@@ -47,11 +47,24 @@
         "type": "github"
       }
     },
+    "rixpkgs": {
+      "locked": {
+        "lastModified": 1746476429,
+        "narHash": "sha256-KHNAOy8ILpIlz5rtwxURpcVOqbWRMoT/rXRgpy1pyG8=",
+        "type": "tarball",
+        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-04-29.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-04-29.tar.gz"
+      }
+    },
     "root": {
       "inputs": {
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
-        "plugins-r": "plugins-r"
+        "plugins-r": "plugins-r",
+        "rixpkgs": "rixpkgs"
       }
     }
   },

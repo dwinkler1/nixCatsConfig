@@ -50,7 +50,7 @@
     # neovim-nightly-overlay = {
     #   url = "github:nix-community/neovim-nightly-overlay";
     # };
-
+    rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2025-04-29.tar.gz";
   };
 
   # see :help nixCats.flake.outputs
@@ -153,7 +153,12 @@
               inherit (pkgs) nix-doc lua-language-server nixd;
               # and each will be its own sub category
             };
-            rdev = with pkgs; [
+            rdev = let
+                rpkgs = import inputs.rixpkgs {
+                  system = "${pkgs.system}";
+                };
+            in
+            with rpkgs; [
               (rWrapper.override { packages = with rPackages; [ languageserver ]; })
             ];
             notes = with pkgs; [
@@ -302,6 +307,8 @@
             general = with pkgs; [
               # <- this would be included if any of the subcategories of general are
               # libgit2
+              gcc
+              gnumake
             ];
           };
 
@@ -394,7 +401,7 @@
             # these also recieve our pkgs variable
             # see :help nixCats.flake.outputs.packageDefinitions
             settings = {
-              suffix-path = true;
+              suffix-path = false;
               suffix-LD = true;
               # The name of the package, and the default launch name,
               # and the name of the .desktop file, is `nixCats`,
