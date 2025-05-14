@@ -401,7 +401,7 @@
             # these also recieve our pkgs variable
             # see :help nixCats.flake.outputs.packageDefinitions
             settings = {
-              suffix-path = false;
+              suffix-path = true;
               suffix-LD = true;
               # The name of the package, and the default launch name,
               # and the name of the .desktop file, is `nixCats`,
