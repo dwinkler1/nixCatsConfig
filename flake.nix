@@ -130,6 +130,7 @@
               universal-ctags
               ripgrep
               fd
+              direnv
             ];
             # these names are arbitrary.
             lint = with pkgs; [
