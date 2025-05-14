@@ -160,7 +160,12 @@
                 };
             in
             with rpkgs; [
-              (rWrapper.override { packages = with rPackages; [ languageserver ]; })
+              (rWrapper.override { packages = with rPackages; [
+                languageserver 
+                dplyr
+                data_table
+                ]; })
+              R
             ];
             notes = with pkgs; [
               zk
@@ -400,8 +405,8 @@
             # these also recieve our pkgs variable
             # see :help nixCats.flake.outputs.packageDefinitions
             settings = {
-              suffix-path = true;
-              suffix-LD = true;
+              suffix-path = false;
+              suffix-LD = false;
               # The name of the package, and the default launch name,
               # and the name of the .desktop file, is `nixCats`,
               # or, whatever you named the package definition in the packageDefinitions set.
