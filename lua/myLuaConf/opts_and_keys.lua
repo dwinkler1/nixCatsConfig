@@ -144,5 +144,5 @@ vim.keymap.set("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap 
 vim.keymap.set("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
 vim.keymap.set("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 
-vim.keymap.set("n", "gs", "<Plug>(leap)", { desc = "Char Search" })
+vim.keymap.set({"n", "v"}, "gs", "<Plug>(leap)", { desc = "Char Search" })
 vim.keymap.set("n", "gS", "<Plug>(leap-from-window)", { desc = "Char Search" })
