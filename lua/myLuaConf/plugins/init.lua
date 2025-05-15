@@ -17,6 +17,7 @@ if ok then
   vim.notify = notify
   vim.keymap.set('n', '<Esc>', function()
     notify.dismiss { silent = true }
+    vim.cmd { cmd = 'nohlsearch' }
   end, { desc = 'dismiss notify popup and clear hlsearch' })
 end
 
@@ -414,7 +415,7 @@ require('lze').load {
     for_cat = "general.extra",
     event = 'DeferredUIEnter',
     keys = {
-        { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
     },
   },
 
