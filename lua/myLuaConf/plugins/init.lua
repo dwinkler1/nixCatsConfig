@@ -66,6 +66,7 @@ if nixCats 'general.extra' then
       -- Create a table with the options to be passed to setup()
       R_args = { "--quiet", "--no-save" },
       rconsole_width = 120,
+      rconsole_height = 25,
       hook = {
         on_filetype = function()
           -- This function will be called at the FileType event
