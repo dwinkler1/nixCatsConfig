@@ -165,7 +165,6 @@
                 dplyr
                 data_table
                 ]; })
-              R
             ];
             notes = with pkgs; [
               zk
@@ -320,6 +319,9 @@
           # this section is for environmentVariables that should be available
           # at RUN TIME for plugins. Will be available to path within neovim terminal
           environmentVariables = {
+            rdev = {
+              R_LIBS_USER = "./.Rlibs";
+            };
             test = {
               default = {
                 CATTESTVARDEFAULT = "It worked!";
