@@ -23,6 +23,7 @@ require('lze').load {
           -- python = { "isort", "black" },
           -- Use a sub-list to run only the first available formatter
           -- javascript = { { "prettierd", "prettier" } },
+          nix = { "alejandra" },
         },
       })
 
@@ -30,7 +31,7 @@ require('lze').load {
         conform.format({
           lsp_fallback = true,
           async = false,
-          timeout_ms = 3000,
+          timeout_ms = 10000,
         })
       end, { desc = "[F]ormat [F]ile" })
     end,

@@ -159,7 +159,7 @@ require('lze').load {
             }
           },
           formatting = {
-            command = { "nixfmt" }
+            command = { "alejandra" }
           },
           diagnostic = {
             suppress = {
