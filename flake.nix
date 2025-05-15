@@ -245,6 +245,8 @@
             blink-cmp
             blink-compat
             colorful-menu-nvim
+            copilot-lua
+            blink-copilot
           ];
           treesitter = with pkgs.vimPlugins; [
             nvim-treesitter-textobjects

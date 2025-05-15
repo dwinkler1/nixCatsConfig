@@ -39,6 +39,27 @@ return {
     on_plugin = { "blink.cmp" },
   },
   {
+    "copilot.lua",
+    for_cat = "general.blink",
+    dep_of = 'blink.cmp',
+    event = "InsertEnter",
+    after = function()
+      require('copilot').setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+        filetypes = {
+          markdown = true,
+          help = true,
+        },
+
+      })
+    end,
+  },
+  {
+    "blink-copilot",
+    dep_of = "blink.cmp",
+  },
+  {
     "blink.cmp",
     for_cat = "general.blink",
     event = "DeferredUIEnter",
@@ -107,7 +128,7 @@ return {
           preset = 'luasnip',
         },
         sources = {
-          default = { 'lsp', 'path', 'snippets', 'buffer', 'omni' },
+          default = { 'lsp', 'path', 'snippets', 'buffer', 'omni', 'copilot' },
           providers = {
             path = {
               score_offset = 50,
@@ -125,6 +146,12 @@ return {
               opts = {
                 cmp_name = 'cmdline',
               },
+            },
+            copilot = {
+              name = "copilot",
+              module = "blink-copilot",
+              score_offset = 30,
+              async = true,
             },
           },
         },
