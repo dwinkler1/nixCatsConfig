@@ -123,6 +123,7 @@
           ripgrep
           fd
           direnv
+          lazygit
         ];
         # these names are arbitrary.
         lint = with pkgs; [
@@ -292,6 +293,7 @@
             }
             snacks-nvim
             vim-slime
+            lazygit-nvim
             # If it was included in your flake inputs as plugins-hlargs,
             # this would be how to add that plugin in your config.
             # pkgs.neovimPlugins.hlargs

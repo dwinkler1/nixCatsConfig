@@ -409,6 +409,15 @@ require('lze').load {
     end,
   },
   {
+    'lazygit.nvim',
+    for_cat = "general.extra",
+    event = 'DeferredUIEnter',
+    keys = {
+        { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+    },
+  },
+
+  {
     'which-key.nvim',
     for_cat = 'general.extra',
     -- cmd = { "" },
