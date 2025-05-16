@@ -113,7 +113,9 @@ if nixCats 'general.extra' then
   })
   vim.keymap.set('n', "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
   vim.keymap.set("n", "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffer" })
-  vim.keymap.set('n', "<leader>tt", function() Snacks.terminal.open() end, { desc = "Open terminal" })
+  vim.keymap.set('n', "<leader>tt", function() Snacks.terminal.get() end, { desc = "Open terminal" })
+  vim.keymap.set('n', "<leader>to", function() Snacks.terminal.open() end, { desc = "Open new terminal" })
+  vim.keymap.set('n', "<leader>tg", function() Snacks.terminal.toggle() end, { desc = "Toggle terminal" })
   vim.keymap.set('n', "<leader>e", function() Snacks.explorer() end, { desc = "File Explorer" })
   vim.keymap.set('n', "<leader>,", function() Snacks.picker.buffers() end, { desc = "Buffer Explorer" })
 
