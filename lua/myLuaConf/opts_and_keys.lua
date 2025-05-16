@@ -1,7 +1,7 @@
 -- NOTE: These 2 need to be set up before any plugins are loaded.
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
-
+vim.g.omni_sql_default_compl_type = 'syntax'
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
