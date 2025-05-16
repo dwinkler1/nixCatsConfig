@@ -22,10 +22,10 @@ return {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = '<c-space>',
-            node_incremental = '<c-space>',
-            scope_incremental = '<c-s>',
-            node_decremental = '<M-space>',
+            init_selection = 'gaa',
+            node_incremental = 'gaa',
+            scope_incremental = 'gas',
+            node_decremental = 'gAA',
           },
         },
         textobjects = {
@@ -40,6 +40,8 @@ return {
               ['if'] = '@function.inner',
               ['ac'] = '@class.outer',
               ['ic'] = '@class.inner',
+              ['in'] = '@call.inner',
+              ['an'] = '@call.outer',
             },
           },
           move = {
@@ -48,22 +50,29 @@ return {
             goto_next_start = {
               [']m'] = '@function.outer',
               [']]'] = '@class.outer',
+              [']p'] = '@parameter.inner',
+              [']n'] = '@call.inner',
             },
             goto_next_end = {
               [']M'] = '@function.outer',
               [']['] = '@class.outer',
+              [']P'] = '@parameter.inner',
             },
             goto_previous_start = {
               ['[m'] = '@function.outer',
               ['[['] = '@class.outer',
+              ['[p'] = '@parameter.inner',
+              ['[n'] = '@call.inner',
             },
             goto_previous_end = {
               ['[M'] = '@function.outer',
               ['[]'] = '@class.outer',
+              ['[P'] = '@parameter.inner',
             },
           },
           swap = {
             enable = true,
+            init_selection = '<c-space>',
             swap_next = {
               ['<leader>a'] = '@parameter.inner',
             },
