@@ -73,6 +73,13 @@ require('lze').load {
     },
   },
   {
+    'julials',
+    for_cat = "rdev",
+    lsp = {
+      filetype = { 'julia' }
+    }
+  },
+  {
     -- name of the lsp
     "lua_ls",
     enabled = nixCats('lua') or nixCats('neonixdev') or false,
