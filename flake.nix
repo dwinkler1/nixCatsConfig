@@ -271,7 +271,10 @@
             vim-sleuth
             vim-fugitive
             vim-rhubarb
-            nvim-surround
+            {
+              plugin = mini-surround;
+              name = "mini.surround";
+            }
           ];
           extra = with pkgs.vimPlugins; [
             fidget-nvim

@@ -177,6 +177,17 @@ require('lze').load {
     end,
   },
   {
+    'mini.surround',
+    for_cat = 'general.extra',
+    event = 'DeferredUIEnter',
+    after = function(plugin)
+      require('mini.surround').setup({
+        n_lines = 50,
+        vim.keymap.set({ "x", "n" }, "s", "<Nop>", { noremap = true })
+      })
+    end,
+  },
+  {
     'mini.ai',
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
@@ -247,15 +258,6 @@ require('lze').load {
     event = 'DeferredUIEnter',
     after = function(plugin)
       require('ibl').setup()
-    end,
-  },
-  {
-    'nvim-surround',
-    for_cat = 'general.always',
-    event = 'DeferredUIEnter',
-    -- keys = "",
-    after = function(plugin)
-      require('nvim-surround').setup()
     end,
   },
   {

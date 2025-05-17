@@ -11,6 +11,18 @@
 | (n) \<leader\>U | Undo-tree |
 | (n) \<leader\>su | Search Undo-tree (Snacks) |
 
+## Surround
+
+|  key |  action |
+| :---  | :--- | 
+|  sa{motion}{char} | surround with {char} |
+|  sr{char1}{char2} | change surround from {char1} to {char2} |
+|  sd{char} | delete surround {char} |
+|  sf{char} | find surround {char} |
+|  sF{char} | find surround {char} backward |
+
+Note: 's' is set to \<Nop\> when `mini.surround` is loaded use `cl`
+
 ## Search
 
 |  key |  action |
