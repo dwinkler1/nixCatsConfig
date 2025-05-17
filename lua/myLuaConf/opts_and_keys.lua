@@ -95,11 +95,11 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = 'Scroll Up' })
 vim.keymap.set("n", "n", "nzzzv", { desc = 'Next Search Result' })
 vim.keymap.set("n", "N", "Nzzzv", { desc = 'Previous Search Result' })
 
-vim.keymap.set("n", "<leader><leader>[", "<cmd>bprev<CR>", { desc = 'Previous buffer' })
-vim.keymap.set("n", "<leader><leader>]", "<cmd>bnext<CR>", { desc = 'Next buffer' })
-vim.keymap.set("n", "<leader><leader>l", "<cmd>b#<CR>", { desc = 'Last buffer' })
-vim.keymap.set("n", "<leader><leader>d", "<cmd>bdelete<CR>", { desc = 'delete buffer' })
-vim.keymap.set("n", "<leader><leader>q", "<cmd>qall<CR>", { desc = 'Quit all' })
+vim.keymap.set("n", "<leader>b[", "<cmd>bprev<CR>", { desc = 'Previous buffer' })
+vim.keymap.set("n", "<leader>b]", "<cmd>bnext<CR>", { desc = 'Next buffer' })
+vim.keymap.set("n", "<leader>bl", "<cmd>b#<CR>", { desc = 'Last buffer' })
+vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = 'delete buffer' })
+vim.keymap.set("n", "<leader>bq", "<cmd>qall<CR>", { desc = 'Quit all' })
 vim.keymap.set("n", "<leader>bb", "<cmd>b#<CR>", { desc = 'Last buffer' })
 
 -- see help sticky keys on windows
@@ -115,7 +115,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 
@@ -143,6 +143,7 @@ vim.keymap.set("n", "<leader>wl", "<C-w>l", { desc = "Go to Right Window", remap
 vim.keymap.set("n", "<leader>_", "<C-W>s", { desc = "Split Window Below", remap = true })
 vim.keymap.set("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
 vim.keymap.set("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
+vim.keymap.set("n", "<leader>wo", "<C-W>o", { desc = "Delete Other Windows", remap = true })
 
 vim.keymap.set({"n", "v"}, "gs", "<Plug>(leap)", { desc = "Char Search" })
 vim.keymap.set("n", "gS", "<Plug>(leap-from-window)", { desc = "Char Search" })

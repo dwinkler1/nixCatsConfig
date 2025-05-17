@@ -112,12 +112,19 @@ if nixCats 'general.extra' then
     explorer = { enabled = true, replace_netrw = false }
   })
   vim.keymap.set('n', "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
-  vim.keymap.set("n", "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffer" })
+  vim.keymap.set('n', "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffer" })
   vim.keymap.set('n', "<leader>tt", function() Snacks.terminal.get() end, { desc = "Open terminal" })
   vim.keymap.set('n', "<leader>to", function() Snacks.terminal.open() end, { desc = "Open new terminal" })
   vim.keymap.set('n', "<leader>tg", function() Snacks.terminal.toggle() end, { desc = "Toggle terminal" })
   vim.keymap.set('n', "<leader>e", function() Snacks.explorer() end, { desc = "File Explorer" })
   vim.keymap.set('n', "<leader>,", function() Snacks.picker.buffers() end, { desc = "Buffer Explorer" })
+  vim.keymap.set('n', "<leader>sm", function() Snacks.picker.marks() end, { desc = "Search Marks" })
+  vim.keymap.set('n', "<leader>sM", function() Snacks.picker.man() end, { desc = "Search manual pages" })
+  vim.keymap.set('n', "<leader>su", function() Snacks.picker.undo() end, { desc = "Search Undo-tree" })
+  vim.keymap.set('n', "<leader>sq", function() Snacks.picker.qflist() end, { desc = "Search Quickfix" })
+  vim.keymap.set('n', "<leader>ge", function() Snacks.picker.git_diff() end, { desc = "Search git diff" })
+  vim.keymap.set({ 'n', 'v' }, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Search git diff" })
+  vim.keymap.set('n', "<leader>.", function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer" })
 
   require('zk').setup({
     picker = 'telescope',

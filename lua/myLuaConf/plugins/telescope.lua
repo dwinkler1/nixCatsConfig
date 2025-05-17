@@ -81,7 +81,7 @@ return {
           prompt_title = 'Live Grep in Open Files',
         }
       end, mode = {"n"}, desc = '[S]earch [/] in Open Files' },
-      { "<leader><leader>s", function() return require('telescope.builtin').buffers() end, mode = {"n"}, desc = '[ ] Find existing buffers', },
+      { "<leader>bs", function() return require('telescope.builtin').buffers() end, mode = {"n"}, desc = '[ ] Find existing buffers', },
       { "<leader>s.", function() return require('telescope.builtin').oldfiles() end, mode = {"n"}, desc = '[S]earch Recent Files ("." for repeat)', },
       { "<leader>sb", function() return require('telescope.builtin').buffers() end, mode = {"n"}, desc = '[S]earch [b]uffers', },
       { "<leader>sr", function() return require('telescope.builtin').resume() end, mode = {"n"}, desc = '[S]earch [R]esume', },

@@ -1,3 +1,76 @@
+# Cheatsheet
+
+## Helpers
+
+|  key |  action |
+| :---  | :--- | 
+| (i) <C-space> | trigger auto-completion |
+| (i) <C-e> | close auto-completion |
+| (n) \<leader\>sk | search keymaps |
+| (n) \<leader\>sh | search help |
+| (n) \<leader\>U | Undo-tree |
+| (n) \<leader\>su | Search Undo-tree (Snacks) |
+
+## Search
+
+|  key |  action |
+| :---  | :--- | 
+| \<leader\>sb | search buffers |
+| \<leader\>sf | search files |
+| \<leader\>sg | grep files |
+| \<leader\>sd | search diagnostics |
+| \<leader\>sr | search resume |
+| \<leader\>sw | search word under cursor / in selection |
+| \<leader\>sk | search keymaps |
+| \<leader\>sh | search help |
+| \<leader\>sm | search marks (Snacks) |
+| \<leader\>s. | search recent files |
+| \<leader\>ss | search telescope |
+| \<leader\>su | Search Undo-tree (Snacks) |
+| \<leader\>ds | search document symbols (lsp) |
+| \<leader\>ws | search workspace symbols (lsb) |
+
+## Within Buffer Movement
+
+|  key |  action |
+|:---  | :--- | 
+| \<C-d\> | scroll down (C = super on mac for me) |
+| \<C-u\> | scroll up (C = super on mac for me) |
+| ]d | next diagnostic (lsp) |
+| [d | prev diagnostic (lsp) |
+| ]c | next git change hunk |
+| [c | prev git change hunk |
+| gs | leap search (type first 2 chars and Symbol shown) | 
+ 
+
+## Between Buffer Movement
+
+|  key |  action |
+| :---  | :--- | 
+| \<leader\>bb | last buffer |
+| \<leader\>b] | next buffer |
+| \<leader\>b[ | prev buffer |
+| \<leader\>bd | delete buffer (Snacks) |
+| \<leader\>bo | delete other buffer (Snacks) |
+| \<leader\>bs / <leader>, | search buffers (Telescop / Snacks) |
+
+## Window Movement
+
+|  key |  action |
+| :---  | :--- | 
+| gS | leap search (type first 2 chars and Symbol shown) | 
+
+## Window Management
+
+
+|  key |  action |
+| :---  | :--- | 
+| \<leader\>wh/j/k/l | move to h/j/k/l window |
+| \<leader\>wd | delete window |
+| \<leader\>wo | delete other window(s) |
+| \<leader\>_ | Split below |
+| \<leader\>\| | split right |
+
 # Example `nixCats` Configuration
 
 This directory contains an example of the suggested, idiomatic way to manage a neovim configuration using `nixCats`. It leverages [`lze`](https://github.com/BirdeeHub/lze) for lazy loading, although [`lz.n`](https://github.com/nvim-neorocks/lz.n) can be used instead to similar effect. It also includes a fallback mechanism using `paq` and `mason`, allowing you to load the directory without `nix` if needed.
