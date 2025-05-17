@@ -4,8 +4,8 @@
 
 |  key |  action |
 | :---  | :--- | 
-| (i) <C-space> | trigger auto-completion |
-| (i) <C-e> | close auto-completion |
+| (i) \<C-space\> | trigger auto-completion |
+| (i) \<C-e\> | close auto-completion |
 | (n) \<leader\>sk | search keymaps |
 | (n) \<leader\>sh | search help |
 | (n) \<leader\>U | Undo-tree |
