@@ -183,6 +183,30 @@
             nvim-notify
           ];
           extra = [
+            {
+              plugin = mini-sessions;
+              name = "mini.sessions";
+            }
+            {
+              plugin = mini-starter;
+              name = "mini.starter";
+            }
+            {
+              plugin = mini-visits;
+              name = "mini.visits";
+            }
+            {
+              plugin = mini-pick;
+              name = "mini.pick";
+            }
+            {
+              plugin = mini-extra;
+              name = "mini.extra";
+            }
+            {
+              plugin = mini-icons;
+              name = "mini.icons";
+            }
             snacks-nvim
             pkgs.neovimPlugins.r
             oil-nvim
@@ -296,7 +320,6 @@
               plugin = mini-jump2d;
               name = "mini.jump2d";
             }
-            snacks-nvim
             vim-slime
             lazygit-nvim
             # If it was included in your flake inputs as plugins-hlargs,
@@ -452,7 +475,7 @@
           # you could also pass something else:
           # see :help nixCats
           themer = true;
-          colorscheme = "onedark";
+          colorscheme = "tokyonight";
         };
         extra = {
           # to keep the categories table from being filled with non category things that you want to pass

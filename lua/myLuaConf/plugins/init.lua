@@ -29,6 +29,45 @@ if nixCats 'general.extra' then
   -- but why... I guess I could make it load
   -- after the other lze definitions in the next call using priority value?
   -- didnt seem necessary.
+
+  local function get_current_directory_name()
+    local full_path = vim.fn.getcwd()
+    local dir_name = string.match(full_path, "[^/]+$")
+    return dir_name
+  end
+
+  require('mini.sessions').setup()
+  -- vim.fn.input('Title: ')
+  vim.keymap.set("n", "<leader>ww",
+    function() MiniSessions.write(vim.fn.input('Session name:', get_current_directory_name())) end,
+    { desc = "Write Session" })
+
+  -- mini.starter
+
+  local my_ministarter = require('myLuaConf.plugins.ministart')
+  local recent_files_bytype = function() return my_ministarter.get_recent_files_by_ft_or_ext({ 'r', 'sql', 'julia', 'python' }) end
+
+  local starter = require('mini.starter')
+  starter.setup(
+    {
+      evaluate_single = true,
+      items = {
+        starter.sections.builtin_actions(),
+        starter.sections.recent_files(5, true),
+        starter.sections.pick(),
+        starter.sections.sessions(5, true),
+        recent_files_bytype,
+      },
+      footer = my_ministarter.footer_text,
+      content_hooks = {
+        starter.gen_hook.adding_bullet(),
+        starter.gen_hook.indexing('all', { 'Builtin actions', 'Recent files (current directory)', 'Recent files' }),
+        starter.gen_hook.aligning('center', 'center'),
+        starter.gen_hook.padding(3, 2),
+      },
+    }
+  )
+
   vim.g.loaded_netrwPlugin = 1
   require('oil').setup {
     default_file_explorer = true,
@@ -101,7 +140,7 @@ if nixCats 'general.extra' then
   require("snacks").setup({
     bigfile = { enabled = true },
     dashboard = {
-      enabled = true,
+      enabled = false,
       sections = {
         { section = "header" },
         { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
@@ -109,21 +148,21 @@ if nixCats 'general.extra' then
         { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 }, },
     },
     picker = { enabled = true },
-    explorer = { enabled = true, replace_netrw = false }
+    explorer = { enabled = false, replace_netrw = false }
   })
   vim.keymap.set('n', "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
   vim.keymap.set('n', "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffer" })
   vim.keymap.set('n', "<leader>tt", function() Snacks.terminal.get() end, { desc = "Open terminal" })
   vim.keymap.set('n', "<leader>to", function() Snacks.terminal.open() end, { desc = "Open new terminal" })
   vim.keymap.set('n', "<leader>tg", function() Snacks.terminal.toggle() end, { desc = "Toggle terminal" })
-  vim.keymap.set('n', "<leader>e", function() Snacks.explorer() end, { desc = "File Explorer" })
+  --vim.keymap.set('n', "<leader>e", function() Snacks.explorer() end, { desc = "File Explorer" })
   vim.keymap.set('n', "<leader>,", function() Snacks.picker.buffers() end, { desc = "Buffer Explorer" })
   vim.keymap.set('n', "<leader>sm", function() Snacks.picker.marks() end, { desc = "Search Marks" })
-  vim.keymap.set('n', "<leader>sM", function() Snacks.picker.man() end, { desc = "Search manual pages" })
+  vim.keymap.set('n', "<leader>sz", function() Snacks.picker.man() end, { desc = "Search manual pages" })
   vim.keymap.set('n', "<leader>su", function() Snacks.picker.undo() end, { desc = "Search Undo-tree" })
   vim.keymap.set('n', "<leader>sq", function() Snacks.picker.qflist() end, { desc = "Search Quickfix" })
   vim.keymap.set('n', "<leader>ge", function() Snacks.picker.git_diff() end, { desc = "Search git diff" })
-  vim.keymap.set({ 'n', 'v' }, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Search git diff" })
+  vim.keymap.set({ 'n', 'v' }, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Open remote (Browser)" })
   vim.keymap.set('n', "<leader>.", function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer" })
 
   require('zk').setup({
@@ -177,6 +216,48 @@ require('lze').load {
     end,
   },
   {
+    'mini.icons',
+    for_cat = 'general.extra',
+    dep_of = 'mini.pick',
+    after = function(plugin)
+      require('mini.icons').setup()
+    end,
+  },
+  {
+    'mini.extra',
+    for_cat = 'general.extra',
+    dep_of = { 'mini.ai', 'mini.pick' },
+    after = function(plugin)
+      require('mini.extra').setup()
+    end,
+  },
+  {
+    'mini.visits',
+    for_cat = 'general.extra',
+    dep_of = { 'mini.pick' },
+    after = function(plugin)
+      require('mini.visits').setup()
+    end,
+  },
+  {
+    'mini.pick',
+    for_cat = 'general.extra',
+    event = 'DeferredUIEnter',
+    dep_of = 'mini.starter',
+    after = function(plugin)
+      require('mini.pick').setup()
+      vim.keymap.set('n', "<leader>e", function() MiniExtra.pickers.explorer() end, { desc = "File Explorer" })
+      vim.keymap.set('n', "<leader>sls", function() MiniExtra.pickers.lsp({ scope = 'document_symbol' }) end,
+        { desc = "Search LSP [s]ymbols" })
+      vim.keymap.set('n', "<leader>slw", function() MiniExtra.pickers.lsp({ scope = 'workspace_symbol' }) end,
+        { desc = "Search LSP [w]orkspace Symbols" })
+      vim.keymap.set('n', "<leader>slr", function() MiniExtra.pickers.lsp({ scope = 'references' }) end,
+        { desc = "Search LSP [r]eferences" })
+      vim.keymap.set('n', "<leader>sld", function() MiniExtra.pickers.lsp({ scope = 'definition' }) end,
+        { desc = "Search LSP [d]efinitions" })
+    end,
+  },
+  {
     'mini.surround',
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
@@ -192,6 +273,7 @@ require('lze').load {
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
     after = function(plugin)
+      require('mini.extra').setup()
       require('mini.ai').setup()
     end,
   },
@@ -455,6 +537,7 @@ require('lze').load {
         { '<leader>r_',        hidden = true },
         { '<leader>s',         group = '[s]earch' },
         { '<leader>s_',        hidden = true },
+        { '<leader>sl',        group = '[s]earch [l]sp' },
         { '<leader>t',         group = '[t]oggles' },
         { '<leader>t_',        hidden = true },
         { '<leader>w',         group = '[w]orkspace' },
