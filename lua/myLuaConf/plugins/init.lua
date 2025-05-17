@@ -138,7 +138,7 @@ if nixCats 'general.extra' then
     }
   })
   vim.keymap.set('n', "<leader>zo", '<cmd>ZkNotes<CR>', { desc = "Search Zk Note" })
-  vim.keymap.set('n', "<leader>zt", '<cmd>zktags<cr>', { desc = "search zk tags" })
+  vim.keymap.set('n', "<leader>zt", '<cmd>Zktags<cr>', { desc = "search zk tags" })
   vim.keymap.set("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>")
   vim.keymap.set("n", "<leader>zj", "<Cmd>ZkNew { group = 'journal' }<CR>")
 end
