@@ -256,8 +256,9 @@ require('lze').load {
       vim.keymap.set('n', "<leader>me", function() pickers.git_hunks() end, { desc = "Mini Git Explorer" })
       vim.keymap.set('n', "<leader>md", function() pickers.diagnostic() end, { desc = "Mini Diagnostics Explorer" })
       vim.keymap.set('n', "<leader>ml", function() pickers.buf_lines() end, { desc = "Mini Lines Explorer" })
-      vim.keymap.set('n', "<leader>mb", function() pickers.buffers() end, { desc = "Mini Buffer Explorer" })
       vim.keymap.set('n', "<leader>mm", function() pickers.marks() end, { desc = "Mini Marks Explorer" })
+      vim.keymap.set('n', "<leader>mt", function() pickers.treesitter() end, { desc = "Mini Treesitter Explorer" })
+      vim.keymap.set('n', "<leader>mv", function() pickers.visit_paths() end, { desc = "Mini Visits Explorer" })
       vim.keymap.set('n', "<leader>sls", function() pickers.lsp({ scope = 'document_symbol' }) end,
         { desc = "Search LSP [s]ymbols" })
       vim.keymap.set('n', "<leader>slw", function() pickers.lsp({ scope = 'workspace_symbol' }) end,
@@ -312,7 +313,7 @@ require('lze').load {
     'render-markdown',
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
-    ft = { 'markdown', 'copilot-chat' },
+    ft = { 'markdown', 'quarto', 'copilot-chat' },
     after = function()
       require('render-markdown').setup({
         completions = { blink = { enabled = true } },

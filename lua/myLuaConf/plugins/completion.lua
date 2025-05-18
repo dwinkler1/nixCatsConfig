@@ -26,7 +26,7 @@ return {
       ls.config.setup {}
 
       vim.keymap.set({ "i", "s" }, "<M-n>", function()
-        if ls.choice_active() then 
+        if ls.choice_active() then
           ls.change_choice(1)
         end
       end)
@@ -59,18 +59,19 @@ return {
     for_cat = "general.blink",
     event = "DeferredUIEnter",
     after = function()
-
       local chat = require('CopilotChat')
---      local prompts = require('CopilotChat.config.prompts')
+      --      local prompts = require('CopilotChat.config.prompts')
       local chatselect = require('CopilotChat.select')
---      local cutils = require('CopilotChat.utils')
+      --      local cutils = require('CopilotChat.utils')
       chat.setup({
         model = 'gemini-2.5-pro',
         -- Markdown rendering
         highlight_headers = false,
+        separator = '---',
+        error_header = '> [!ERROR] Error',
         show_help = false, -- Show help message when opening the chat window
         window = {
-          layout = "float",
+          layout = "vertical", --"float",
           width = 0.45,
           height = 0.45,
           row = math.floor(vim.fn.winheight(0) * 0.55),

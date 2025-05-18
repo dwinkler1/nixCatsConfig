@@ -19,6 +19,11 @@ return {
       require('nvim-treesitter.configs').setup {
         highlight = { enable = true, },
         indent = { enable = false, },
+        parser_configurations = {
+          markdown = {
+            filetypes = { "markdown", "quarto", "copilot-chat" },
+          },
+        },
         incremental_selection = {
           enable = true,
           keymaps = {
