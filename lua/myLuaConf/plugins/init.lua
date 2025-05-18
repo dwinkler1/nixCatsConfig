@@ -222,7 +222,7 @@ require('lze').load {
     'mini.icons',
     for_cat = 'general.extra',
     dep_of = 'mini.pick',
-    after = function(plugin)
+    after = function()
       require('mini.icons').setup()
     end,
   },
@@ -230,7 +230,7 @@ require('lze').load {
     'mini.extra',
     for_cat = 'general.extra',
     dep_of = { 'mini.ai', 'mini.pick' },
-    after = function(plugin)
+    after = function()
       require('mini.extra').setup()
     end,
   },
@@ -238,7 +238,7 @@ require('lze').load {
     'mini.visits',
     for_cat = 'general.extra',
     dep_of = { 'mini.pick' },
-    after = function(plugin)
+    after = function()
       require('mini.visits').setup()
     end,
   },
@@ -247,16 +247,24 @@ require('lze').load {
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
     dep_of = 'mini.starter',
-    after = function(plugin)
-      require('mini.pick').setup()
-      vim.keymap.set('n', "<leader>e", function() MiniExtra.pickers.explorer() end, { desc = "File Explorer" })
-      vim.keymap.set('n', "<leader>sls", function() MiniExtra.pickers.lsp({ scope = 'document_symbol' }) end,
+    after = function()
+      local pick = require('mini.pick')
+      pick.setup()
+      vim.ui.select = pick.ui_select
+      local pickers = MiniExtra.pickers
+      vim.keymap.set('n', "<leader>e", function() pickers.explorer() end, { desc = "File Explorer" })
+      vim.keymap.set('n', "<leader>me", function() pickers.git_hunks() end, { desc = "Mini Git Explorer" })
+      vim.keymap.set('n', "<leader>md", function() pickers.diagnostic() end, { desc = "Mini Diagnostics Explorer" })
+      vim.keymap.set('n', "<leader>ml", function() pickers.buf_lines() end, { desc = "Mini Lines Explorer" })
+      vim.keymap.set('n', "<leader>mb", function() pickers.buffers() end, { desc = "Mini Buffer Explorer" })
+      vim.keymap.set('n', "<leader>mm", function() pickers.marks() end, { desc = "Mini Marks Explorer" })
+      vim.keymap.set('n', "<leader>sls", function() pickers.lsp({ scope = 'document_symbol' }) end,
         { desc = "Search LSP [s]ymbols" })
-      vim.keymap.set('n', "<leader>slw", function() MiniExtra.pickers.lsp({ scope = 'workspace_symbol' }) end,
+      vim.keymap.set('n', "<leader>slw", function() pickers.lsp({ scope = 'workspace_symbol' }) end,
         { desc = "Search LSP [w]orkspace Symbols" })
-      vim.keymap.set('n', "<leader>slr", function() MiniExtra.pickers.lsp({ scope = 'references' }) end,
+      vim.keymap.set('n', "<leader>slr", function() pickers.lsp({ scope = 'references' }) end,
         { desc = "Search LSP [r]eferences" })
-      vim.keymap.set('n', "<leader>sld", function() MiniExtra.pickers.lsp({ scope = 'definition' }) end,
+      vim.keymap.set('n', "<leader>sld", function() pickers.lsp({ scope = 'definition' }) end,
         { desc = "Search LSP [d]efinitions" })
     end,
   },
@@ -264,7 +272,7 @@ require('lze').load {
     'mini.surround',
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
-    after = function(plugin)
+    after = function()
       require('mini.surround').setup({
         n_lines = 50,
         vim.keymap.set({ "x", "n" }, "s", "<Nop>", { noremap = true })
@@ -275,7 +283,7 @@ require('lze').load {
     'mini.ai',
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
-    after = function(plugin)
+    after = function()
       require('mini.extra').setup()
       require('mini.ai').setup()
     end,
@@ -284,7 +292,7 @@ require('lze').load {
     'mini.pairs',
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
-    after = function(plugin)
+    after = function()
       require('mini.pairs').setup()
     end,
   },
@@ -292,7 +300,7 @@ require('lze').load {
     'mini.jump2d',
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
-    after = function(plugin)
+    after = function()
       require('mini.jump2d').setup({
         mappings = {
           start_jumping = '<S-CR>',
@@ -326,7 +334,7 @@ require('lze').load {
       { '<leader>ms', '<cmd>MarkdownPreviewStop <CR>',   mode = { 'n' }, noremap = true, desc = 'markdown preview stop' },
       { '<leader>mt', '<cmd>MarkdownPreviewToggle <CR>', mode = { 'n' }, noremap = true, desc = 'markdown preview toggle' },
     },
-    before = function(plugin)
+    before = function()
       vim.g.mkdp_auto_close = 0
     end,
   },
@@ -344,7 +352,7 @@ require('lze').load {
     'comment.nvim',
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
-    after = function(plugin)
+    after = function()
       require('Comment').setup()
     end,
   },
@@ -352,7 +360,7 @@ require('lze').load {
     'indent-blankline.nvim',
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
-    after = function(plugin)
+    after = function()
       require('ibl').setup()
     end,
   },
@@ -371,7 +379,7 @@ require('lze').load {
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
     -- keys = "",
-    after = function(plugin)
+    after = function()
       require('fidget').setup {}
     end,
   },
@@ -397,7 +405,7 @@ require('lze').load {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    after = function(plugin)
+    after = function()
       require('lualine').setup {
         options = {
           icons_enabled = false,
@@ -441,7 +449,7 @@ require('lze').load {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    after = function(plugin)
+    after = function()
       require('gitsigns').setup {
         -- See `:help gitsigns.txt`
         signs = {
@@ -534,7 +542,7 @@ require('lze').load {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    after = function(plugin)
+    after = function()
       require('which-key').setup {}
       require('which-key').add {
         { '<leader><leader>',  group = 'buffer commands' },

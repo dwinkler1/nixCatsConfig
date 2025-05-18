@@ -70,13 +70,12 @@ return {
         highlight_headers = false,
         show_help = false, -- Show help message when opening the chat window
         window = {
-          layout = "float", -- "float" or "split"
-          width = 0.45, -- Relative width (30% of screen width)
-          height = 0.45, -- Relative height (30% of screen height)
-          -- Position the window towards the bottom
-          row = math.floor(vim.fn.winheight(0) * 0.55), -- Start at 65% from the top
-          col = math.floor(vim.fn.winwidth(0) * 0.55), -- Start at 5% from the left (for 90% width, this centers it)
-          border = "rounded", -- Or your preferred border style
+          layout = "float",
+          width = 0.45,
+          height = 0.45,
+          row = math.floor(vim.fn.winheight(0) * 0.55),
+          col = math.floor(vim.fn.winwidth(0) * 0.55),
+          border = "rounded",
           title = "Copilot Chat",
         },
 
