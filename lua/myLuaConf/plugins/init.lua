@@ -45,7 +45,10 @@ if nixCats 'general.extra' then
   -- mini.starter
 
   local my_ministarter = require('myLuaConf.plugins.ministart')
-  local recent_files_bytype = function() return my_ministarter.get_recent_files_by_ft_or_ext({ 'r', 'sql', 'julia', 'python' }) end
+  local recent_files_bytype = function()
+    return my_ministarter.get_recent_files_by_ft_or_ext({ 'r', 'sql', 'julia',
+      'python' })
+  end
 
   local starter = require('mini.starter')
   starter.setup(
@@ -294,6 +297,17 @@ require('lze').load {
         mappings = {
           start_jumping = '<S-CR>',
         },
+      })
+    end,
+  },
+  {
+    'render-markdown',
+    for_cat = 'general.extra',
+    event = 'DeferredUIEnter',
+    ft = { 'markdown', 'copilot-chat' },
+    after = function()
+      require('render-markdown').setup({
+        completions = { blink = { enabled = true } },
       })
     end,
   },

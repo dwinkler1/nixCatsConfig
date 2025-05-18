@@ -1,4 +1,5 @@
 local load_w_after = function(name)
+  -- Define the function outside the keymapping for better scope management
   vim.cmd.packadd(name)
   vim.cmd.packadd(name .. '/after')
 end
@@ -20,14 +21,12 @@ return {
     for_cat = "general.blink",
     dep_of = { "blink.cmp" },
     after = function(_)
-      local luasnip = require 'luasnip'
-      require('luasnip.loaders.from_vscode').lazy_load()
-      luasnip.config.setup {}
-
       local ls = require('luasnip')
+      require('luasnip.loaders.from_vscode').lazy_load()
+      ls.config.setup {}
 
       vim.keymap.set({ "i", "s" }, "<M-n>", function()
-        if ls.choice_active() then
+        if ls.choice_active() then 
           ls.change_choice(1)
         end
       end)
@@ -41,7 +40,7 @@ return {
   {
     "copilot.lua",
     for_cat = "general.blink",
-    dep_of = 'blink.cmp',
+    dep_of = { 'blink.cmp', 'CopilotChat' },
     event = "InsertEnter",
     after = function()
       require('copilot').setup({
@@ -54,6 +53,112 @@ return {
 
       })
     end,
+  },
+  {
+    "CopilotChat",
+    for_cat = "general.blink",
+    event = "DeferredUIEnter",
+    after = function()
+
+      local chat = require('CopilotChat')
+--      local prompts = require('CopilotChat.config.prompts')
+      local chatselect = require('CopilotChat.select')
+--      local cutils = require('CopilotChat.utils')
+      chat.setup({
+        model = 'gemini-2.5-pro',
+        -- Markdown rendering
+        highlight_headers = false,
+        show_help = false, -- Show help message when opening the chat window
+        window = {
+          layout = "float", -- "float" or "split"
+          width = 0.45, -- Relative width (30% of screen width)
+          height = 0.45, -- Relative height (30% of screen height)
+          -- Position the window towards the bottom
+          row = math.floor(vim.fn.winheight(0) * 0.55), -- Start at 65% from the top
+          col = math.floor(vim.fn.winwidth(0) * 0.55), -- Start at 5% from the left (for 90% width, this centers it)
+          border = "rounded", -- Or your preferred border style
+          title = "Copilot Chat",
+        },
+
+        prompts = {
+          Explain = {
+            mapping = '<leader>cce',
+            description = 'AI Explain',
+          },
+          Review = {
+            mapping = '<leader>ccr',
+            description = 'AI Review',
+          },
+          Tests = {
+            mapping = '<leader>cct',
+            description = 'AI Tests',
+          },
+          Fix = {
+            mapping = '<leader>ccf',
+            description = 'AI Fix',
+          },
+          Optimize = {
+            mapping = '<leader>cco',
+            description = 'AI Optimize',
+          },
+          Docs = {
+            mapping = '<leader>ccd',
+            description = 'AI Documentation',
+          },
+          Commit = {
+            mapping = '<leader>ccg',
+            description = 'AI Generate Commit',
+            selection = chatselect.buffer,
+          },
+        }
+      })
+
+      vim.keymap.set({ 'n' }, '<leader>cca', chat.toggle, { desc = 'AI Toggle' })
+      vim.keymap.set({ 'v' }, '<leader>cca', chat.open, { desc = 'AI Open' })
+      vim.keymap.set({ 'n' }, '<leader>ccx', chat.reset, { desc = 'AI Reset' })
+      vim.keymap.set({ 'n' }, '<leader>ccs', chat.stop, { desc = 'AI Stop' })
+      vim.keymap.set({ 'n' }, '<leader>ccm', chat.select_model, { desc = 'AI Models' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>ccp', chat.select_prompt, { desc = 'AI Prompts' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>ccq', function()
+        vim.ui.input({
+          prompt = 'AI Question> ',
+        }, function(input)
+          if input and input ~= "" then
+            chat.ask(input)
+          end
+        end)
+      end, { desc = 'AI Question' })
+
+      vim.keymap.set('v', '<leader>ccc', function()
+        local input = vim.fn.input("Quick Chat: ")
+        if input == nil or input == "" then
+          vim.notify("CopilotChat: No input provided.", vim.log.levels.WARN)
+          return
+        end
+        -- Reselect visual selection after input prompt
+        vim.cmd('normal! gv')
+        chat.ask(input, {
+          selection = chatselect.visual
+        })
+      end, { desc = "CopilotChat - Quick chat" })
+
+      vim.keymap.set('n', '<leader>ccc', function()
+        local input = vim.fn.input("Quick Chat: ")
+        if input and input ~= "" then
+          chat.ask(input, {
+            selection = chatselect.buffer
+          })
+        end
+      end, { desc = "CopilotChat - Quick chat" })
+      vim.keymap.set('n', '<leader>ccb', function()
+        local input = vim.fn.input("Buffers Chat: ")
+        if input and input ~= "" then
+          chat.ask(input, {
+            selection = chatselect.buffers
+          })
+        end
+      end, { desc = "CopilotChat - Chat with all open buffers" })
+    end
   },
   {
     "blink-copilot",
