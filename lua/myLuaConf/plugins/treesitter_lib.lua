@@ -1,6 +1,30 @@
-M = {}
+local MTREE = {}
 
-function M.print_type()
+function MTREE.add_global_node(nodes)
+  local global_nodes = nodes
+  table.insert(global_nodes, MTREE.get_type())
+  return global_nodes
+end
+
+function MTREE.remove_global_node(nodes)
+  local global_nodes = nodes
+  for i, v in ipairs(global_nodes) do
+    if v == MTREE.get_type() then
+      table.remove(global_nodes, i)
+    end
+  end
+  return global_nodes
+end
+
+function MTREE.set_global_nodes()
+  local nodes_in = {}
+  for n in string.gmatch(vim.fn.input("Enter root nodes: "), '([^,]+)') do
+    table.insert(nodes_in, n)
+  end
+  return nodes_in
+end
+
+function MTREE.get_type()
   local ts_utils = require 'nvim-treesitter.ts_utils'
   local cur_win = vim.api.nvim_get_current_win()
   local cur_node = ts_utils.get_node_at_cursor(cur_win, true)
@@ -9,9 +33,10 @@ function M.print_type()
     return
   end
   print("Node type: " .. cur_node:type())
+  return cur_node:type()
 end
 
-function M.detect_global_node()
+function MTREE.detect_global_node()
   local ts_utils = require 'nvim-treesitter.ts_utils'
   local cur_win = vim.api.nvim_get_current_win()
   local cur_node = ts_utils.get_node_at_cursor(cur_win, true)
@@ -26,7 +51,7 @@ function M.detect_global_node()
   return root:type()
 end
 
-function M.move_to_next_non_empty_line()
+function MTREE.move_to_next_non_empty_line()
   local ts_utils = require 'nvim-treesitter.ts_utils'
   -- Search for the next non-empty line
   local line_num = vim.fn.search("[^;]\\S", "W")
@@ -46,14 +71,14 @@ function M.move_to_next_non_empty_line()
     return
   end
 
-  while node:type() == 'comment' or node:type() == 'block_comment' or node:type() == 'line_comment' or node:type() == M.detect_global_node() do
+  while node:type() == 'comment' or node:type() == 'block_comment' or node:type() == 'line_comment' or node:type() == MTREE.detect_global_node() do
     vim.api.nvim_win_set_cursor(0, { line_num + 1, 0 })
-    M.move_to_next_non_empty_line()
+    MTREE.move_to_next_non_empty_line()
     node = ts_utils.get_node_at_cursor()
   end
 end
 
-function M.vselect_node(node)
+function MTREE.vselect_node(node)
   local ts_utils = require 'nvim-treesitter.ts_utils'
   local cur_buf = vim.api.nvim_get_current_buf()
   ts_utils.update_selection(cur_buf, node, "V")
@@ -69,12 +94,12 @@ local function is_in_list(list, value)
 end
 
 
-function M.select_until_global(global_nodes)
+function MTREE.select_until_global(global_nodes)
   local ts_utils = require 'nvim-treesitter.ts_utils'
-  local root_node = M.detect_global_node()
+  local root_node = MTREE.detect_global_node()
   if not global_nodes then
     print("No global nodes provided")
-    global_nodes = { root_node }
+    global_nodes = { }-- { root_node }
   end
 
   local node = ts_utils.get_node_at_cursor()
@@ -93,36 +118,36 @@ function M.select_until_global(global_nodes)
     parent = node:parent()
   end
 
-  M.vselect_node(node)
+  MTREE.vselect_node(node)
   -- Return the node for possible further use
   return node
 end
 
-function M.slime_send_region()
+function MTREE.slime_send_region()
   local keys = ":<C-u>call slime#send_op(visualmode(), 1)<CR>"
   local mode = "x"
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, true, true), mode, true)
   return
 end
 
-function M.send_repl(global_nodes)
+function MTREE.send_repl(global_nodes)
   local ts_utils = require 'nvim-treesitter.ts_utils'
   local cur_win = vim.api.nvim_get_current_win()
   local cur_node = ts_utils.get_node_at_cursor(cur_win, true)
   if not cur_node then
-    M.move_to_next_non_empty_line()
+    MTREE.move_to_next_non_empty_line()
   else
     local cur_type = cur_node:type()
     if cur_type == 'comment' or cur_type == 'block_comment' or cur_type == 'line_comment' or is_in_list(global_nodes, cur_type) then
-      M.move_to_next_non_empty_line()
+      MTREE.move_to_next_non_empty_line()
     end
   end
 
-  local sel_node = M.select_until_global(global_nodes)
+  local sel_node = MTREE.select_until_global(global_nodes)
   -- Send the selected text to the terminal using vim-slime
-  M.slime_send_region()
+  MTREE.slime_send_region()
   ts_utils.goto_node(sel_node, true)
-  M.move_to_next_non_empty_line()
+  MTREE.move_to_next_non_empty_line()
 end
 
-return M
+return MTREE

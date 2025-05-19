@@ -1,6 +1,6 @@
-M = {}
+local MMINI = {}
 local mini = require('mini.starter')
-M.footer_n_seconds = (function()
+MMINI.footer_n_seconds = (function()
   local timer = vim.loop.new_timer()
   local n_seconds = 0
   timer:start(0, 1000, vim.schedule_wrap(function()
@@ -17,7 +17,7 @@ M.footer_n_seconds = (function()
   end
 end)()
 
-M.footer_text = (function() return [[
+MMINI.footer_text = (function() return [[
        _      _____       _             ____  _   _                 _           
       (_)    /  __ \     | |           / / / | \ | |               (_)          
  _ __  ___  _| /  \/ __ _| |_ ___     / / /  |  \| | ___  _____   ___ _ __ ___  
@@ -32,7 +32,7 @@ end
 -- for mini.starter Neovim dashboard, with file path appended to name.
 -- Accepts a table of target filetypes (e.g., {"lua", "python", "markdown"})
 -- or a single filetype string (e.g., "lua").
-function M.get_recent_files_by_ft_or_ext(target_filetypes_input)
+function MMINI.get_recent_files_by_ft_or_ext(target_filetypes_input)
   -- Ensure target_filetypes is a table
   local target_filetypes_list
   if type(target_filetypes_input) == "string" then
@@ -148,4 +148,4 @@ function M.get_recent_files_by_ft_or_ext(target_filetypes_input)
   return result_items
 end
 
-return M
+return MMINI

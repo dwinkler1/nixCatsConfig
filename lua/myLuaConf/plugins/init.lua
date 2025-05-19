@@ -155,8 +155,8 @@ if nixCats 'general.extra' then
   })
   vim.keymap.set('n', "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
   vim.keymap.set('n', "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffer" })
-  vim.keymap.set('n', "<leader>tt", function() Snacks.terminal.get() end, { desc = "Open terminal" })
-  vim.keymap.set('n', "<leader>to", function() Snacks.terminal.open() end, { desc = "Open new terminal" })
+  -- vim.keymap.set('n', "<leader>tt", function() Snacks.terminal.get() end, { desc = "Open terminal" })
+  -- vim.keymap.set('n', "<leader>to", function() Snacks.terminal.open() end, { desc = "Open new terminal" })
   vim.keymap.set('n', "<leader>tg", function() Snacks.terminal.toggle() end, { desc = "Toggle terminal" })
   --vim.keymap.set('n', "<leader>e", function() Snacks.explorer() end, { desc = "File Explorer" })
   vim.keymap.set('n', "<leader>,", function() Snacks.picker.buffers() end, { desc = "Buffer Explorer" })
@@ -193,6 +193,14 @@ if nixCats 'general.extra' then
   vim.keymap.set("n", "<leader>zp", "<Cmd>ZkNew { group = 'projects' }<CR>", { desc = "New Project Note" } )
   vim.keymap.set("n", "<leader>zl", "<Cmd>ZkLinks<CR>", {desc = "Links"})
   vim.keymap.set("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", {desc = "Backlinks"})
+  -- terminal setup
+  local term_lib = require('myLuaConf.plugins.terminal_lib')
+  vim.keymap.set("n", "<leader>tc", function() term_lib.open_clickhouse_client() end, { desc = "Open Clickhouse client" })
+  vim.keymap.set("n", "<leader>tl", function() term_lib.open_clickhouse_local() end, { desc = "Open Clickhouse local" })
+  vim.keymap.set("n", "<leader>tj", function() term_lib.open_julia() end, { desc = "Open Julia" })
+  vim.keymap.set("n", "<leader>td", function() term_lib.open_duckdb() end, { desc = "Open DuckDB" })
+  vim.keymap.set("n", "<leader>tx", function() term_lib.open_in_terminal() end, { desc = "Terminal Command" })
+  vim.keymap.set("n", "<leader>tt", function() term_lib.open_in_terminal('') end, { desc = "Terminal" })
 end
 
 require('lze').load {
@@ -222,7 +230,7 @@ require('lze').load {
       vim.g.slime_bracketed_paste = true
       vim.g.slime_input_pid = true
       vim.g.slime_suggest_default = true
-      vim.g.slime_menu_config = true
+      vim.g.slime_menu_config = false
       vim.g.slime_neovim_ignore_unlisted = false
       vim.keymap.set("v", "<localleader><localleader>", "<Plug>SlimeRegionSend", { noremap = true })
       vim.keymap.set("n", "<localleader><localleader>", "<Plug>SlimeLineSend", { noremap = true })
@@ -268,6 +276,7 @@ require('lze').load {
       vim.keymap.set('n', "<leader>ml", function() pickers.buf_lines() end, { desc = "Mini Lines Explorer" })
       vim.keymap.set('n', "<leader>mm", function() pickers.marks() end, { desc = "Mini Marks Explorer" })
       vim.keymap.set('n', "<leader>mt", function() pickers.treesitter() end, { desc = "Mini Treesitter Explorer" })
+      vim.keymap.set('n', "<leader>st", function() pickers.treesitter() end, { desc = "Mini Treesitter Explorer" })
       vim.keymap.set('n', "<leader>mv", function() pickers.visit_paths() end, { desc = "Mini Visits Explorer" })
       vim.keymap.set('n', "<leader>sls", function() pickers.lsp({ scope = 'document_symbol' }) end,
         { desc = "Search LSP [s]ymbols" })

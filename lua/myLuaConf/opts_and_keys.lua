@@ -103,6 +103,7 @@ vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = 'delete buffer' }
 vim.keymap.set("n", "<leader>bq", "<cmd>qall<CR>", { desc = 'Quit all' })
 vim.keymap.set("n", "<leader>bb", "<cmd>b#<CR>", { desc = 'Last buffer' })
 
+vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = 'Exit terminal mode' })
 -- see help sticky keys on windows
 vim.cmd([[command! W w]])
 vim.cmd([[command! Wq wq]])
