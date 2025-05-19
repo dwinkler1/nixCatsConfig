@@ -5,6 +5,7 @@ vim.g.omni_sql_default_compl_type = 'syntax'
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
+vim.cmd("filetype plugin on")
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`

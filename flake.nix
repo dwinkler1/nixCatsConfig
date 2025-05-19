@@ -163,6 +163,10 @@
                 data_table
               ];
             })
+            pkgs.julia-lts
+            (pkgs.python3.withPackages(ps: with ps; [
+              ipython
+            ]))
           ];
         notes = with pkgs; [
           zk
@@ -257,6 +261,9 @@
         ];
         format = with pkgs.vimPlugins; [
           conform-nvim
+        ];
+        julia = with pkgs.vimPlugins; [
+          julia-vim
         ];
         markdown = with pkgs.vimPlugins; [
           markdown-preview-nvim
@@ -466,6 +473,7 @@
         categories = {
           notes = true;
           rdev = true;
+          julia = true;
           markdown = true;
           general = true;
           lint = true;

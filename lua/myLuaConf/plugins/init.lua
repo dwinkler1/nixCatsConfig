@@ -169,7 +169,7 @@ if nixCats 'general.extra' then
   vim.keymap.set('n', "<leader>.", function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer" })
 
   require('zk').setup({
-    picker = 'telescope',
+    picker = 'minipick',
     lsp = {
       -- `config` is passed to `vim.lsp.start_client(config)`
       config = {
@@ -187,15 +187,25 @@ if nixCats 'general.extra' then
     }
   })
   vim.keymap.set('n', "<leader>zo", '<cmd>ZkNotes<CR>', { desc = "Search Zk Note" })
-  vim.keymap.set('n', "<leader>zt", '<cmd>Zktags<cr>', { desc = "search zk tags" })
-  vim.keymap.set("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>")
-  vim.keymap.set("n", "<leader>zj", "<Cmd>ZkNew { group = 'journal' }<CR>")
+  vim.keymap.set('n', "<leader>zt", '<cmd>ZkTags<cr>', { desc = "search zk tags" })
+  vim.keymap.set("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", { desc = "New Zk Note"})
+  vim.keymap.set("n", "<leader>zj", "<Cmd>ZkNew { group = 'journal' }<CR>", { desc = "New Journal Entry" } )
+  vim.keymap.set("n", "<leader>zp", "<Cmd>ZkNew { group = 'projects' }<CR>", { desc = "New Project Note" } )
+  vim.keymap.set("n", "<leader>zl", "<Cmd>ZkLinks<CR>", {desc = "Links"})
+  vim.keymap.set("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", {desc = "Backlinks"})
 end
 
 require('lze').load {
   { import = 'myLuaConf.plugins.telescope' },
   { import = 'myLuaConf.plugins.treesitter' },
   { import = 'myLuaConf.plugins.completion' },
+  {
+    'julia-vim',
+    for_cat = 'julia',
+    event = 'DeferredUIEnter',
+    after = function()
+    end,
+  },
   {
     'vim-slime',
     for_cat = 'general.extra',
@@ -286,7 +296,9 @@ require('lze').load {
     event = 'DeferredUIEnter',
     after = function()
       require('mini.extra').setup()
-      require('mini.ai').setup()
+      require('mini.ai').setup({
+        search_method = 'cover',
+      })
     end,
   },
   {

@@ -9,11 +9,11 @@ return {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    load = function (name)
-        vim.cmd.packadd(name)
-        vim.cmd.packadd("nvim-treesitter-textobjects")
+    load = function(name)
+      vim.cmd.packadd(name)
+      vim.cmd.packadd("nvim-treesitter-textobjects")
     end,
-    after = function (plugin)
+    after = function(plugin)
       -- [[ Configure Treesitter ]]
       -- See `:help nvim-treesitter`
       require('nvim-treesitter.configs').setup {
@@ -39,14 +39,15 @@ return {
             lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
             keymaps = {
               -- You can use the capture groups defined in textobjects.scm
-              ['aa'] = '@parameter.outer',
-              ['ia'] = '@parameter.inner',
-              ['af'] = '@function.outer',
-              ['if'] = '@function.inner',
-              ['ac'] = '@class.outer',
-              ['ic'] = '@class.inner',
-              ['in'] = '@call.inner',
-              ['an'] = '@call.outer',
+              ['tp'] = '@parameter.outer',
+              ['tia'] = '@parameter.inner',
+              ['tf'] = '@function.outer',
+              ['tif'] = '@function.inner',
+              ['tt'] = '@class.outer',
+              ['tit'] = '@class.inner',
+              ['tic'] = '@call.inner',
+              ['tc'] = '@call.outer',
+              ['ta'] = '@assignment.outer'
             },
           },
           move = {

@@ -71,7 +71,7 @@ return {
         error_header = '> [!ERROR] Error',
         show_help = false, -- Show help message when opening the chat window
         window = {
-          layout = "vertical", --"float",
+          layout = "float",
           width = 0.45,
           height = 0.45,
           row = math.floor(vim.fn.winheight(0) * 0.55),

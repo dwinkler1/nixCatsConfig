@@ -9,7 +9,8 @@ end
 -- nixCats gives us the paths, which is faster than searching the rtp!
 local old_ft_fallback = require('lze').h.lsp.get_ft_fallback()
 require('lze').h.lsp.set_ft_fallback(function(name)
-  local lspcfg = nixCats.pawsible({ "allPlugins", "opt", "nvim-lspconfig" }) or nixCats.pawsible({ "allPlugins", "start", "nvim-lspconfig" })
+  local lspcfg = nixCats.pawsible({ "allPlugins", "opt", "nvim-lspconfig" }) or
+      nixCats.pawsible({ "allPlugins", "start", "nvim-lspconfig" })
   if lspcfg then
     local ok, cfg = pcall(dofile, lspcfg .. "/lsp/" .. name .. ".lua")
     if not ok then
@@ -76,8 +77,12 @@ require('lze').load {
     'julials',
     for_cat = "rdev",
     lsp = {
-      filetype = { 'julia' }
-    }
+      filetype = { 'julia' },
+    },
+    after = function()
+      local bnum = vim.api.nvim_get_current_buf()
+      require('myLuaConf.LSPs.on_attach')(_,bnum)
+    end
   },
   {
     -- name of the lsp
