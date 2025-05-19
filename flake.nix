@@ -164,9 +164,10 @@
               ];
             })
             pkgs.julia-lts
-            (pkgs.python3.withPackages(ps: with ps; [
-              ipython
-            ]))
+            (pkgs.python3.withPackages (ps:
+              with ps; [
+                ipython
+              ]))
           ];
         notes = with pkgs; [
           zk
@@ -451,6 +452,7 @@
         settings = {
           suffix-path = false;
           suffix-LD = false;
+          autowrapRuntimeDeps = "prefix";
           # The name of the package, and the default launch name,
           # and the name of the .desktop file, is `nixCats`,
           # or, whatever you named the package definition in the packageDefinitions set.
