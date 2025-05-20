@@ -190,9 +190,11 @@ if nixCats 'general.extra' then
   vim.keymap.set('n', "<leader>zt", '<cmd>ZkTags<cr>', { desc = "search zk tags" })
   vim.keymap.set("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", { desc = "New Zk Note"})
   vim.keymap.set("n", "<leader>zj", "<Cmd>ZkNew { group = 'journal' }<CR>", { desc = "New Journal Entry" } )
-  vim.keymap.set("n", "<leader>zp", "<Cmd>ZkNew { group = 'projects' }<CR>", { desc = "New Project Note" } )
+  vim.keymap.set("n", "<leader>zp", "<Cmd>ZkNew { title = vim.fn.input('Title: '), group = 'projects' }<CR>", { desc = "New Project Note" } )
   vim.keymap.set("n", "<leader>zl", "<Cmd>ZkLinks<CR>", {desc = "Links"})
   vim.keymap.set("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", {desc = "Backlinks"})
+  vim.keymap.set("n", "<leader>zi", "<Cmd>ZkIndex<CR>", {desc = "Index Notes"})
+
   -- terminal setup
   local term_lib = require('myLuaConf.plugins.terminal_lib')
   vim.keymap.set("n", "<leader>tc", function() term_lib.open_clickhouse_client() end, { desc = "Open Clickhouse client" })
