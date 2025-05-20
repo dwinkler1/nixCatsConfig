@@ -72,6 +72,17 @@ if nixCats 'general.extra' then
   )
 
   vim.g.loaded_netrwPlugin = 1
+  function _G.get_oil_winbar()
+    local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
+    local dir = require("oil").get_current_dir(bufnr)
+    if dir then
+      return vim.fn.fnamemodify(dir, ":~")
+    else
+      -- If there is no current directory (e.g. over ssh), just show the buffer name
+      return vim.api.nvim_buf_get_name(0)
+    end
+  end
+
   require('oil').setup {
     default_file_explorer = true,
     view_options = {
@@ -81,7 +92,8 @@ if nixCats 'general.extra' then
       'icon',
       'permissions',
       'size',
-      -- "mtime",
+      'mtime',
+      'birthtime'
     },
     keymaps = {
       ['g?'] = 'actions.show_help',
@@ -101,9 +113,12 @@ if nixCats 'general.extra' then
       ['g.'] = 'actions.toggle_hidden',
       ['g\\'] = 'actions.toggle_trash',
     },
+    win_options = {
+      winbar = "%!v:lua.get_oil_winbar()",
+    },
   }
   vim.keymap.set('n', '-', '<cmd>Oil<CR>', { noremap = true, desc = 'Open Parent Directory' })
-  vim.keymap.set('n', '<leader>-', '<cmd>Oil .<CR>', { noremap = true, desc = 'Open nvim root directory' })
+  --vim.keymap.set('n', '<leader>-', '<cmd>Oil .<CR>', { noremap = true, desc = 'Open nvim root directory' })
   require('r').setup(
     {
       -- Create a table with the options to be passed to setup()
@@ -188,12 +203,13 @@ if nixCats 'general.extra' then
   })
   vim.keymap.set('n', "<leader>zo", '<cmd>ZkNotes<CR>', { desc = "Search Zk Note" })
   vim.keymap.set('n', "<leader>zt", '<cmd>ZkTags<cr>', { desc = "search zk tags" })
-  vim.keymap.set("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", { desc = "New Zk Note"})
-  vim.keymap.set("n", "<leader>zj", "<Cmd>ZkNew { group = 'journal' }<CR>", { desc = "New Journal Entry" } )
-  vim.keymap.set("n", "<leader>zp", "<Cmd>ZkNew { title = vim.fn.input('Title: '), group = 'projects' }<CR>", { desc = "New Project Note" } )
-  vim.keymap.set("n", "<leader>zl", "<Cmd>ZkLinks<CR>", {desc = "Links"})
-  vim.keymap.set("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", {desc = "Backlinks"})
-  vim.keymap.set("n", "<leader>zi", "<Cmd>ZkIndex<CR>", {desc = "Index Notes"})
+  vim.keymap.set("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", { desc = "New Zk Note" })
+  vim.keymap.set("n", "<leader>zj", "<Cmd>ZkNew { group = 'journal' }<CR>", { desc = "New Journal Entry" })
+  vim.keymap.set("n", "<leader>zp", "<Cmd>ZkNew { title = vim.fn.input('Title: '), group = 'projects' }<CR>",
+    { desc = "New Project Note" })
+  vim.keymap.set("n", "<leader>zl", "<Cmd>ZkLinks<CR>", { desc = "Links" })
+  vim.keymap.set("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", { desc = "Backlinks" })
+  vim.keymap.set("n", "<leader>zi", "<Cmd>ZkIndex<CR>", { desc = "Index Notes" })
 
   -- terminal setup
   local term_lib = require('myLuaConf.plugins.terminal_lib')
@@ -209,6 +225,33 @@ require('lze').load {
   { import = 'myLuaConf.plugins.telescope' },
   { import = 'myLuaConf.plugins.treesitter' },
   { import = 'myLuaConf.plugins.completion' },
+  {
+    'yazi',
+    for_cat = 'general.always',
+    event = 'DeferredUIEnter',
+    keys = {
+      -- 👇 in this section, choose your own keymappings!
+      {
+        "<leader>-",
+        mode = { "n", "v" },
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
+      },
+      {
+        -- Open in the current working directory
+        "<leader>cw",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Open the file manager in nvim's working directory",
+      },
+      {
+        "<c-up>",
+        "<cmd>Yazi toggle<cr>",
+        desc = "Resume the last yazi session",
+      },
+    },
+    after = function()
+    end,
+  },
   {
     'julia-vim',
     for_cat = 'julia',

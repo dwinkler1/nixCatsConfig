@@ -94,11 +94,11 @@ function MTERM.open_in_terminal(cmd)
 end
 
 function MTERM.open_clickhouse_client()
-  MTERM.open_in_terminal("clickhouse client")
+  MTERM.open_in_terminal("clickhouse client -m")
 end
 
 function MTERM.open_clickhouse_local()
-  MTERM.open_in_terminal("clickhouse local")
+  MTERM.open_in_terminal("clickhouse local -m")
 end
 
 function MTERM.open_duckdb()

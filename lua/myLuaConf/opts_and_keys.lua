@@ -149,3 +149,14 @@ vim.keymap.set("n", "<leader>wo", "<C-W>o", { desc = "Delete Other Windows", rem
 
 vim.keymap.set({"n", "v"}, "gs", "<Plug>(leap)", { desc = "Char Search" })
 vim.keymap.set("n", "gS", "<Plug>(leap-from-window)", { desc = "Char Search" })
+
+if vim.g.neovide then
+  vim.o.guifont = "Hack Nerd Font,JetBrainsMono Nerd Font:h13"
+  vim.g.neovide_cursor_smooth_blink = true
+  vim.g.neovide_cursor_animation_length = 0
+  vim.keymap.set("n", "<leader>ne", "<cmd>NeovideReload<CR>", { desc = "Reload Neovide" })
+  vim.keymap.set("n", "<leader>nt", "<cmd>NeovideToggleTransparency<CR>", { desc = "Toggle Neovide Transparency" })
+  vim.keymap.set("n", "<leader>ns", "<cmd>NeovideToggleSmoothScrolling<CR>", { desc = "Toggle Neovide Smooth Scrolling" })
+  vim.keymap.set("n", "<leader>nf", "<cmd>NeovideFullscreen<CR>", { desc = "Toggle Neovide Fullscreen" })
+end
+

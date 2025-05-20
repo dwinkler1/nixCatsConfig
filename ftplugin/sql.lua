@@ -1,7 +1,13 @@
 local ts_lib = require('myLuaConf.plugins.treesitter_lib')
 
-local global_nodes_sql = { 'program' }
+local global_nodes_sql = { 'program', 'cte' }
 
+
+
+vim.keymap.set({ 'n' }, '<localleader>;', function()
+    vim.api.nvim_call_function('slime#send', { ";\n" })
+  end,
+  { noremap = true, silent = true, desc = "SQL statment return", buffer = true })
 
 vim.keymap.set({ 'n' }, '<localleader>r', function()
     global_nodes_sql = ts_lib.set_global_nodes()
