@@ -226,7 +226,7 @@ require('lze').load {
   { import = 'myLuaConf.plugins.treesitter' },
   { import = 'myLuaConf.plugins.completion' },
   {
-    'yazi',
+    'Yazi',
     for_cat = 'general.always',
     event = 'DeferredUIEnter',
     keys = {
