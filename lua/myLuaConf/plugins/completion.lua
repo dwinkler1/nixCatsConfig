@@ -3,7 +3,6 @@ local load_w_after = function(name)
   vim.cmd.packadd(name)
   vim.cmd.packadd(name .. '/after')
 end
-
 return {
   {
     "cmp-cmdline",
@@ -219,6 +218,20 @@ return {
                     return require("colorful-menu").blink_components_highlight(ctx)
                   end,
                 },
+                kind_icon = {
+                  -- (optional) use highlights from mini.icons
+                  highlight = function(ctx)
+                    local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+                    return hl
+                  end,
+                },
+                kind = {
+                  -- (optional) use highlights from mini.icons
+                  highlight = function(ctx)
+                    local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+                    return hl
+                  end,
+                }
               },
             },
           },

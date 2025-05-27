@@ -284,7 +284,7 @@ require('lze').load {
   {
     'mini.icons',
     for_cat = 'general.extra',
-    dep_of = 'mini.pick',
+    dep_of = {'mini.pick', 'blink.cmp'},
     after = function()
       require('mini.icons').setup()
     end,
