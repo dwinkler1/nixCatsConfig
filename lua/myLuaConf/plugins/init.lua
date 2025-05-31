@@ -40,8 +40,12 @@ if nixCats 'general.extra' then
 
   local my_ministarter = require('myLuaConf.plugins.ministart')
   local recent_files_bytype = function()
-    return my_ministarter.get_recent_files_by_ft_or_ext({ 'r', 'sql', 'julia',
-      'python' })
+    return my_ministarter.get_recent_files_by_ft_or_ext({
+      'r',
+      'sql',
+      'julia',
+      'python'
+    })
   end
 
   local starter = require('mini.starter')
@@ -247,7 +251,11 @@ require('lze').load {
           }
         }
       })
+      vim.cmd([[cab cc CodeCompanion]])
       require('myLuaConf.plugins.cprogress'):init()
+      vim.keymap.set({ "n", "v" }, "<leader>aa", "<cmd>CodeCompanionActions<CR>", { desc = "Chat Action" })
+      vim.keymap.set({ "n", "v" }, "<leader>ac", "<cmd>CodeCompanionChat Toggle<CR>", { desc = "Chat Toggle" })
+      vim.keymap.set({ "n", "v" }, "<leader>an", "<cmd>CodeCompanionChat Add<CR>", { desc = "Chat New" })
     end,
   },
   {
@@ -341,13 +349,13 @@ require('lze').load {
       vim.ui.select = pick.ui_select
       local pickers = MiniExtra.pickers
       vim.keymap.set('n', "<leader>e", function() pickers.explorer() end, { desc = "File Explorer" })
-      vim.keymap.set('n', "<leader>me", function() pickers.git_hunks() end, { desc = "Mini Git Explorer" })
-      vim.keymap.set('n', "<leader>md", function() pickers.diagnostic() end, { desc = "Mini Diagnostics Explorer" })
-      vim.keymap.set('n', "<leader>ml", function() pickers.buf_lines() end, { desc = "Mini Lines Explorer" })
-      vim.keymap.set('n', "<leader>mm", function() pickers.marks() end, { desc = "Mini Marks Explorer" })
-      vim.keymap.set('n', "<leader>mt", function() pickers.treesitter() end, { desc = "Mini Treesitter Explorer" })
+      vim.keymap.set('n', "<leader>gl", function() pickers.git_hunks() end, { desc = "Diff List" })
+      vim.keymap.set('n', "<leader>dd", function() pickers.diagnostic() end, { desc = "Diagnostics" })
+      vim.keymap.set('n', "<leader>d/", function() pickers.buf_lines() end, { desc = "Fuzzy find" })
+      vim.keymap.set('n', "<leader>'", function() pickers.marks() end, { desc = "Search marks" })
+      vim.keymap.set('n', "<leader>dt", function() pickers.treesitter() end, { desc = "Treesitter Nodes" })
       vim.keymap.set('n', "<leader>st", function() pickers.treesitter() end, { desc = "Mini Treesitter Explorer" })
-      vim.keymap.set('n', "<leader>mv", function() pickers.visit_paths() end, { desc = "Mini Visits Explorer" })
+      vim.keymap.set('n', "<leader>sv", function() pickers.visit_paths() end, { desc = "Visits" })
       vim.keymap.set('n', "<leader>sls", function() pickers.lsp({ scope = 'document_symbol' }) end,
         { desc = "Search LSP [s]ymbols" })
       vim.keymap.set('n', "<leader>slw", function() pickers.lsp({ scope = 'workspace_symbol' }) end,
@@ -416,7 +424,7 @@ require('lze').load {
         mappings = {
           apply = '<leader>ga',
           reset = '<leader>gr',
-          textobject = '<leader>gt',
+          textobject = 'gh',
         },
       })
     end,
@@ -459,7 +467,7 @@ require('lze').load {
     'undotree',
     for_cat = 'general.extra',
     cmd = { 'UndotreeToggle', 'UndotreeHide', 'UndotreeShow', 'UndotreeFocus', 'UndotreePersistUndo' },
-    keys = { { '<leader>U', '<cmd>UndotreeToggle<CR>', mode = { 'n' }, desc = 'Undo Tree' } },
+    keys = { { '<leader>u', '<cmd>UndotreeToggle<CR>', mode = { 'n' }, desc = 'Undo Tree' } },
     before = function(_)
       vim.g.undotree_WindowLayout = 1
       vim.g.undotree_SplitWidth = 40
@@ -494,6 +502,7 @@ require('lze').load {
   {
     'fidget.nvim',
     for_cat = 'general.extra',
+    dep_of = 'codecompanion',
     event = 'DeferredUIEnter',
     -- keys = "",
     after = function()
@@ -663,26 +672,27 @@ require('lze').load {
     after = function()
       require('which-key').setup {}
       require('which-key').add {
-        { '<leader><leader>',  group = 'buffer commands' },
-        { '<leader><leader>_', hidden = true },
-        { '<leader>c',         group = '[c]ode' },
-        { '<leader>c_',        hidden = true },
-        { '<leader>d',         group = '[d]ocument' },
-        { '<leader>d_',        hidden = true },
-        { '<leader>g',         group = '[g]it' },
-        { '<leader>g_',        hidden = true },
-        { '<leader>m',         group = '[m]arkdown' },
-        { '<leader>m_',        hidden = true },
-        { '<leader>r',         group = '[r]ename' },
-        { '<leader>r_',        hidden = true },
-        { '<leader>s',         group = '[s]earch' },
-        { '<leader>s_',        hidden = true },
-        { '<leader>sl',        group = '[s]earch [l]sp' },
-        { '<leader>t',         group = '[t]oggles' },
-        { '<leader>t_',        hidden = true },
-        { '<leader>w',         group = '[w]orkspace' },
-        { '<leader>w_',        hidden = true },
-        { '<leader>z',         group = '[z]ettelkasten' }
+        { '<leader>b',  group = '[b]uffer' },
+        { '<leader>b_', hidden = true },
+        { '<leader>c',  group = '[c]ode' },
+        { '<leader>c_', hidden = true },
+        { '<leader>d',  group = '[d]ocument' },
+        { '<leader>d_', hidden = true },
+        { '<leader>g',  group = '[g]it' },
+        { '<leader>g_', hidden = true },
+        { '<leader>m',  group = '[m]arkdown' },
+        { '<leader>m_', hidden = true },
+        { '<leader>r',  group = '[r]ename' },
+        { '<leader>r_', hidden = true },
+        { '<leader>s',  group = '[s]earch' },
+        { '<leader>s_', hidden = true },
+        { '<leader>sl', group = '[s]earch [l]sp' },
+        { '<leader>t',  group = '[t]erminal' },
+        { '<leader>t_', hidden = true },
+        { '<leader>w',  group = '[w]orkspace' },
+        { '<leader>w_', hidden = true },
+        { '<leader>z',  group = '[z]ettelkasten' },
+        { "<leader>a",  group = "AI" },
       }
     end,
   },

@@ -80,10 +80,10 @@ return {
             enable = true,
             init_selection = '<c-space>',
             swap_next = {
-              ['<leader>a'] = '@parameter.inner',
+              ['<leader>x'] = '@parameter.inner',
             },
             swap_previous = {
-              ['<leader>A'] = '@parameter.inner',
+              ['<leader>X'] = '@parameter.inner',
             },
           },
         },

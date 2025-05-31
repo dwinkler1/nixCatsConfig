@@ -148,6 +148,10 @@
         format = with pkgs; [
           alejandra
         ];
+        markdown = with pkgs;[
+          marksman
+          python313Packages.pylatexenc
+        ];
         neonixdev = {
           # also you can do this.
           inherit (pkgs) nix-doc lua-language-server nixd;

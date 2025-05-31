@@ -8,8 +8,9 @@
 | (i) \<C-e\> | close auto-completion |
 | (n) \<leader\>sk | search keymaps |
 | (n) \<leader\>sh | search help |
-| (n) \<leader\>U | Undo-tree |
+| (n) \<leader\>u | Undo-tree |
 | (n) \<leader\>su | Search Undo-tree (Snacks) |
+
 
 ## Surround
 
@@ -41,6 +42,7 @@ Note: 's' is set to \<Nop\> when `mini.surround` is loaded use `cl`
 | \<leader\>su | Search Undo-tree (Snacks) |
 | \<leader\>ds | search document symbols (lsp) |
 | \<leader\>ws | search workspace symbols (lsb) |
+
 
 ## Within Buffer Movement
 

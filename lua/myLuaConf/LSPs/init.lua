@@ -81,8 +81,15 @@ require('lze').load {
     },
     after = function()
       local bnum = vim.api.nvim_get_current_buf()
-      require('myLuaConf.LSPs.on_attach')(_,bnum)
+      require('myLuaConf.LSPs.on_attach')(_, bnum)
     end
+  },
+  {
+    'marksman',
+    for_cat = "markdown",
+    lsp = {
+      filetype = { 'markdown', 'quarto', 'codecompanion' },
+    }
   },
   {
     -- name of the lsp
