@@ -54,6 +54,14 @@ return {
     end,
   },
   {
+    "codecompanion",
+    for_cat = "general.always",
+    event = "DeferredUIEnter",
+    after = function()
+      require('codecompanion').setup()
+    end
+  },
+  {
     "CopilotChat",
     for_cat = "general.blink",
     event = "DeferredUIEnter",

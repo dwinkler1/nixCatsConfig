@@ -325,6 +325,10 @@
                   plugin = CopilotChat-nvim;
                   name = "CopilotChat";
                 }
+                { 
+                  plugin = codecompanion-nvim;
+                  name = "codecompanion";
+                }
                 {
                   plugin = yazi-nvim;
                   name = "Yazi";
