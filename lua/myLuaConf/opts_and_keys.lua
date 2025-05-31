@@ -7,11 +7,14 @@ vim.g.omni_sql_default_compl_type = 'syntax'
 -- NOTE: You can change these options as you wish!
 vim.cmd("filetype plugin on")
 
+vim.treesitter.language.register('markdown', 'codecompanion')
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
 -- Set highlight on search
 vim.opt.hlsearch = true

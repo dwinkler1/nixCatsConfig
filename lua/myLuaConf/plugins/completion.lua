@@ -54,14 +54,6 @@ return {
     end,
   },
   {
-    "codecompanion",
-    for_cat = "general.always",
-    event = "DeferredUIEnter",
-    after = function()
-      require('codecompanion').setup()
-    end
-  },
-  {
     "CopilotChat",
     for_cat = "general.blink",
     event = "DeferredUIEnter",
@@ -254,7 +246,7 @@ return {
           preset = 'luasnip',
         },
         sources = {
-          default = { 'lsp', 'path', 'snippets', 'buffer', 'omni', 'copilot' },
+          default = { 'lsp', 'path', 'snippets', 'buffer', 'omni', 'copilot', 'codecompanion' },
           providers = {
             path = {
               score_offset = 50,
@@ -279,6 +271,12 @@ return {
               score_offset = 45,
               async = true,
             },
+            codecompanion = {
+              name = "CodeCompanion",
+              module = "codecompanion.providers.completion.blink",
+              score_offset = 45,
+              async = true,
+            }
           },
         },
       })

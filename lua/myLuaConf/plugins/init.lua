@@ -2,9 +2,6 @@ local colorschemeName = nixCats 'colorscheme'
 if not require('nixCatsUtils').isNixCats then
   colorschemeName = 'onedark'
 end
--- Could I lazy load on colorscheme with lze?
--- sure. But I was going to call vim.cmd.colorscheme() during startup anyway
--- this is just an example, feel free to do a better job!
 vim.cmd.colorscheme(colorschemeName)
 
 local ok, notify = pcall(require, 'notify')
@@ -21,7 +18,6 @@ if ok then
   end, { desc = 'dismiss notify popup and clear hlsearch' })
 end
 
--- NOTE: you can check if you included the category with the thing wherever you want.
 if nixCats 'general.extra' then
   -- I didnt want to bother with lazy loading this.
   -- I could put it in opt and put it in a spec anyway
@@ -41,8 +37,6 @@ if nixCats 'general.extra' then
   vim.keymap.set("n", "<leader>ww",
     function() MiniSessions.write(vim.fn.input('Session name:', get_current_directory_name())) end,
     { desc = "Write Session" })
-
-  -- mini.starter
 
   local my_ministarter = require('myLuaConf.plugins.ministart')
   local recent_files_bytype = function()
@@ -226,6 +220,37 @@ require('lze').load {
   { import = 'myLuaConf.plugins.treesitter' },
   { import = 'myLuaConf.plugins.completion' },
   {
+    'codecompanion',
+    for_cat = 'general.blink',
+    event = 'DeferredUIEnter',
+    after = function()
+      require("codecompanion").setup({ -- NOTE: you can check if you included the category with the thing wherever you want.
+        adapters = {
+          copilot = function()
+            return require("codecompanion.adapters").extend("copilot", {
+              schema = {
+                model = {
+                  default = "gemini-2.5-pro",
+                },
+              },
+            })
+          end,
+        },
+        display = {
+          chat = {
+            show_settings = true, -- Show settings in the chat window
+            window = {
+              layout = "vertical",
+              position = "right", -- Open the chat window in the lower right corner
+              width = 0.33,       -- Width of the chat window (1/3 of screen)
+            }
+          }
+        }
+      })
+      require('myLuaConf.plugins.cprogress'):init()
+    end,
+  },
+  {
     'Yazi',
     for_cat = 'general.always',
     event = 'DeferredUIEnter',
@@ -284,7 +309,7 @@ require('lze').load {
   {
     'mini.icons',
     for_cat = 'general.extra',
-    dep_of = {'mini.pick', 'blink.cmp'},
+    dep_of = { 'mini.pick', 'blink.cmp' },
     after = function()
       require('mini.icons').setup()
     end,
@@ -376,13 +401,38 @@ require('lze').load {
     end,
   },
   {
+    'mini.diff',
+    for_cat = 'general.extra',
+    event = 'DeferredUIEnter',
+    keys = {
+      { '<leader>go', function() require('mini.diff').toggle_overlay(0) end, desc = 'Toggle Mini Diff Overlay' },
+    },
+    after = function()
+      local diff = require("mini.diff")
+      diff.setup({
+        view = {
+          style = 'sign',
+        },
+        mappings = {
+          apply = '<leader>ga',
+          reset = '<leader>gr',
+          textobject = '<leader>gt',
+        },
+      })
+    end,
+  },
+  {
     'render-markdown',
     for_cat = 'general.extra',
     event = 'DeferredUIEnter',
-    ft = { 'markdown', 'quarto', 'copilot-chat' },
+    dep_of = { 'blink.cmp', 'copilot-chat', 'codecompanion' },
+    ft = { 'markdown', 'quarto', 'copilot-chat', 'codecompanion' },
     after = function()
       require('render-markdown').setup({
-        completions = { blink = { enabled = true } },
+        completions = {
+          blink = { enabled = true },
+        },
+        file_types = { 'markdown', 'quarto', 'copilot-chat', 'codecompanion' },
       })
     end,
   },
@@ -502,7 +552,7 @@ require('lze').load {
         tabline = {
           lualine_a = { 'buffers' },
           -- if you use lualine-lsp-progress, I have mine here instead of fidget
-          -- lualine_b = { 'lsp_progress', },
+          lualine_b = { 'lsp_progress', },
           lualine_z = { 'tabs' },
         },
       }
@@ -510,6 +560,7 @@ require('lze').load {
   },
   {
     'gitsigns.nvim',
+    enabled = false,
     for_cat = 'general.always',
     event = 'DeferredUIEnter',
     -- cmd = { "" },
