@@ -148,7 +148,7 @@
         format = with pkgs; [
           alejandra
         ];
-        markdown = with pkgs;[
+        markdown = with pkgs; [
           marksman
           python313Packages.pylatexenc
         ];

@@ -164,7 +164,8 @@ if nixCats 'general.extra' then
         { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 }, },
     },
     picker = { enabled = true },
-    explorer = { enabled = false, replace_netrw = false }
+    explorer = { enabled = false, replace_netrw = false },
+    toggle = { enabled = false }
   })
   vim.keymap.set('n', "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
   vim.keymap.set('n', "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffer" })
