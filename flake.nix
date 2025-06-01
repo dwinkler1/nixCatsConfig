@@ -177,6 +177,7 @@
                   ipython
                 ]
             ))
+            pkgs.python3Packages.python-lsp-server
           ];
         notes = with pkgs; [
           zk
@@ -374,6 +375,7 @@
         general = with pkgs; [
           # <- this would be included if any of the subcategories of general are
           libgit2
+          #pythonManylinuxPackages.manylinux1
         ];
       };
 

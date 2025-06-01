@@ -85,6 +85,13 @@ require('lze').load {
     end
   },
   {
+    'pylsp',
+    for_cat = "rdev",
+    lsp = {
+      filetype = { 'python', 'py' },
+    }
+  },
+  {
     'marksman',
     for_cat = "markdown",
     lsp = {
