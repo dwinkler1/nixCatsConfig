@@ -6,6 +6,7 @@ vim.g.omni_sql_default_compl_type = 'syntax'
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 vim.cmd("filetype plugin on")
+
 vim.treesitter.language.register('markdown', 'codecompanion')
 vim.diagnostic.config({
   virtual_lines = true,
