@@ -206,6 +206,9 @@ if nixCats 'general.extra' then
   vim.keymap.set("n", "<leader>zj", "<Cmd>ZkNew { group = 'journal' }<CR>", { desc = "New Journal Entry" })
   vim.keymap.set("n", "<leader>zp", "<Cmd>ZkNew { title = vim.fn.input('Title: '), group = 'projects' }<CR>",
     { desc = "New Project Note" })
+  vim.keymap.set("n", "<leader>zr",
+    "<Cmd>ZkNew { group = 'literature', extra = {author = vim.fn.input('Author: '), year = vim.fn.input('Year: '), title = vim.fn.input('Title: ') } }<CR>",
+    { desc = "New literature note" })
   vim.keymap.set("n", "<leader>zl", "<Cmd>ZkLinks<CR>", { desc = "Links" })
   vim.keymap.set("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", { desc = "Backlinks" })
   vim.keymap.set("n", "<leader>zi", "<Cmd>ZkIndex<CR>", { desc = "Index Notes" })
