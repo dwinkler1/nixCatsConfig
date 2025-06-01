@@ -177,7 +177,7 @@
                   ipython
                 ]
             ))
-            pkgs.python3Packages.python-lsp-server
+            pkgs.pyright
           ];
         notes = with pkgs; [
           zk

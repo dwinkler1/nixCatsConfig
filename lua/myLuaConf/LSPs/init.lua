@@ -85,10 +85,10 @@ require('lze').load {
     end
   },
   {
-    'pylsp',
-    for_cat = "rdev",
+    'pyright',
+    for_cat = {"rdev", "pydev"},
     lsp = {
-      filetype = { 'python', 'py' },
+      filetype = { 'python' },
     }
   },
   {
