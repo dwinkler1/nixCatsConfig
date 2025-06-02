@@ -9,7 +9,7 @@ require('lze').load {
       { "<leader>df", desc = "[d]ocument [f]ormat" },
     },
     -- colorscheme = "",
-    after = function (plugin)
+    after = function(plugin)
       local conform = require("conform")
 
       conform.setup({
@@ -24,6 +24,7 @@ require('lze').load {
           -- Use a sub-list to run only the first available formatter
           -- javascript = { { "prettierd", "prettier" } },
           nix = { "alejandra" },
+          r = { 'styler' },
         },
       })
 

@@ -151,6 +151,7 @@ if nixCats 'general.extra' then
           })
         end,
       },
+      pdfviewer = "zathura",
     }
   )
   require("snacks").setup({
@@ -292,9 +293,46 @@ require('lze').load {
   {
     'julia-vim',
     for_cat = 'julia',
+    ft = { 'julia', 'jl' },
     event = 'DeferredUIEnter',
     after = function()
     end,
+  },
+  {
+    'otter',
+    for_cat = 'quarto',
+    event = 'DeferredUIEnter',
+    ft = { 'quarto' },
+    dep_of = { 'quarto-nvim', 'markdown-preview.nvim' },
+    after = function()
+      local otter = require('otter')
+      otter.setup({
+        lsp = {
+          diagnostic_update_events = { 'BufWritePost', 'InsertLeave' },
+        },
+        buffers = {
+          write_to_disk = true,
+        },
+      })
+    end
+  },
+  {
+    'quarto-nvim',
+    for_cat = 'quarto',
+    event = 'DeferredUIEnter',
+    ft = { 'qmd', 'quarto' },
+    after = function()
+      require('quarto').setup({
+        lspFeatures = {
+          enabled = true,
+          chunks = 'curly',
+        },
+        codeRunner = {
+          enabled = true,
+          default_method = 'slime',
+        },
+      })
+    end
   },
   {
     'vim-slime',

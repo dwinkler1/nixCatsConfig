@@ -4,6 +4,7 @@ return {
   {
     "nvim-treesitter",
     for_cat = 'general.treesitter',
+    dep_of = { 'otter' },
     -- cmd = { "" },
     event = "DeferredUIEnter",
     -- ft = "",

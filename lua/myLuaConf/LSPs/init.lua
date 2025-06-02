@@ -25,6 +25,7 @@ require('lze').load {
   {
     "nvim-lspconfig",
     for_cat = "general.core",
+    dep_of = { "otter" },
     on_require = { "lspconfig" },
     -- NOTE: define a function for lsp,
     -- and it will run for all specs with type(plugin.lsp) == table
@@ -70,12 +71,12 @@ require('lze').load {
     'r_language_server',
     for_cat = "rdev",
     lsp = {
-      filetypes = { 'r', 'rmd', 'quarto' },
+      filetypes = { 'r' },
     },
   },
   {
     'julials',
-    for_cat = "rdev",
+    for_cat = "jldev",
     lsp = {
       filetype = { 'julia' },
     },
@@ -86,7 +87,7 @@ require('lze').load {
   },
   {
     'pyright',
-    for_cat = {"rdev", "pydev"},
+    for_cat = { "pydev" },
     lsp = {
       filetype = { 'python' },
     }

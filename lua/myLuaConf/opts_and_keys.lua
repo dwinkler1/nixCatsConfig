@@ -16,7 +16,11 @@ vim.diagnostic.config({
     severity = vim.diagnostic.severity.ERROR
   }
 })
-vim.keymap.set('n', "<leader>ld", function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end,
+vim.g.diagnostics_enabled_global = true
+vim.keymap.set('n', "<leader>ld", function()
+    vim.g.diagnostics_enabled_global = not vim.g.diagnostics_enabled_global
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+  end,
   { desc = "Toggle Diagnostics" })
 vim.api.nvim_create_autocmd("InsertEnter", {
   desc = "switch diagnostics off",
@@ -28,7 +32,10 @@ vim.api.nvim_create_autocmd("ModeChanged", {
   desc = "switch diagnostics on",
   pattern = "i:n",
   callback = function()
-    vim.diagnostic.enable(true)
+    if vim.g.diagnostics_enabled_global then
+      -- if diagnostics are enabled globally, enable them in insert mode
+      vim.diagnostic.enable(true)
+    end
   end,
 })
 -- Sets how neovim will display certain whitespace characters in the editor.
