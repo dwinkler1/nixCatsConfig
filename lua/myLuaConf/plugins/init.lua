@@ -469,7 +469,7 @@ require('lze').load {
         mappings = {
           apply = '<leader>ga',
           reset = '<leader>gr',
-          textobject = 'h',
+          textobject = 'o',
         },
       })
     end,

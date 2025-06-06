@@ -16,10 +16,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1748792178,
+        "lastModified": 1749111037,
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5929de975bcf4c7c8d8b5ca65c8cd9ef9e44523e",
+        "rev": "ec62ae342c340d24289735e31eb9155261cd5fe7",
         "type": "github"
       },
       "original": {
@@ -32,10 +32,10 @@
     "plugins-r": {
       "flake": false,
       "locked": {
-        "lastModified": 1748371931,
+        "lastModified": 1749130465,
         "owner": "R-nvim",
         "repo": "R.nvim",
-        "rev": "382858fcf23aabbf47ff06279baf69d52260b939",
+        "rev": "65f772c012240bc1a1706da11049d2c9801275dc",
         "type": "github"
       },
       "original": {
