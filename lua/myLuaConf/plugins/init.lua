@@ -121,8 +121,9 @@ if nixCats 'general.extra' then
     {
       -- Create a table with the options to be passed to setup()
       R_args = { "--quiet", "--no-save" },
-      rconsole_width = 120,
-      rconsole_height = 25,
+      rconsole_width = 0,
+      rconsole_height = 20,
+      nvimpager = "split_v",
       hook = {
         on_filetype = function()
           -- This function will be called at the FileType event
@@ -414,8 +415,7 @@ require('lze').load {
     event = 'DeferredUIEnter',
     after = function()
       require('mini.surround').setup({
-        n_lines = 50,
-        vim.keymap.set({ "x", "n" }, "s", "<Nop>", { noremap = true })
+        n_lines = 500,
       })
     end,
   },
@@ -439,14 +439,17 @@ require('lze').load {
     end,
   },
   {
-    'mini.jump2d',
+    'flash',
     for_cat = 'general.extra',
-    event = 'DeferredUIEnter',
+    event = 'BufEnter',
+    keys = {
+      { "s", function() require("flash").jump() end,              mode = { "n", "x", "o" }, desc = "Flash" },
+      { "S", function() require("flash").treesitter() end,        mode = { "n", "x", "o" }, desc = "Flash Treesitter" },
+      { "r", function() require("flash").remote() end,            mode = "o",               desc = "Remote Flash" },
+      { "R", function() require("flash").treesitter_search() end, mode = { "o", "x" },      desc = "Treesitter Search" },
+    },
     after = function()
-      require('mini.jump2d').setup({
-        mappings = {
-          start_jumping = '<S-CR>',
-        },
+      require("flash").setup({
       })
     end,
   },
@@ -466,7 +469,7 @@ require('lze').load {
         mappings = {
           apply = '<leader>ga',
           reset = '<leader>gr',
-          textobject = 'gh',
+          textobject = 'h',
         },
       })
     end,
@@ -668,7 +671,6 @@ require('lze').load {
           end, { desc = 'reset git hunk' })
           -- normal mode
           map('n', '<leader>gs', gs.stage_hunk, { desc = 'git stage hunk' })
-          map('n', '<leader>gr', gs.reset_hunk, { desc = 'git reset hunk' })
           map('n', '<leader>gS', gs.stage_buffer, { desc = 'git Stage buffer' })
           map('n', '<leader>gu', gs.undo_stage_hunk, { desc = 'undo stage hunk' })
           map('n', '<leader>gR', gs.reset_buffer, { desc = 'git Reset buffer' })

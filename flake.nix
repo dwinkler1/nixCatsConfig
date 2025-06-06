@@ -357,8 +357,8 @@
               name = "mini.pairs";
             }
             {
-              plugin = mini-jump2d;
-              name = "mini.jump2d";
+              plugin = flash-nvim;
+              name = "flash";
             }
             vim-slime
             lazygit-nvim

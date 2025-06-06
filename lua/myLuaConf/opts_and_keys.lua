@@ -6,7 +6,6 @@ vim.g.omni_sql_default_compl_type = 'syntax'
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 vim.cmd("filetype plugin on")
-
 vim.treesitter.language.register('markdown', 'codecompanion')
 vim.diagnostic.config({
   virtual_lines = true,
@@ -22,14 +21,17 @@ vim.keymap.set('n', "<leader>ld", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
   end,
   { desc = "Toggle Diagnostics" })
+local diagnostics_grp = vim.api.nvim_create_augroup('daniel-diagnostics-toggle', { clear = true })
 vim.api.nvim_create_autocmd("InsertEnter", {
   desc = "switch diagnostics off",
+  group = diagnostics_grp,
   callback = function()
     vim.diagnostic.enable(false)
   end
 })
 vim.api.nvim_create_autocmd("ModeChanged", {
   desc = "switch diagnostics on",
+  group = diagnostics_grp,
   pattern = "i:n",
   callback = function()
     if vim.g.diagnostics_enabled_global then
