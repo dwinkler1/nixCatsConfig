@@ -245,6 +245,7 @@
                 "onedark" = onedark-nvim;
                 "catppuccin" = catppuccin-nvim;
                 "catppuccin-mocha" = catppuccin-nvim;
+                "catppuccin-latte" = catppuccin-nvim;
                 "tokyonight" = tokyonight-nvim;
                 "tokyonight-day" = tokyonight-nvim;
               });
@@ -529,7 +530,7 @@
               format = true;
               neonixdev = true;
               test = {
-                subtest1 = true;
+                subtest1 = false;
               };
 
               # enabling this category will enable the go category,
@@ -542,7 +543,7 @@
               # you could also pass something else:
               # see :help nixCats
               themer = true;
-              colorscheme = "tokyonight";
+              colorscheme = "catppuccin-latte";
             };
             extra = {
               # to keep the categories table from being filled with non category things that you want to pass
