@@ -289,7 +289,6 @@
                 plugin = otter-nvim;
                 name = "otter";
               }
-              pkgs.neovimPlugins.cmp-pandoc-references
             ];
             markdown = with pkgs.vimPlugins; [
               markdown-preview-nvim
@@ -310,6 +309,7 @@
                   plugin = codecompanion-nvim;
                   name = "codecompanion";
                 }
+                pkgs.neovimPlugins.cmp-pandoc-references
               ];
               treesitter = with pkgs.vimPlugins; [
                 nvim-treesitter-textobjects
