@@ -122,7 +122,7 @@ if nixCats 'general.extra' then
       -- Create a table with the options to be passed to setup()
       R_args = { "--quiet", "--no-save" },
       rconsole_width = 0,
-      rconsole_height = 20,
+      rconsole_height = 10,
       nvimpager = "split_v",
       hook = {
         on_filetype = function()

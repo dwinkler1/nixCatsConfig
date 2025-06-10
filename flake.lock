@@ -29,6 +29,21 @@
         "type": "github"
       }
     },
+    "plugins-cmp-pandoc-references": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1743491695,
+        "owner": "jmbuhr",
+        "repo": "cmp-pandoc-references",
+        "rev": "130eae4f75029d6495808e0ea4b769fa1ce4c9ac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jmbuhr",
+        "repo": "cmp-pandoc-references",
+        "type": "github"
+      }
+    },
     "plugins-r": {
       "flake": false,
       "locked": {
@@ -60,6 +75,7 @@
       "inputs": {
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
+        "plugins-cmp-pandoc-references": "plugins-cmp-pandoc-references",
         "plugins-r": "plugins-r",
         "rixpkgs": "rixpkgs"
       }

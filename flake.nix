@@ -38,6 +38,10 @@
       url = "github:R-nvim/R.nvim";
       flake = false;
     };
+    "plugins-cmp-pandoc-references" = {
+      url = "github:jmbuhr/cmp-pandoc-references";
+      flake = false;
+    };
     # "plugins-hlargs" = {
     #   url = "github:m-demare/hlargs.nvim";
     #   flake = false;
@@ -285,6 +289,7 @@
                 plugin = otter-nvim;
                 name = "otter";
               }
+              pkgs.neovimPlugins.cmp-pandoc-references
             ];
             markdown = with pkgs.vimPlugins; [
               markdown-preview-nvim

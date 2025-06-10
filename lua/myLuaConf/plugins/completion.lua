@@ -276,7 +276,11 @@ return {
               module = "codecompanion.providers.completion.blink",
               score_offset = 45,
               async = true,
-            }
+            },
+            references = {
+              name = "pandoc_references",
+              module = "cmp-pandoc-references.blink",
+            },
           },
         },
       })
