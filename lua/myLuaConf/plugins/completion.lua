@@ -246,7 +246,7 @@ return {
           preset = 'luasnip',
         },
         sources = {
-          default = { 'lsp', 'path', 'snippets', 'buffer', 'omni', 'copilot', 'codecompanion' },
+          default = { 'pandoc_references', 'lsp', 'path', 'snippets', 'buffer', 'omni', 'copilot', 'codecompanion' },
           providers = {
             path = {
               score_offset = 50,
