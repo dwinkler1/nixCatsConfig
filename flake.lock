@@ -2,10 +2,10 @@
   "nodes": {
     "nixCats": {
       "locked": {
-        "lastModified": 1748760778,
+        "lastModified": 1749615682,
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "88cde33af841e2aa1ea0c83c4d9dcfefdde54fb3",
+        "rev": "c0148957e961100bff3fd213b8a4bc5f669f3028",
         "type": "github"
       },
       "original": {
@@ -16,10 +16,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1749213349,
+        "lastModified": 1749903597,
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a4ff0e3c64846abea89662bfbacf037ef4b34207",
+        "rev": "41da1e3ea8e23e094e5e3eeb1e6b830468a7399e",
         "type": "github"
       },
       "original": {
