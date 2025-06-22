@@ -2,10 +2,11 @@
   "nodes": {
     "nixCats": {
       "locked": {
-        "lastModified": 1749615682,
+        "lastModified": 1750385661,
+        "narHash": "sha256-JpIEf5IrOzMTjowkxB6kgh4AK3Dp9i/T9G4w2ZiKMgQ=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "c0148957e961100bff3fd213b8a4bc5f669f3028",
+        "rev": "04379fef2fbd4c9d8f4c9a6203cef135ab0b1acd",
         "type": "github"
       },
       "original": {
@@ -16,10 +17,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1749903597,
+        "lastModified": 1750386251,
+        "narHash": "sha256-1ovgdmuDYVo5OUC5NzdF+V4zx2uT8RtsgZahxidBTyw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "41da1e3ea8e23e094e5e3eeb1e6b830468a7399e",
+        "rev": "076e8c6678d8c54204abcb4b1b14c366835a58bb",
         "type": "github"
       },
       "original": {
@@ -33,6 +35,7 @@
       "flake": false,
       "locked": {
         "lastModified": 1743491695,
+        "narHash": "sha256-XsdneGNJzmRBggk8lz9JNDQYk7wbYfUAF2oZLXzFb9c=",
         "owner": "jmbuhr",
         "repo": "cmp-pandoc-references",
         "rev": "130eae4f75029d6495808e0ea4b769fa1ce4c9ac",
@@ -48,6 +51,7 @@
       "flake": false,
       "locked": {
         "lastModified": 1749130465,
+        "narHash": "sha256-yAXwfwCYlzIQofY0jstydflui+AhYY85JVVmnpOh+V0=",
         "owner": "R-nvim",
         "repo": "R.nvim",
         "rev": "65f772c012240bc1a1706da11049d2c9801275dc",
