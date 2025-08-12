@@ -2,10 +2,10 @@
   "nodes": {
     "nixCats": {
       "locked": {
-        "lastModified": 1753170780,
+        "lastModified": 1750385661,
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "e0c3fd5c218c808ce31e29caa91df43c65d7dfc6",
+        "rev": "04379fef2fbd4c9d8f4c9a6203cef135ab0b1acd",
         "type": "github"
       },
       "original": {
@@ -16,10 +16,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1754990257,
+        "lastModified": 1750386251,
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "372d9eeeafa5b15913201e2b92e8e539ac7c64d1",
+        "rev": "076e8c6678d8c54204abcb4b1b14c366835a58bb",
         "type": "github"
       },
       "original": {
@@ -44,28 +44,13 @@
         "type": "github"
       }
     },
-    "plugins-cmp-r": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1746709841,
-        "owner": "R-nvim",
-        "repo": "cmp-r",
-        "rev": "602f399c4efde01147cadfebcc884b7aa154f8b7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "R-nvim",
-        "repo": "cmp-r",
-        "type": "github"
-      }
-    },
     "plugins-r": {
       "flake": false,
       "locked": {
-        "lastModified": 1754740974,
+        "lastModified": 1749130465,
         "owner": "R-nvim",
         "repo": "R.nvim",
-        "rev": "a1aa07f35179328021c6ad7ca9093ef07df30095",
+        "rev": "65f772c012240bc1a1706da11049d2c9801275dc",
         "type": "github"
       },
       "original": {
@@ -91,7 +76,6 @@
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
         "plugins-cmp-pandoc-references": "plugins-cmp-pandoc-references",
-        "plugins-cmp-r": "plugins-cmp-r",
         "plugins-r": "plugins-r",
         "rixpkgs": "rixpkgs"
       }

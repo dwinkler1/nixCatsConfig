@@ -1,4 +1,5 @@
-final: prev: let
+final: prev:
+let
   reqPkgs = with prev.rpkgs.rPackages; [
     Hmisc
     broom
@@ -17,8 +18,8 @@ final: prev: let
       src = prev.rpkgs.fetchFromGitHub {
         owner = "R-nvim";
         repo = "R.nvim";
-        rev = "382858fcf23aabbf47ff06279baf69d52260b939";
-        sha256 = "sha256-j2rXXO7246Nh8U6XyX43nNTbrire9ta9Ono9Yr+Eh9M=";
+        rev = "65f772c012240bc1a1706da11049d2c9801275dc";
+        sha256 = "sha256-yAXwfwCYlzIQofY0jstydflui+AhYY85JVVmnpOh+V0="; # sha256-j2rXXO7246Nh8U6XyX43nNTbrire9ta9Ono9Yr+Eh9M=
       };
       sourceRoot = "source/nvimcom";
       buildInputs = with prev.rpkgs; [
@@ -26,11 +27,12 @@ final: prev: let
         stdenv.cc.cc
         gnumake
       ];
-      propagatedBuildInputs = [];
+      propagatedBuildInputs = [ ];
     })
   ];
-in {
-  quarto = prev.rpkgs.quarto.override {extraRPackages = reqPkgs;};
-  rWrapper = prev.rpkgs.rWrapper.override {packages = reqPkgs;};
-  radianWrapper = prev.rpkgs.radianWrapper.override {packages = reqPkgs;};
+in
+{
+  quarto = prev.rpkgs.quarto.override { extraRPackages = reqPkgs; };
+  rWrapper = prev.rpkgs.rWrapper.override { packages = reqPkgs; };
+  radianWrapper = prev.rpkgs.radianWrapper.override { packages = reqPkgs; };
 }
