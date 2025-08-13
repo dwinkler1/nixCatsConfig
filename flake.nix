@@ -1,14 +1,16 @@
 # Copyright (c) 2023 BirdeeHub
 # Licensed under the MIT license
-
 {
   description = "Daniel's NixCats";
 
   inputs = {
     # see :help nixCats.flake.inputs
+
+    # Nix inputs
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2025-04-29.tar.gz";
+
     # neovim plugs
     "plugins-r" = {
       url = "github:R-nvim/R.nvim";
@@ -25,7 +27,12 @@
   };
 
   # see :help nixCats.flake.outputs
-  outputs = { self, nixpkgs, nixCats, ... }@inputs: let
+  outputs = {
+    self,
+    nixpkgs,
+    nixCats,
+    ...
+  } @ inputs: let
     inherit (nixCats) utils;
     luaPath = ./.;
     forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
@@ -36,54 +43,66 @@
     };
 
     # see :help nixCats.flake.outputs.overlays
-    dependencyOverlays = /* (import ./overlays inputs) ++ */ [
-      # use `pkgs.neovimPlugins`, which is a set of our plugins.
-      (utils.standardPluginOverlay inputs)
-      # add any other flake overlays here.
-      ### R Packages
-      (final: prev: {
-            rpkgs = inputs.rixpkgs.legacyPackages.${prev.system};
-          })
-      (final: prev: let
-        reqPkgs = with prev.rpkgs.rPackages; [
-          Hmisc
-          arm
-          broom
-          car
-          data_table
-          janitor
-          languageserver
-          quarto
-          styler
-          tidyverse
-          (buildRPackage {
-            name = "nvimcom";
-            src = inputs.plugins-r;
-            sourceRoot = "source/nvimcom";
-            buildInputs = with prev.rpkgs; [
-              R
-              stdenv.cc.cc
-              gnumake
+    dependencyOverlays =
+      /*
+      (import ./overlays inputs) ++
+      */
+      [
+        # use `pkgs.neovimPlugins`, which is a set of our plugins.
+        (utils.standardPluginOverlay inputs)
+        # add any other flake overlays here.
+        ### R Packages
+        (final: prev: {
+          rpkgs = inputs.rixpkgs.legacyPackages.${prev.system};
+        })
+        (
+          final: prev: let
+            reqPkgs = with prev.rpkgs.rPackages; [
+              Hmisc
+              arm
+              broom
+              car
+              data_table
+              janitor
+              languageserver
+              quarto
+              styler
+              tidyverse
+              (buildRPackage {
+                name = "nvimcom";
+                src = inputs.plugins-r;
+                sourceRoot = "source/nvimcom";
+                buildInputs = with prev.rpkgs; [
+                  R
+                  stdenv.cc.cc
+                  gnumake
+                ];
+                propagatedBuildInputs = [];
+              })
             ];
-            propagatedBuildInputs = [];
-          })
-        ];
-        in {
-          quarto = prev.rpkgs.quarto.override {extraRPackages = reqPkgs;};
-          rWrapper = prev.rpkgs.rWrapper.override {packages = reqPkgs;};
-        }
-      )
+          in {
+            quarto = prev.rpkgs.quarto.override {extraRPackages = reqPkgs;};
+            rWrapper = prev.rpkgs.rWrapper.override {packages = reqPkgs;};
+          }
+        )
 
-      # (utils.fixSystemizedOverlay inputs.codeium.overlays
-      #   (system: inputs.codeium.overlays.${system}.default)
-      # )
-    ];
+        # (utils.fixSystemizedOverlay inputs.codeium.overlays
+        #   (system: inputs.codeium.overlays.${system}.default)
+        # )
+      ];
 
     # :help nixCats.flake.outputs.categories
     # :help nixCats.flake.outputs.categoryDefinitions.scheme
     # :help nixCats.flake.outputs.packageDefinitions
-    categoryDefinitions = { pkgs, settings, categories, extra, name, mkPlugin, ... }@packageDef: {
-
+    categoryDefinitions = {
+      pkgs,
+      settings,
+      categories,
+      extra,
+      name,
+      mkPlugin,
+      ...
+    } @ packageDef: {
       lspsAndRuntimeDeps = {
         external = with pkgs; [
           direnv
@@ -96,17 +115,21 @@
           jq
           just
           lazygit
+          lua51Packages.tiktoken_core
           man
           pandoc
+          perl
           pigz
           poppler
           rclone
           ripgrep
           rsync
+          ruby
           shfmt
           sqlfluff
           tldr
           wget
+          zathura
           zoxide
           zsh
         ];
@@ -120,7 +143,7 @@
           nix-doc
           nixd
         ];
-        lua = with pkgs;[
+        lua = with pkgs; [
           lua-language-server
         ];
         python = with pkgs; [
@@ -147,7 +170,7 @@
           plenary-nvim
           neogit
           {
-            plugin = mini-nvim; 
+            plugin = mini-nvim;
             name = "mini.nvim";
           }
         ];
@@ -181,11 +204,11 @@
       # not loaded automatically at startup.
       # use with packadd and an autocommand in config to achieve lazy loading
       optionalPlugins = {
-        gitPlugins = with pkgs.neovimPlugins; [ 
-          cmp-pandoc-references 
+        gitPlugins = with pkgs.neovimPlugins; [
+          cmp-pandoc-references
           cmp-r
-          ];
-        general = with pkgs.vimPlugins; [ ];
+        ];
+        general = with pkgs.vimPlugins; [];
         utils = with pkgs.vimPlugins; [
           blink-compat
           blink-copilot
@@ -201,7 +224,7 @@
           {
             plugin = codecompanion-nvim;
             name = "codecompanion";
-          } 
+          }
           {
             plugin = CopilotChat-nvim;
             name = "CopilotChat";
@@ -231,25 +254,29 @@
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
       extraWrapperArgs = {
         test = [
-          '' --set TESTVAR2 "It worked again!"''
+          ''--set TESTVAR2 "It worked again!"''
         ];
       };
 
       # in neovim: vim.g.python3_host_prog
       # or run from nvim terminal via :!<packagename>-python3
       python3.libraries = {
-        test = (_:[]);
+        test = _: [];
       };
       # populates $LUA_PATH and $LUA_CPATH
       extraLuaPackages = {
-        test = [ (_:[]) ];
+        test = [(_: [])];
       };
     };
 
     # This entire set is also passed to nixCats for querying within the lua.
     # see :help nixCats.flake.outputs.packageDefinitions
     packageDefinitions = {
-      n = {pkgs , name, ... }: {
+      n = {
+        pkgs,
+        name,
+        ...
+      }: {
         # they contain a settings set defined above
         # see :help nixCats.flake.outputs.settings
         settings = {
@@ -258,7 +285,7 @@
           wrapRc = true;
           autowrapRuntimeDeps = "prefix";
           # your alias may not conflict with your other packages.
-          aliases = [ "vim" ];
+          aliases = ["vim"];
           hosts = {
             python3.enable = true;
             g = {
@@ -286,69 +313,86 @@
           utils = true;
           test = false;
         };
-        
       };
     };
     defaultPackageName = "n";
   in
-  # see :help nixCats.flake.outputs.exports
-  forEachSystem (system: let
-    nixCatsBuilder = utils.baseBuilder luaPath {
-      inherit nixpkgs system dependencyOverlays extra_pkg_config;
-    } categoryDefinitions packageDefinitions;
-    defaultPackage = nixCatsBuilder defaultPackageName;
-    # this is just for using utils such as pkgs.mkShell
-    # The one used to build neovim is resolved inside the builder
-    # and is passed to our categoryDefinitions and packageDefinitions
-    pkgs = import nixpkgs { inherit system; };
-  in
-  {
-    # these outputs will be wrapped with ${system} by utils.eachSystem
+    # see :help nixCats.flake.outputs.exports
+    forEachSystem (system: let
+      nixCatsBuilder =
+        utils.baseBuilder luaPath {
+          inherit nixpkgs system dependencyOverlays extra_pkg_config;
+        }
+        categoryDefinitions
+        packageDefinitions;
+      defaultPackage = nixCatsBuilder defaultPackageName;
+      # this is just for using utils such as pkgs.mkShell
+      # The one used to build neovim is resolved inside the builder
+      # and is passed to our categoryDefinitions and packageDefinitions
+      pkgs = import nixpkgs {inherit system;};
+    in {
+      # these outputs will be wrapped with ${system} by utils.eachSystem
 
-    # this will make a package out of each of the packageDefinitions defined above
-    # and set the default package to the one passed in here.
-    packages = utils.mkAllWithDefault defaultPackage;
+      # this will make a package out of each of the packageDefinitions defined above
+      # and set the default package to the one passed in here.
+      packages = utils.mkAllWithDefault defaultPackage;
 
-    # choose your package for devShell
-    # and add whatever else you want in it.
-    devShells = {
-      default = pkgs.mkShell {
-        name = defaultPackageName;
-        packages = [ defaultPackage ];
-        inputsFrom = [ ];
-        shellHook = ''
-        '';
+      # choose your package for devShell
+      # and add whatever else you want in it.
+      devShells = {
+        default = pkgs.mkShell {
+          name = defaultPackageName;
+          packages = [defaultPackage];
+          inputsFrom = [];
+          shellHook = ''
+          '';
+        };
       };
-    };
+    })
+    // (let
+      # we also export a nixos module to allow reconfiguration from configuration.nix
+      nixosModule = utils.mkNixosModules {
+        moduleNamespace = [defaultPackageName];
+        inherit
+          defaultPackageName
+          dependencyOverlays
+          luaPath
+          categoryDefinitions
+          packageDefinitions
+          extra_pkg_config
+          nixpkgs
+          ;
+      };
+      # and the same for home manager
+      homeModule = utils.mkHomeModules {
+        moduleNamespace = [defaultPackageName];
+        inherit
+          defaultPackageName
+          dependencyOverlays
+          luaPath
+          categoryDefinitions
+          packageDefinitions
+          extra_pkg_config
+          nixpkgs
+          ;
+      };
+    in {
+      # these outputs will be NOT wrapped with ${system}
 
-  }) // (let
-    # we also export a nixos module to allow reconfiguration from configuration.nix
-    nixosModule = utils.mkNixosModules {
-      moduleNamespace = [ defaultPackageName ];
-      inherit defaultPackageName dependencyOverlays luaPath
-        categoryDefinitions packageDefinitions extra_pkg_config nixpkgs;
-    };
-    # and the same for home manager
-    homeModule = utils.mkHomeModules {
-      moduleNamespace = [ defaultPackageName ];
-      inherit defaultPackageName dependencyOverlays luaPath
-        categoryDefinitions packageDefinitions extra_pkg_config nixpkgs;
-    };
-  in {
+      # this will make an overlay out of each of the packageDefinitions defined above
+      # and set the default overlay to the one named here.
+      overlays =
+        utils.makeOverlays luaPath {
+          inherit nixpkgs dependencyOverlays extra_pkg_config;
+        }
+        categoryDefinitions
+        packageDefinitions
+        defaultPackageName;
 
-    # these outputs will be NOT wrapped with ${system}
+      nixosModules.default = nixosModule;
+      homeModules.default = homeModule;
 
-    # this will make an overlay out of each of the packageDefinitions defined above
-    # and set the default overlay to the one named here.
-    overlays = utils.makeOverlays luaPath {
-      inherit nixpkgs dependencyOverlays extra_pkg_config;
-    } categoryDefinitions packageDefinitions defaultPackageName;
-
-    nixosModules.default = nixosModule;
-    homeModules.default = homeModule;
-
-    inherit utils nixosModule homeModule;
-    inherit (utils) templates;
-  });
-
+      inherit utils nixosModule homeModule;
+      inherit (utils) templates;
+    });
 }

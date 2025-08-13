@@ -1,0 +1,43 @@
+local add = Config.add
+local now_if_args = Config.now_if_args
+local later = MiniDeps.later
+-- lua
+later(function()
+  add("luvit-meta")
+  add("lazydev.nvim")
+  require("lazydev").setup({
+    library = {
+      -- See the configuration section for more details
+      -- Load luvit types when the `vim.uv` word is found
+      "lua",
+      "mini.nvim",
+      { path = "luvit-meta/library", words = { "vim%.uv" } },
+      { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+    },
+  })
+end)
+
+-- Markdown
+now_if_args(function()
+  add("render-markdown.nvim")  
+  require('render-markdown').setup({
+    --    completions = { blink = { enabled = true } },
+    file_types = { 'markdown', 'quarto', 'rmd' },
+    link = {
+      wiki = {
+        body = function(ctx)
+          local diagnostics = vim.diagnostic.get(ctx.buf, {
+            lnum = ctx.row,
+            severity = vim.diagnostic.severity.HINT,
+          })
+          for _, diagnostic in ipairs(diagnostics) do
+            if diagnostic.source == 'marksman' then
+              return diagnostic.message
+            end
+          end
+          return nil
+        end,
+      },
+    },
+  })
+end)
