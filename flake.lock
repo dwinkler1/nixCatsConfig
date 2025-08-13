@@ -76,14 +76,14 @@
     },
     "rixpkgs": {
       "locked": {
-        "lastModified": 1746476429,
-        "narHash": "sha256-KHNAOy8ILpIlz5rtwxURpcVOqbWRMoT/rXRgpy1pyG8=",
+        "lastModified": 1754915244,
+        "narHash": "sha256-WtdFq/HbvAgq03AMhSAJW35go6R5bqhGNf2KBzXqH2U=",
         "type": "tarball",
-        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-04-29.tar.gz"
+        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-11.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-04-29.tar.gz"
+        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-11.tar.gz"
       }
     },
     "root": {

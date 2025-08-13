@@ -9,7 +9,7 @@
     # Nix inputs
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2025-04-29.tar.gz";
+    rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-11.tar.gz";
 
     # neovim plugs
     "plugins-r" = {
@@ -51,6 +51,7 @@
         # use `pkgs.neovimPlugins`, which is a set of our plugins.
         (utils.standardPluginOverlay inputs)
         # add any other flake overlays here.
+
         ### R Packages
         (final: prev: {
           rpkgs = inputs.rixpkgs.legacyPackages.${prev.system};
@@ -86,6 +87,24 @@
           }
         )
 
+        ### Python Packages
+        (
+          final: prev: let
+            reqPkgs = pyPackages:
+              with pyPackages; [
+                ipython
+                numpy
+                optuna
+                polars
+                requests
+                scikit-learn
+                statsmodels
+                xgboost
+              ];
+          in {
+            python = prev.python3.withPackages reqPkgs;
+          }
+        )
         # (utils.fixSystemizedOverlay inputs.codeium.overlays
         #   (system: inputs.codeium.overlays.${system}.default)
         # )
@@ -116,6 +135,7 @@
           just
           lazygit
           lua51Packages.tiktoken_core
+          lynx
           man
           pandoc
           perl
@@ -147,6 +167,7 @@
           lua-language-server
         ];
         python = with pkgs; [
+          python
           nodejs
           pyright
           uv

@@ -25,7 +25,7 @@ now(function()
   r.setup({
     -- Create a table with the options to be passed to setup()
     R_args = { "--quiet", "--no-save" },
-    auto_start = "always",
+    auto_start = "no",
     objbr_auto_start = false,
     objbr_place = 'console,below',
     rconsole_width = 120,
