@@ -267,6 +267,15 @@
       # this section is for environmentVariables that should be available
       # at RUN TIME for plugins. Will be available to path within neovim terminal
       environmentVariables = {
+        r = {
+          R_LIBS_USER = "./.Rlibs";
+        };
+        python = {
+          # Prevent uv from managing Python downloads
+          UV_PYTHON_DOWNLOADS = "never";
+          # Force uv to use nixpkgs Python interpreter
+          UV_PYTHON = pkgs.python.interpreter;
+        };
         test = {
           TESTVAR = "It worked!";
         };
