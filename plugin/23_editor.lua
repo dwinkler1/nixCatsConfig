@@ -1,6 +1,14 @@
 local later = MiniDeps.later
 local add = Config.add
 
+if not Config.isNixCats then
+  local m_add = MiniDeps.add
+
+  later(function()
+    m_add("stevearc/conform.nvim")
+  end)
+end
+
 -- Formatting
 later(function()
   add("conform.nvim")
@@ -28,7 +36,7 @@ later(function()
   })
 end)
 
-
+-- Edit
 later(function()
   require("mini.ai").setup({
     search_method = "cover",
@@ -128,7 +136,7 @@ later(function()
   end
   local yank_relpath = function()
     local path = (MiniFiles.get_fs_entry() or {}).path
-    local cwd = vim.fn.getcwd()
+    local cwd = vim.fn.getcwd() .. '/'
     local relpath = remove_string(cwd, path)
     if path == nil then
       return vim.notify("Cursor is not on valid entry")
@@ -268,6 +276,7 @@ later(function()
   require("mini.misc").setup({ make_global = { "put", "put_text", "stat_summary", "bench_time" } })
   --  MiniMisc.setup_auto_root()
   MiniMisc.setup_termbg_sync()
+  MiniMisc.setup_restore_cursor()
 end)
 
 later(function()

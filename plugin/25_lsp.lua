@@ -1,5 +1,11 @@
 local now_if_args = Config.now_if_args
-local add = Config.add
+
+if not Config.isNixCats then
+  local m_add = MiniDeps.add
+  now_if_args(function()
+    m_add("neovim/nvim-lspconfig")
+  end)
+end
 
 now_if_args(function()
   -- Enable LSP only on Neovim>=0.11 as it introduced `vim.lsp.config`
@@ -20,7 +26,6 @@ now_if_args(function()
     "julials",
   })
 
-  local lspconfig = require("lspconfig")
   --  local capabilities = require("blink.cmp").get_lsp_capabilities({}, true)
   local lsp_flags = {
     allow_incremental_sync = true,

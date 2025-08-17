@@ -1,6 +1,15 @@
 local add = Config.add
 local now_if_args = Config.now_if_args
 local later = MiniDeps.later
+
+if not Config.isNixCats then
+  local m_add = MiniDeps.add
+  later(function()
+    m_add({ source = "Bilal2453/luvit-meta" })
+    m_add({ source = "folke/lazydev.nvim" })
+  end)
+end
+
 -- lua
 later(function()
   add("luvit-meta")
@@ -11,6 +20,7 @@ later(function()
       -- Load luvit types when the `vim.uv` word is found
       "lua",
       "mini.nvim",
+      "MiniDeps",
       { path = "luvit-meta/library", words = { "vim%.uv" } },
       { path = "${3rd}/luv/library", words = { "vim%.uv" } },
     },
@@ -19,7 +29,7 @@ end)
 
 -- Markdown
 now_if_args(function()
-  add("render-markdown.nvim")  
+  add("render-markdown.nvim")
   require('render-markdown').setup({
     --    completions = { blink = { enabled = true } },
     file_types = { 'markdown', 'quarto', 'rmd' },

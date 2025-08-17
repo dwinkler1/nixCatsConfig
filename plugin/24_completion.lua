@@ -2,6 +2,29 @@ local add = Config.add
 local later = MiniDeps.later
 local now_if_args = Config.now_if_args
 
+if not Config.isNixCats then
+  local m_add = MiniDeps.add
+  now_if_args(function()
+    BLINK_VERSION = "v1.4.1"
+    m_add({
+      source = "saghen/blink.cmp",
+      depends = { "rafamadriz/friendly-snippets" },
+      checkout = blink_version,
+    })
+  end)
+
+  later(function()
+    m_add({ source = "hrsh7th/cmp-cmdline" })
+    m_add({ source = "xzbdmw/colorful-menu.nvim" })
+    m_add({ source = "zbirenbaum/copilot.lua" })
+    m_add({ source = "CopilotC-Nvim/CopilotChat.nvim" })
+    m_add({ source = "jmbuhr/cmp-pandoc-references" })
+    m_add({ source = "fang2hou/blink-copilot" })
+    m_add({ source = "R-nvim/cmp-r" })
+    m_add({ source = "codecompanion.nvim" })
+  end)
+end
+
 later(function()
   add("cmp-cmdline")
 end)
@@ -154,14 +177,14 @@ end)
 
 
 later(function()
-add("codecompanion.nvim")
+  add("codecompanion.nvim")
   require("codecompanion").setup({ -- NOTE: you can check if you included the category with the thing wherever you want.
     adapters = {
       copilot = function()
         return require("codecompanion.adapters").extend("copilot", {
           schema = {
             model = {
-              default = "gemini-2.5-pro",
+              default = "claude-sonnet-4",
             },
           },
         })
@@ -183,6 +206,20 @@ end)
 
 now_if_args(function()
   add("blink.cmp")
+
+  local fuzzy_setting = {
+    sorts = {
+      "exact",
+      -- defaults
+      "score",
+      "sort_text",
+    }
+  }
+
+  if not Config.isNixCats then
+    fuzzy_setting.prebuilt_binary.force_version = BLINK_VERSION
+  end
+
   require("blink.cmp").setup({
     -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
     -- See :h blink-cmp-config-keymap for configuring keymaps
@@ -224,14 +261,7 @@ now_if_args(function()
         return {}
       end,
     },
-    fuzzy = {
-      sorts = {
-        "exact",
-        -- defaults
-        "score",
-        "sort_text",
-      }
-    },
+    fuzzy = fuzzy_setting,
     signature = {
       enabled = true,
       window = {

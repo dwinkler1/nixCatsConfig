@@ -1,6 +1,23 @@
 local now = MiniDeps.now
+local now_if_args = Config.now_if_args
 local later = MiniDeps.later
 local add = Config.add
+
+if not Config.isNixCats then
+  local m_add = MiniDeps.add
+
+  now(function()
+    add({ source = "R-nvim/R.nvim" })
+  end)
+
+  now_if_args(function()
+    add({ source = "jmbuhr/otter.nvim" })
+  end)
+
+  later(function()
+    m_add({ source = "jpalardy/vim-slime" })
+  end)
+end
 
 -- terminal
 later(function()
@@ -125,4 +142,3 @@ later(function()
     },
   })
 end)
-

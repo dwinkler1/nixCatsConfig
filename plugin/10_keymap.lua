@@ -28,16 +28,15 @@ _G.Config.leader_group_clues = {
   { mode = 'n', keys = '<Leader>g',  desc = '+Git' },
   { mode = 'n', keys = '<Leader>l',  desc = '+LSP' },
   { mode = 'n', keys = '<Leader>L',  desc = '+Lua/Log' },
-  { mode = 'n', keys = '<Leader>m',  desc = '+Map' },
   { mode = 'n', keys = '<Leader>o',  desc = '+Other' },
   { mode = 'n', keys = '<Leader>r',  desc = '+R' },
   { mode = 'n', keys = '<Leader>t',  desc = '+Terminal' },
-  { mode = 'n', keys = '<Leader>T',  desc = '+Test' },
   { mode = 'n', keys = '<Leader>u',  desc = '+UI' },
   { mode = 'n', keys = '<Leader>v',  desc = '+Visits' },
   { mode = 'n', keys = '<Leader>w',  desc = '+Windows' },
   { mode = 'x', keys = '<Leader>l',  desc = '+LSP' },
   { mode = 'x', keys = '<Leader>r',  desc = '+R' },
+  { mode = 'n', keys = '<Leader>z',  desc = '+ZK' },
 }
 
 -- Create `<Leader>` mappings
@@ -80,14 +79,8 @@ nmap_leader('bW', '<Cmd>lua MiniBufremove.wipeout(0, true)<CR>', 'Wipeout!')
 nmap_leader('bq', '<Cmd>qall<CR>', 'Quit all')
 
 -- e is for 'explore' and 'edit'
-local edit_config_file = function(filename)
-  return '<Cmd>edit ' .. vim.fn.stdpath('config') .. '/plugin/' .. filename .. '<CR>'
-end
 nmap_leader('ed', '<Cmd>lua MiniFiles.open()<CR>', 'Directory')
-nmap_leader('ef', '<Cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<CR>', 'File directory')
-nmap_leader('em', edit_config_file('20_mini.lua'), 'Mini.nvim config')
-nmap_leader('eo', edit_config_file('00_options.lua'), 'Options config')
-nmap_leader('ep', edit_config_file('21_plugins.lua'), 'Plugins config')
+nmap_leader('ef', '<Cmd>lua Config.try_opendir()<CR>', 'File directory')
 nmap_leader('es', '<Cmd>lua MiniSessions.select()<CR>', 'Sessions')
 nmap_leader('eq', '<Cmd>lua Config.toggle_quickfix()<CR>', 'Quickfix')
 nmap_leader('ez', '<Cmd>lua MiniFiles.open(os.getenv("ZK_NOTEBOOK_DIR"))<CR>', 'Notes directory')
@@ -181,11 +174,8 @@ nmap_leader('Lx', '<Cmd>lua Config.execute_lua_line()<CR>', 'Execute `lua` line'
 
 -- o is for 'other'
 local trailspace_toggle_command = '<Cmd>lua vim.b.minitrailspace_disable = not vim.b.minitrailspace_disable<CR>'
-nmap_leader('oC', '<Cmd>lua MiniCursorword.toggle()<CR>', 'Cursor word hl toggle')
 nmap_leader('od', '<Cmd>Neogen<CR>', 'Document')
 nmap_leader('oh', '<Cmd>normal gxiagxila<CR>', 'Move arg left')
-nmap_leader('oH', '<Cmd>TSBufToggle highlight<CR>', 'Highlight toggle')
-nmap_leader('og', '<Cmd>lua MiniDoc.generate()<CR>', 'Generate plugin doc')
 nmap_leader('ol', '<Cmd>normal gxiagxina<CR>', 'Move arg right')
 nmap_leader('or', '<Cmd>lua MiniMisc.resize_window()<CR>', 'Resize to default width')
 nmap_leader('oS', '<Cmd>lua Config.insert_section()<CR>', 'Section insert')
@@ -193,20 +183,21 @@ nmap_leader('ot', '<Cmd>lua MiniTrailspace.trim()<CR>', 'Trim trailspace')
 nmap_leader('oT', trailspace_toggle_command, 'Trailspace hl toggle')
 nmap_leader('oz', '<Cmd>lua MiniMisc.zoom()<CR>', 'Zoom toggle')
 nmap_leader('ow', "<Cmd>lua MiniSessions.write(vim.fn.input('Session name: ', string.match(vim.fn.getcwd(), \"[^/]+$\") .. '-session.vim'))<CR>", 'Write session')
+
 -- r is for 'R'
--- - Mappings starting with `T` send commands to current neoterm buffer, so
---   some sort of R interpreter should already run there
-nmap_leader('rc', '<Cmd>T devtools::check()<CR>', 'Check')
-nmap_leader('rC', '<Cmd>T devtools::test_coverage()<CR>', 'Coverage')
-nmap_leader('rd', '<Cmd>T devtools::document()<CR>', 'Document')
-nmap_leader('ri', '<Cmd>T devtools::install(keep_source=TRUE)<CR>', 'Install')
-nmap_leader('rk', '<Cmd>T rmarkdown::render("%")<CR>', 'Knit file')
-nmap_leader('rl', '<Cmd>T devtools::load_all()<CR>', 'Load all')
-nmap_leader('rT', '<Cmd>T testthat::test_file("%")<CR>', 'Test file')
-nmap_leader('rt', '<Cmd>T devtools::test()<CR>', 'Test')
+nmap_leader('rc', '<Cmd>RSend devtools::check()<CR>', 'Check')
+nmap_leader('rC', '<Cmd>RSend devtools::test_coverage()<CR>', 'Coverage')
+nmap_leader('rd', '<Cmd>RSend devtools::document()<CR>', 'Document')
+nmap_leader('ri', '<Cmd>RSend devtools::install(keep_source=TRUE)<CR>', 'Install')
+nmap_leader('rk', '<Cmd>RSend quarto::quarto_preview("%")<CR>', 'Knit file')
+nmap_leader('rl', '<Cmd>RSend devtools::load_all()<CR>', 'Load all')
+nmap_leader('rL', '<Cmd>RSend devtools::load_all(recompile=TRUE)<CR>', 'Load all recompile')
+nmap_leader('rm', '<Cmd>RSend Rcpp::compileAttributes()<CR>', 'Run examples')
+nmap_leader('rT', '<Cmd>RSend testthat::test_file("%")<CR>', 'Test file')
+nmap_leader('rt', '<Cmd>RSend devtools::test()<CR>', 'Test')
 
 -- - Copy to clipboard and make reprex (which itself is loaded to clipboard)
-xmap_leader('rx', '"+y :T reprex::reprex()<CR>', 'Reprex selection')
+xmap_leader('rx', '"+y :RSend reprex::reprex()<CR>', 'Reprex selection')
 
 -- s is for 'send' (Send text to neoterm buffer)
 nmap_leader('s', '<Cmd>SlimeSendCurrentLine<CR>j', 'Send to terminal')
@@ -224,22 +215,6 @@ vim.keymap.set("n", "<leader>tj", '<Cmd>lua Config.terminal.open_julia()<CR>', {
 vim.keymap.set("n", "<leader>td", '<Cmd>lua Config.terminal.open_duckdb()<CR>', { desc = "Open DuckDB" })
 vim.keymap.set("n", "<leader>tx", '<Cmd>lua Config.terminal.open_in_terminal()<CR>', { desc = "Terminal Command" })
 vim.keymap.set("n", "<leader>tt", '<Cmd>lua Config.terminal.open_in_terminal("")<CR>', { desc = "Terminal" })
--- nmap_leader('ta', '<Cmd>lua MiniTest.run()<CR>', 'Test run all')
--- nmap_leader('tf', '<Cmd>lua MiniTest.run_file()<CR>', 'Test run file')
--- nmap_leader('tl', '<Cmd>lua MiniTest.run_at_location()<CR>', 'Test run location')
--- nmap_leader('ts', '<Cmd>lua Config.minitest_screenshots.browse()<CR>', 'Test show screenshot')
--- nmap_leader('tT', '<Cmd>belowright Tnew<CR>', 'Terminal (horizontal)')
---nmap_leader('tt', '<Cmd>vertical Tnew<CR>', 'Terminal (vertical)')
-
--- T is for 'test'
-nmap_leader('TF', '<Cmd>TestFile -strategy=make | copen<CR>', 'File (quickfix)')
-nmap_leader('Tf', '<Cmd>TestFile<CR>', 'File')
-nmap_leader('TL', '<Cmd>TestLast -strategy=make | copen<CR>', 'Last (quickfix)')
-nmap_leader('Tl', '<Cmd>TestLast<CR>', 'Last')
-nmap_leader('TN', '<Cmd>TestNearest -strategy=make | copen<CR>', 'Nearest (quickfix)')
-nmap_leader('Tn', '<Cmd>TestNearest<CR>', 'Nearest')
-nmap_leader('TS', '<Cmd>TestSuite -strategy=make | copen<CR>', 'Suite (quickfix)')
-nmap_leader('Ts', '<Cmd>TestSuite<CR>', 'Suite')
 
 -- v is for 'visits'
 nmap_leader('vv', '<Cmd>lua MiniVisits.add_label("core")<CR>', 'Add "core" label')

@@ -60,13 +60,16 @@
           final: prev: let
             reqPkgs = with prev.rpkgs.rPackages; [
               Hmisc
+              Rcpp
               arm
               broom
               car
               data_table
+              devtools
               janitor
               languageserver
               quarto
+              reprex
               styler
               tidyverse
               (buildRPackage {
@@ -134,11 +137,12 @@
           jq
           just
           lazygit
-          lua51Packages.tiktoken_core
+          luajitPackages.tiktoken_core
           lynx
           man
           pandoc
           perl
+          perl540Packages.NeovimExt
           pigz
           poppler
           rclone
@@ -148,6 +152,7 @@
           shfmt
           sqlfluff
           tldr
+          tree-sitter
           wget
           zathura
           zoxide
@@ -219,6 +224,14 @@
           nvim-lspconfig
           nvim-treesitter-textobjects
           nvim-treesitter.withAllGrammars
+          {
+            plugin = codecompanion-nvim;
+            name = "codecompanion";
+          }
+          {
+            plugin = CopilotChat-nvim;
+            name = "CopilotChat";
+          }
         ];
       };
 
@@ -242,14 +255,6 @@
           nvim-dap-virtual-text
           nvim-lint
           vim-slime
-          {
-            plugin = codecompanion-nvim;
-            name = "codecompanion";
-          }
-          {
-            plugin = CopilotChat-nvim;
-            name = "CopilotChat";
-          }
         ];
         markdown = with pkgs.vimPlugins; [
         ];
@@ -317,7 +322,10 @@
           # your alias may not conflict with your other packages.
           aliases = ["vim"];
           hosts = {
+            node.enable = true;
+            perl.enable = true;
             python3.enable = true;
+            ruby.enable = true;
             g = {
               enable = true;
               path = {

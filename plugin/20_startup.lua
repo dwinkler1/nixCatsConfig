@@ -1,7 +1,57 @@
 local now = MiniDeps.now
 local later = MiniDeps.later
 local now_if_args = Config.now_if_args
-local add = Config.add
+
+if not Config.isNixCats then
+  local add = MiniDeps.add
+  now_if_args(function()
+    add({
+      source = "nvim-treesitter/nvim-treesitter",
+      checkout = "master",
+      monitor = "main",
+      hooks = {
+        post_checkout = function()
+          vim.cmd("TSUpdate")
+        end,
+      },
+    })
+    add({
+      source = "nvim-treesitter/nvim-treesitter-textobjects",
+      checkout = "main",
+    })
+
+    -- Ensure installed
+    --stylua: ignore
+    local ensure_installed = { "bash", "bibtex", "c", "caddy", "cmake", "comment", "commonlisp", "cpp", "css", "csv",
+      "cuda", "desktop", "diff", "dockerfile", "doxygen", "editorconfig", "fortran", "git_config", "git_rebase",
+      "gitattributes", "gitcommit", "gitignore", "gnuplot", "go", "gpg", "html", "javascript", "jq", "json", "json5",
+      "julia", "just", "latex", "ledger", "lua", "luadoc", "luap", "luau", "make", "markdown", "markdown_inline",
+      "matlab",
+      "meson", "muttrc", "nix", "nu", "passwd", "powershell", "prql", "python", "r", "query", "readline", "regex",
+      "requirements", "rnoweb", "rust", "sql", "ssh_config", "swift", "tmux", "toml", "tsv", "tsx", "typescript", "typst",
+      "vala", "vim", "vimdoc", "yaml", "zig", }
+    require("nvim-treesitter.configs").setup({
+      ensure_installed = ensure_installed,
+      auto_install = true,
+      highlight = { enable = true },
+      indent = { enable = false },
+      parser_configurations = {
+        markdown = {
+          filetypes = { "markdown", "copilot-chat" },
+        },
+      },
+    })
+    local isnt_installed = function(lang)
+      return #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".*", false) == 0
+    end
+    local to_install = vim.tbl_filter(isnt_installed, ensure_installed)
+    if #to_install > 0 then
+      require("nvim-treesitter").install(to_install)
+    end
+
+    add({ source = "zk-org/zk-nvim" })
+  end)
+end
 
 -- Mini.nvim
 now(function()
@@ -169,7 +219,11 @@ now_if_args(function()
     indent = { enable = false },
     parser_configurations = {
       markdown = {
-        filetypes = { "markdown", "copilot-chat" },
+        filetypes = {
+          "markdown",
+          "copilot-chat",
+          "codecompanion"
+        },
       },
     },
   })

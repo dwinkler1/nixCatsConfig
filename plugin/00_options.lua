@@ -2,6 +2,14 @@
 local later = MiniDeps.later
 local now = MiniDeps.now
 
+if not Config.isNixCats then
+  local add = MiniDeps.add
+  now(function()
+    add({ name = "mini.nvim" })
+  end)
+end
+
+
 now(function()
   local palette = require('mini.hues').make_palette({
     background = '#fefcf5',
@@ -37,23 +45,23 @@ vim.o.shada          = "'100,<50,s10,:1000,/100,@100,h" -- Limit what is stored 
 vim.cmd('filetype plugin indent on')                    -- Enable all filetype plugins
 
 -- UI =========================================================================
-vim.o.breakindent    = true      -- Indent wrapped lines to match line start
-vim.o.colorcolumn    = '+1'      -- Draw colored column one step to the right of desired maximum width
-vim.o.cursorline     = false     -- Enable highlighting of the current line
-vim.o.foldenable     = false     -- Enable folding
-vim.o.linebreak      = true      -- Wrap long lines at 'breakat' (if 'wrap' is set)
-vim.o.list           = true      -- Show helpful character indicators
-vim.o.number         = true      -- Show line numbers
-vim.o.pumheight      = 10        -- Make popup menu smaller
-vim.o.relativenumber = true   -- Show relative line numbers
-vim.o.ruler          = false     -- Don't show cursor position
+vim.o.breakindent    = true -- Indent wrapped lines to match line start
+vim.o.colorcolumn    = '+1' -- Draw colored column one step to the right of desired maximum width
+vim.o.cursorline     = false -- Enable highlighting of the current line
+vim.o.foldenable     = false -- Enable folding
+vim.o.linebreak      = true -- Wrap long lines at 'breakat' (if 'wrap' is set)
+vim.o.list           = true -- Show helpful character indicators
+vim.o.number         = true -- Show line numbers
+vim.o.pumheight      = 10 -- Make popup menu smaller
+vim.o.relativenumber = true -- Show relative line numbers
+vim.o.ruler          = false -- Don't show cursor position
 vim.o.shortmess      = 'FOSWaco' -- Disable certain messages from |ins-completion-menu|
-vim.o.showmode       = false     -- Don't show mode in command line
-vim.o.signcolumn     = 'yes'     -- Always show signcolumn or it would frequently shift
-vim.o.splitbelow     = true      -- Horizontal splits will be below
-vim.o.splitright     = true      -- Vertical splits will be to the right
-vim.o.wrap           = true      -- Display long lines as just one line
-vim.o.bg             = 'light'   -- Set background
+vim.o.showmode       = false -- Don't show mode in command line
+vim.o.signcolumn     = 'yes' -- Always show signcolumn or it would frequently shift
+vim.o.splitbelow     = true -- Horizontal splits will be below
+vim.o.splitright     = true -- Vertical splits will be to the right
+vim.o.wrap           = true -- Display long lines as just one line
+vim.o.bg             = 'light' -- Set background
 
 vim.o.listchars      = table.concat({ 'extends:…', 'nbsp:␣', 'precedes:…', 'tab:> ', 'trail:·' }, ',') -- Special text symbols
 vim.o.cursorlineopt  = 'screenline,number' -- Show cursor line only screen line when wrapped
@@ -146,7 +154,7 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function()
     vim.diagnostic.config({
       signs = {
-        severity = { min = 'WARN', max = 'ERROR'}
+        severity = { min = 'WARN', max = 'ERROR' }
       },
       virtual_text = {
         current_line = false,
