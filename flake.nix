@@ -24,7 +24,6 @@
       url = "github:jmbuhr/cmp-pandoc-references";
       flake = false;
     };
-
   };
 
   # see :help nixCats.flake.outputs
@@ -127,8 +126,7 @@
       name,
       mkPlugin,
       ...
-    } @ packageDef: let
-    in{
+    } @ packageDef: {
       lspsAndRuntimeDeps = {
         external = with pkgs; [
           clickhouse
@@ -301,17 +299,15 @@
       };
 
       extraLuaPackages = {
-         general = [ (lp: lp.tiktoken_core ) ];
-        };
+        general = [(lp: lp.tiktoken_core)];
+      };
+
       # in neovim: vim.g.python3_host_prog
       # or run from nvim terminal via :!<packagename>-python3
       python3.libraries = {
         test = _: [];
       };
-      # populates $LUA_PATH and $LUA_CPATH
-      extraLuaPackages = {
-        test = [(_: [])];
-      };
+
     };
 
     # This entire set is also passed to nixCats for querying within the lua.

@@ -233,8 +233,7 @@ now_if_args(function()
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
           ["]a"] = "@paramter.inner",
-          ["]m"] = "@function.outer",
-          ["]]"] = { query = "@class.outer", desc = "Next class start" },
+          ["]f"] = "@function.outer",
           ["]o"] = "@loop.*",
           ["]s"] = { query = "@local.scope", desc = "Next scope" },
           ["]z"] = { query = "@fold", desc = "Next fold" },
@@ -245,8 +244,7 @@ now_if_args(function()
         },
         goto_previous_start = {
           ["[a"] = "@parameter.inner",
-          ["[m"] = "@function.outer",
-          ["[["] = "@class.outer",
+          ["[f"] = "@function.outer",
           ["[o"] = "@loop.*",
           ["[s"] = { query = "@local.scope", query_group = "locals", desc = "Prev. scope" },
           ["[z"] = { query = "@fold", query_group = "folds", desc = "Prev. fold" },
