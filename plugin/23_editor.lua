@@ -105,6 +105,7 @@ later(function()
     group = minifiles_augroup,
     pattern = "MiniFilesExplorerOpen",
     callback = function()
+      MiniFiles.set_bookmark("h", os.getenv("HOME") or vim.env.HOME, { desc = "Home" })
       MiniFiles.set_bookmark("c", vim.fn.stdpath("config"), { desc = "Config" })
       MiniFiles.set_bookmark("w", vim.fn.getcwd, { desc = "Working directory" })
     end,
