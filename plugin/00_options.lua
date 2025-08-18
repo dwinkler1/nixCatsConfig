@@ -20,7 +20,7 @@ now(function()
   })
   palette.fg_mid2 = "#586e75"
   palette.fg_mid = "#073642"
-  palette.bg_edge = "#fdf6e3"
+  palette.bg_edge = "#FDE9E3" --"#fdf6e3"
   palette.accent_bg = "#eee8d5"
   require('mini.hues').apply_palette(palette)
 end)
@@ -78,7 +78,7 @@ end
 
 if vim.fn.has('nvim-0.11') == 1 then
   --  vim.o.completeopt = 'menuone,fuzzy' -- Use fuzzy matching for built-in completion noselect,
-  vim.o.winborder = 'double' -- Use double-line as default border
+  vim.o.winborder = 'rounded' -- Use double-line as default border
 end
 if vim.fn.has('nvim-0.12') == 1 then
   vim.o.pummaxwidth = 100                                 -- Limit maximum width of popup menu
@@ -114,7 +114,7 @@ vim.o.iskeyword        = '@,48-57,_,192-255,-' -- Treat dash separated words as 
 vim.o.formatlistpat    = [[^\s*[0-9\-\+\*]\+[\.\)]*\s\+]]
 
 -- Spelling ===================================================================
-vim.o.spelllang        = 'en,de' -- Define spelling dictionaries
+vim.o.spelllang        = 'en_us,de' -- Define spelling dictionaries
 vim.o.spelloptions     = 'camel' -- Treat parts of camelCase words as seprate words
 
 -- vim.o.dictionary = vim.fn.stdpath('config') .. '/misc/dict/english.txt' -- Use specific dictionaries
@@ -185,7 +185,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- Neovide
 if vim.g.neovide then
-  vim.o.guifont = "Hack Nerd Font,JetBrainsMono Nerd Font:h13"
+  vim.o.guifont = "JetBrainsMono Nerd Font,Hack Nerd Font:h12"
   vim.g.neovide_cursor_smooth_blink = true
   vim.g.neovide_cursor_animation_length = 0
   vim.keymap.set("n", "<leader>ne", "<cmd>NeovideReload<CR>", { desc = "Reload Neovide" })

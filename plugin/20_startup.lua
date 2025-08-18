@@ -30,6 +30,7 @@ if not Config.isNixCats then
       "meson", "muttrc", "nix", "nu", "passwd", "powershell", "prql", "python", "r", "query", "readline", "regex",
       "requirements", "rnoweb", "rust", "sql", "ssh_config", "swift", "tmux", "toml", "tsv", "tsx", "typescript", "typst",
       "vala", "vim", "vimdoc", "yaml", "zig", }
+
     require("nvim-treesitter.configs").setup({
       ensure_installed = ensure_installed,
       auto_install = true,
@@ -226,7 +227,77 @@ now_if_args(function()
         },
       },
     },
+    textobjects = {
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          ["]a"] = "@paramter.inner",
+          ["]m"] = "@function.outer",
+          ["]]"] = { query = "@class.outer", desc = "Next class start" },
+          ["]o"] = "@loop.*",
+          ["]s"] = { query = "@local.scope", desc = "Next scope" },
+          ["]z"] = { query = "@fold", desc = "Next fold" },
+        },
+        goto_next_end = {
+          ["]M"] = "@function.outer",
+          ["]["] = "@class.outer",
+        },
+        goto_previous_start = {
+          ["[a"] = "@parameter.inner",
+          ["[m"] = "@function.outer",
+          ["[["] = "@class.outer",
+          ["[o"] = "@loop.*",
+          ["[s"] = { query = "@local.scope", query_group = "locals", desc = "Prev. scope" },
+          ["[z"] = { query = "@fold", query_group = "folds", desc = "Prev. fold" },
+        },
+        goto_previous_end = {
+          ["[M"] = "@function.outer",
+          ["[]"] = "@class.outer",
+        },
+        goto_next = {
+          ["]d"] = "@conditional.outer",
+        },
+        goto_previous = {
+          ["[d"] = "@conditional.outer",
+        }
+      },
+      swap = {
+        enable = true,
+        swap_next = {
+          ["<leader>x"] = "@parameter.inner",
+        },
+        swap_previous = {
+          ["<leader>X"] = "@parameter.inner",
+        },
+      },
+      lsp_interop = {
+        enable = true,
+        border = 'none',
+        floating_preview_opts = {},
+        peek_definition_code = {
+          ["<leader>lm"] = "@function.outer",
+          ["<leader>lM"] = "@class.outer",
+        },
+      },
+    },
   })
+
+  require 'treesitter-context'.setup {
+    enable = false,
+    multiwindow = false,    -- Enable multiwindow support.
+    max_lines = 30,          -- How many lines the window should span. Values <= 0 mean no limit.
+    min_window_height = 50,  -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+    line_numbers = true,
+    multiline_threshold = 10, -- Maximum number of lines to show for a single context
+    trim_scope = 'outer',   -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+    mode = 'cursor',        -- Line used to calculate context. Choices: 'cursor', 'topline'
+    -- Separator between context and content. Should be a single character string, like '-'.
+    -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+    separator = '-',
+    zindex = 20,   -- The Z-index of the context window
+    on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+  }
 end)
 
 -- zk

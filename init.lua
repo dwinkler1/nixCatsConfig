@@ -1,7 +1,6 @@
 require('nixCatsUtils').setup {
   non_nix_value = true,
 }
-
 _G.Config = {}
 
 Config.isNixCats = require('nixCatsUtils').isNixCats

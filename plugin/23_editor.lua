@@ -38,7 +38,9 @@ end)
 
 -- Edit
 later(function()
-  require("mini.ai").setup({
+  local ai = require("mini.ai")
+  local spec_treesitter = ai.gen_spec.treesitter
+  ai.setup({
     search_method = "cover",
     n_lines = 1000,
   })
@@ -105,18 +107,21 @@ later(function()
     callback = function()
       MiniFiles.set_bookmark("c", vim.fn.stdpath("config"), { desc = "Config" })
       MiniFiles.set_bookmark("w", vim.fn.getcwd, { desc = "Working directory" })
-      MiniFiles.set_bookmark("z", vim.fn.getcwd, { desc = "Working directory" })
     end,
   })
 
   -- Set focused directory as current working directory
+  local function remove_string(string1, string2)
+    return string2:gsub(string1, "", 1)
+  end
   local set_cwd = function()
     local path = (MiniFiles.get_fs_entry() or {}).path
     if path == nil then
       return vim.notify("Cursor is not on valid entry")
     end
+
     local pwd = vim.fs.dirname(path)
-    vim.notify("PWD: " .. pwd)
+    vim.notify("PWD: " .. '.' .. vim.fn.pathshorten(pwd, 6))
     vim.fn.chdir(pwd)
   end
 
@@ -131,9 +136,6 @@ later(function()
   end
 
   -- Yank in register relative path of entry under cursor
-  local function remove_string(string1, string2)
-    return string2:gsub(string1, "", 1)
-  end
   local yank_relpath = function()
     local path = (MiniFiles.get_fs_entry() or {}).path
     local cwd = vim.fn.getcwd() .. '/'

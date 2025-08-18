@@ -38,8 +38,9 @@ end
 Config.try_opendir = function()
   local buff = vim.api.nvim_buf_get_name(0)
   local ok, err = pcall(MiniFiles.open, buff)
+  if ok then return end
   vim.notify(err)
-  if not ok then MiniFiles.open() end
+  MiniFiles.open()
 end
 
 -- For mini.start

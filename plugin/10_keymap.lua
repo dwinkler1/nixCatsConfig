@@ -216,6 +216,9 @@ vim.keymap.set("n", "<leader>td", '<Cmd>lua Config.terminal.open_duckdb()<CR>', 
 vim.keymap.set("n", "<leader>tx", '<Cmd>lua Config.terminal.open_in_terminal()<CR>', { desc = "Terminal Command" })
 vim.keymap.set("n", "<leader>tt", '<Cmd>lua Config.terminal.open_in_terminal("")<CR>', { desc = "Terminal" })
 
+-- u is for UI
+nmap_leader('ut', '<Cmd>TSContext toggle<CR>', 'Toggle TScontext')
+
 -- v is for 'visits'
 nmap_leader('vv', '<Cmd>lua MiniVisits.add_label("core")<CR>', 'Add "core" label')
 nmap_leader('vV', '<Cmd>lua MiniVisits.remove_label("core")<CR>', 'Remove "core" label')

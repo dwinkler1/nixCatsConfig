@@ -24,6 +24,7 @@
       url = "github:jmbuhr/cmp-pandoc-references";
       flake = false;
     };
+
   };
 
   # see :help nixCats.flake.outputs
@@ -42,6 +43,7 @@
       # allowUnfree = true;
     };
 
+    pwd = builtins.getEnv "PWD";
     # see :help nixCats.flake.outputs.overlays
     dependencyOverlays =
       /*
@@ -108,6 +110,7 @@
             python = prev.python3.withPackages reqPkgs;
           }
         )
+
         # (utils.fixSystemizedOverlay inputs.codeium.overlays
         #   (system: inputs.codeium.overlays.${system}.default)
         # )
@@ -124,20 +127,23 @@
       name,
       mkPlugin,
       ...
-    } @ packageDef: {
+    } @ packageDef: let
+    in{
       lspsAndRuntimeDeps = {
         external = with pkgs; [
-          direnv
+          clickhouse
           duckdb
           fd
           gawk
           gh
           git
+          hunspell
+          hunspellDicts.de-at
+          hunspellDicts.en-us
           ispell
           jq
           just
           lazygit
-          luajitPackages.tiktoken_core
           lynx
           man
           pandoc
@@ -222,6 +228,7 @@
         utils = with pkgs.vimPlugins; [
           blink-cmp
           nvim-lspconfig
+          nvim-treesitter-context
           nvim-treesitter-textobjects
           nvim-treesitter.withAllGrammars
           {
@@ -293,6 +300,9 @@
         ];
       };
 
+      extraLuaPackages = {
+         general = [ (lp: lp.tiktoken_core ) ];
+        };
       # in neovim: vim.g.python3_host_prog
       # or run from nvim terminal via :!<packagename>-python3
       python3.libraries = {
