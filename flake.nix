@@ -42,7 +42,7 @@
       # allowUnfree = true;
     };
 
-    pwd = builtins.getEnv "PWD";
+    #pwd = builtins.getEnv "PWD";
     # see :help nixCats.flake.outputs.overlays
     dependencyOverlays =
       /*
@@ -129,7 +129,7 @@
     } @ packageDef: {
       lspsAndRuntimeDeps = {
         external = with pkgs; [
-          clickhouse
+          clickhouse-lts
           duckdb
           fd
           gawk
@@ -146,7 +146,6 @@
           man
           pandoc
           perl
-          perl540Packages.NeovimExt
           pigz
           poppler
           rclone
