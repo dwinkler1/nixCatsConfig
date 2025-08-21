@@ -352,7 +352,7 @@
           markdown = true;
           nix = true;
           python = true;
-          r = true;
+          r = false;
           utils = true;
           test = false;
         };
