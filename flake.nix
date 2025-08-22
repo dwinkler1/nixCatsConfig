@@ -341,6 +341,33 @@
                 ];
               };
             };
+            m = {
+              enable = true;
+              path = {
+                value = "${pkgs.marimo}/bin/marimo";
+                args = ["--add-flags" "edit"];
+              };
+            };
+            jl = {
+              enable = true;
+              path = {
+                value = "${pkgs.julia-bin}/bin/julia";
+                args = [
+                "--add-flags"
+                "--project=@."
+                ];
+              };
+            };
+            r = {
+              enable = true;
+              path = {
+                value = "${pkgs.rWrapper}/bin/R";
+                args = [
+                  "--add-flags"
+                  "--no-save --no-restore"
+                ];
+              };
+            };
           };
         };
         categories = {
