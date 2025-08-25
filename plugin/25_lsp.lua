@@ -20,7 +20,7 @@ now_if_args(function()
     "pyright",
     "rust_analyzer",
     "air",
-    --"r_language_server",
+    "r_language_server",
     --    "marksman",
     "lua_ls",
     "julials",
@@ -43,6 +43,10 @@ now_if_args(function()
           rich_documentation = true,
           enable = true,
         },
+        on_attach = function(client, _)
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
+        end,
       },
     }
   })
