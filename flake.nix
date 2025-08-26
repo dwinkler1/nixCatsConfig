@@ -7,6 +7,7 @@
     # see :help nixCats.flake.inputs
 
     # Nix inputs
+    # TODO: move this to stable once 25.11 is out
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
