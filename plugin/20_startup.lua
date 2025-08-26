@@ -253,10 +253,10 @@ now_if_args(function()
           ["[]"] = "@class.outer",
         },
         goto_next = {
-          ["]d"] = "@conditional.outer",
+          ["]e"] = "@conditional.outer",
         },
         goto_previous = {
-          ["[d"] = "@conditional.outer",
+          ["[e"] = "@conditional.outer",
         }
       },
       swap = {
