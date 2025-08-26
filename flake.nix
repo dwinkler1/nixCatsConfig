@@ -37,7 +37,7 @@
   } @ inputs: let
     inherit (nixCats) utils;
     luaPath = ./.;
-    forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
+    forEachSystem = utils.eachSystem ["aarch64-darwin" "x86_64-linux" "aarch64-linux"]; #nixpkgs.lib.platforms.all;
 
     # Calls: import nixpkgs { config = extra_pkg_config; inherit system; }
     extra_pkg_config = {
