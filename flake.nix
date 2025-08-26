@@ -8,8 +8,9 @@
 
     # Nix inputs
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-11.tar.gz";
+    rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-25.tar.gz";
 
     # neovim plugs
     "plugins-r" = {
@@ -110,6 +111,40 @@
           }
         )
 
+        ### Unstable pkgs
+        (
+          final: prev: let
+            pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.system};
+          in {
+            clickhouse-lts = pkgs-unstable.clickhouse-lts;
+          }
+        )
+
+        ### General fixes
+        (
+          final: prev: {
+            codecompanion-nvim = prev.vimPlugins.codecompanion-nvim.overrideAttrs {
+              checkInputs = with prev.vimPlugins; [
+                blink-cmp
+                mini-nvim
+              ];
+              dependencies = [prev.vimPlugins.plenary-nvim];
+              nvimSkipModules = [
+                # Requires setup call
+                "codecompanion.actions.static"
+                "codecompanion.actions.init"
+                # Test
+                "minimal"
+                # Fails on darwin
+                "codecompanion.providers.actions.fzf_lua"
+                # Not using
+                "codecompanion.providers.completion.cmp.setup"
+                "codecompanion.providers.actions.telescope"
+                "codecompanion.providers.actions.snacks"
+              ];
+            };
+          }
+        )
         # (utils.fixSystemizedOverlay inputs.codeium.overlays
         #   (system: inputs.codeium.overlays.${system}.default)
         # )
@@ -229,12 +264,8 @@
           nvim-treesitter-textobjects
           nvim-treesitter.withAllGrammars
           {
-            plugin = codecompanion-nvim;
+            plugin = pkgs.codecompanion-nvim;
             name = "codecompanion";
-          }
-          {
-            plugin = CopilotChat-nvim;
-            name = "CopilotChat";
           }
         ];
       };
@@ -306,7 +337,6 @@
       python3.libraries = {
         test = _: [];
       };
-
     };
 
     # This entire set is also passed to nixCats for querying within the lua.
@@ -344,8 +374,8 @@
             m = {
               enable = true;
               path = {
-                value = "${pkgs.marimo}/bin/marimo";
-                args = ["--add-flags" "edit"];
+                value = "${pkgs.uv}/bin/uv";
+                args = ["--add-flags" "run marimo edit"];
               };
             };
             jl = {
@@ -353,8 +383,8 @@
               path = {
                 value = "${pkgs.julia-bin}/bin/julia";
                 args = [
-                "--add-flags"
-                "--project=@."
+                  "--add-flags"
+                  "--project=@."
                 ];
               };
             };

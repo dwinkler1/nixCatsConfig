@@ -57,110 +57,6 @@ later(function()
 end)
 
 later(function()
-  add("CopilotChat.nvim")
-
-  local chat = require("CopilotChat")
-  --      local prompts = require('CopilotChat.config.prompts')
-  local chatselect = require("CopilotChat.select")
-  --      local cutils = require('CopilotChat.utils')
-  chat.setup({
-    model = "claude-sonnet-4",
-    -- Markdown rendering
-    highlight_headers = false,
-    separator = "---",
-    error_header = "> [!ERROR] Error",
-    show_help = false, -- Show help message when opening the chat window
-    window = {
-      layout = "float",
-      width = 0.45,
-      height = 0.45,
-      row = math.floor(vim.fn.winheight(0) * 0.55),
-      col = math.floor(vim.fn.winwidth(0) * 0.55),
-      border = "rounded",
-      title = "Copilot Chat",
-    },
-
-    prompts = {
-      Explain = {
-        mapping = "<leader>aE",
-        description = "AI Explain",
-      },
-      Review = {
-        mapping = "<leader>aR",
-        description = "AI Review",
-      },
-      Tests = {
-        mapping = "<leader>aT",
-        description = "AI Tests",
-      },
-      Fix = {
-        mapping = "<leader>aF",
-        description = "AI Fix",
-      },
-      Optimize = {
-        mapping = "<leader>aO",
-        description = "AI Optimize",
-      },
-      Docs = {
-        mapping = "<leader>aD",
-        description = "AI Documentation",
-      },
-      Commit = {
-        mapping = "<leader>aC",
-        description = "AI Generate Commit",
-        selection = chatselect.buffer,
-      },
-    },
-  })
-
-  vim.keymap.set({ "n" }, "<leader>at", chat.toggle, { desc = "AI Toggle" })
-  vim.keymap.set({ "v" }, "<leader>ae", chat.open, { desc = "AI Open" })
-  vim.keymap.set({ "n" }, "<leader>ar", chat.reset, { desc = "AI Reset" })
-  vim.keymap.set({ "n" }, "<leader>ad", chat.stop, { desc = "AI Stop" })
-  vim.keymap.set({ "n" }, "<leader>am", chat.select_model, { desc = "AI Models" })
-  vim.keymap.set({ "n", "v" }, "<leader>ap", chat.select_prompt, { desc = "AI Prompts" })
-  vim.keymap.set({ "n", "v" }, "<leader>aa", function()
-    vim.ui.input({
-      prompt = "AI Question> ",
-    }, function(input)
-      if input and input ~= "" then
-        chat.ask(input)
-      end
-    end)
-  end, { desc = "AI Question" })
-
-  vim.keymap.set("v", "<leader>av", function()
-    local input = vim.fn.input("Quick Chat: ")
-    if input == nil or input == "" then
-      vim.notify("CopilotChat: No input provided.", vim.log.levels.WARN)
-      return
-    end
-    -- Reselect visual selection after input prompt
-    vim.cmd("normal! gv")
-    chat.ask(input, {
-      selection = chatselect.visual,
-    })
-  end, { desc = "Visual selection context" })
-
-  vim.keymap.set("n", "<leader>ab", function()
-    local input = vim.fn.input("Buffer Chat: ")
-    if input and input ~= "" then
-      chat.ask(input, {
-        selection = chatselect.buffer,
-      })
-    end
-  end, { desc = "Buffer context" })
-  vim.keymap.set("n", "<leader>aB", function()
-    local input = vim.fn.input("Buffers Chat: ")
-    if input and input ~= "" then
-      chat.ask(input, {
-        selection = chatselect.buffers,
-      })
-    end
-  end, { desc = "All Buffers context" })
-end)
-
-later(function()
   add("cmp-pandoc-references")
 end)
 
@@ -200,6 +96,41 @@ later(function()
         },
       },
     },
+    prompt_library = {
+      ["Code Expert"] = {
+        strategy = "chat",
+        description = "Get some special advice from an LLM",
+        opts = {
+          mapping = "<LocalLeader>aa",
+          modes = { "v" },
+          short_name = "expert",
+          auto_submit = true,
+          stop_context_insertion = true,
+          user_prompt = true,
+        },
+        prompts = {
+          {
+            role = "system",
+            content = function(context)
+              return "I want you to act as a senior "
+                  .. context.filetype
+                  .. " developer. I will ask you specific questions and I want you to return concise explanations and codeblock examples."
+            end,
+          },
+          {
+            role = "user",
+            content = function(context)
+              local text = require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
+
+              return "I have the following code:\n\n```" .. context.filetype .. "\n" .. text .. "\n```\n\n"
+            end,
+            opts = {
+              contains_code = true,
+            }
+          },
+        },
+      },
+    }
   })
   vim.cmd([[cab cc CodeCompanion]])
 end)

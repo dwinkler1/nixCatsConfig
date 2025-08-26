@@ -2,11 +2,11 @@
   "nodes": {
     "nixCats": {
       "locked": {
-        "lastModified": 1755685723,
-        "narHash": "sha256-WU7yfMmEbYmJnTWPe0RQpZyjf3c+btJ3BfE9RlnTtU0=",
+        "lastModified": 1756094250,
+        "narHash": "sha256-Bkghd2NdQqQfKwSftABMDjnfRMFTJXA/XvvfKVonV/Q=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "515fb737c41504df023f9638aa0b63111a881c76",
+        "rev": "7496b06144a15e44301aacea31c3e1ccdb81546e",
         "type": "github"
       },
       "original": {
@@ -17,11 +17,27 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1755736253,
-        "narHash": "sha256-jlIQRypNhB1PcB1BE+expE4xZeJxzoAGr1iUbHQta8s=",
+        "lastModified": 1756128520,
+        "narHash": "sha256-R94HxJBi+RK1iCm8Y4Q9pdrHZl0GZoDPIaYwjxRNPh4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "596312aae91421d6923f18cecce934a7d3bfd6b8",
+        "rev": "c53baa6685261e5253a1c355a1b322f82674a824",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1756128520,
+        "narHash": "sha256-R94HxJBi+RK1iCm8Y4Q9pdrHZl0GZoDPIaYwjxRNPh4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c53baa6685261e5253a1c355a1b322f82674a824",
         "type": "github"
       },
       "original": {
@@ -81,20 +97,21 @@
     },
     "rixpkgs": {
       "locked": {
-        "lastModified": 1754915244,
-        "narHash": "sha256-WtdFq/HbvAgq03AMhSAJW35go6R5bqhGNf2KBzXqH2U=",
+        "lastModified": 1756125117,
+        "narHash": "sha256-aCt9VnqhwL7HtNSG1P3YayJl9vmJbJvviSLAGdOzry0=",
         "type": "tarball",
-        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-11.tar.gz"
+        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-25.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-11.tar.gz"
+        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-25.tar.gz"
       }
     },
     "root": {
       "inputs": {
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "plugins-cmp-pandoc-references": "plugins-cmp-pandoc-references",
         "plugins-cmp-r": "plugins-cmp-r",
         "plugins-r": "plugins-r",

@@ -38,7 +38,7 @@ if not Config.isNixCats then
       indent = { enable = false },
       parser_configurations = {
         markdown = {
-          filetypes = { "markdown", "copilot-chat" },
+          filetypes = { "markdown", },
         },
       },
     })
@@ -222,7 +222,6 @@ now_if_args(function()
       markdown = {
         filetypes = {
           "markdown",
-          "copilot-chat",
           "codecompanion"
         },
       },

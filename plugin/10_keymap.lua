@@ -67,6 +67,10 @@ nmap_leader('<S-Tab>', '<Cmd>bprev<CR>', 'Prev buffer')
 nmap_leader("ai", "<cmd>CodeCompanionActions<CR>", "Chat Action")
 nmap_leader("ac", "<cmd>CodeCompanionChat Toggle<CR>", "Chat Toggle")
 nmap_leader("an", "<cmd>CodeCompanionChat Add<CR>", "Chat New")
+nmap_leader("af", "<cmd>CodeCompanion /fix<CR>", "Fix Code")
+nmap_leader("ae", "<cmd>CodeCompanion /exlain<CR>", "Explain Code")
+nmap_leader("al", "<cmd>CodeCompanion /lsp<CR>", "Explain LSP Diagnostics")
+nmap_leader("ag", "<cmd>CodeCompanion /commit<CR>", "Generate commit message")
 --- CopilotChat defined with plugin
 
 -- b is for 'buffer'
