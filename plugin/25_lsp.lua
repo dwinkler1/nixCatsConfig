@@ -19,7 +19,7 @@ now_if_args(function()
     --    "nushell",
     "pyright",
     "rust_analyzer",
-    "air",
+    -- "air",
     "r_language_server",
     --    "marksman",
     "lua_ls",
@@ -43,10 +43,10 @@ now_if_args(function()
           rich_documentation = true,
           enable = true,
         },
-        on_attach = function(client, _)
-          client.server_capabilities.documentFormattingProvider = false
-          client.server_capabilities.documentRangeFormattingProvider = false
-        end,
+        -- on_attach = function(client, _)
+        --   client.server_capabilities.documentFormattingProvider = false
+        --   client.server_capabilities.documentRangeFormattingProvider = false
+        -- end,
       },
     }
   })
