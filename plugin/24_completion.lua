@@ -17,7 +17,6 @@ if not Config.isNixCats then
     m_add({ source = "hrsh7th/cmp-cmdline" })
     m_add({ source = "xzbdmw/colorful-menu.nvim" })
     m_add({ source = "zbirenbaum/copilot.lua" })
-    m_add({ source = "CopilotC-Nvim/CopilotChat.nvim" })
     m_add({ source = "jmbuhr/cmp-pandoc-references" })
     m_add({ source = "fang2hou/blink-copilot" })
     m_add({ source = "R-nvim/cmp-r" })
@@ -43,9 +42,11 @@ later(function()
     suggestion = { enabled = false },
     panel = { enabled = false },
     filetypes = {
-      markdown = true,
-      help = true,
+      ["*"] = true,
     },
+    should_attach = function()
+      return true
+    end,
     server_opts_overrides = {
       settings = {
         telemetry = {
