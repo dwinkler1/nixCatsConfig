@@ -185,7 +185,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- Neovide
 if vim.g.neovide then
-  vim.o.guifont = "JetBrainsMono Nerd Font,Hack Nerd Font:h12"
+  vim.o.guifont = "Iosevka Nerd Font Mono,JetBrainsMono Nerd Font,Hack Nerd Font:h12"
   vim.g.neovide_cursor_smooth_blink = true
   vim.g.neovide_cursor_animation_length = 0
   vim.keymap.set("n", "<leader>ne", "<cmd>NeovideReload<CR>", { desc = "Reload Neovide" })
