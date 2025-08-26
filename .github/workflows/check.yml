@@ -1,0 +1,21 @@
+name: "Test Cats"
+on:
+  workflow_dispatch: # allows manual triggering
+  push:
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v4
+    - uses: wimpysworld/nothing-but-nix@main
+      with:
+        hatchet-protocol: 'carve'
+    - uses: cachix/install-nix-action@v31
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: DeterminateSystems/magic-nix-cache-action@main
+    - run: nix build
+    - run: nix flake check
