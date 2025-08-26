@@ -165,6 +165,7 @@
     } @ packageDef: {
       lspsAndRuntimeDeps = {
         external = with pkgs; [
+          bla___
           clickhouse-lts
           duckdb
           fd
