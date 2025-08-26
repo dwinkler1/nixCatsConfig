@@ -110,6 +110,7 @@ later(function()
       MiniFiles.set_bookmark("h", os.getenv("HOME") or vim.env.HOME, { desc = "Home" })
       MiniFiles.set_bookmark("c", vim.fn.stdpath("config"), { desc = "Config" })
       MiniFiles.set_bookmark("w", vim.fn.getcwd, { desc = "Working directory" })
+      MiniFiles.set_bookmark("z", os.getenv("ZK_NOTEBOOK_DIR") or vim.env.HOME, { desc = "ZK" })
     end,
   })
 
