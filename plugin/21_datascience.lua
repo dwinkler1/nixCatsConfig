@@ -37,67 +37,69 @@ end)
 
 -- r
 now(function()
-  vim.g.rout_follow_colorscheme = true
-  local r = require("r")
-  r.setup({
-    -- Create a table with the options to be passed to setup()
-    R_args = { "--quiet", "--no-save" },
-    auto_start = "no",
-    objbr_auto_start = false,
-    objbr_place = 'console,below',
-    rconsole_width = 120,
-    min_editor_width = 80,
-    rconsole_height = 20,
-    nvimpager = "split_h",
-    hook = {
-      on_filetype = function()
-        -- This function will be called at the FileType event
-        -- of files supported by R.nvim. This is an
-        -- opportunity to create mappings local to buffers.
+  if nixCats('lua.gitPlugins') then
+    vim.g.rout_follow_colorscheme = true
+    local r = require("r")
+    r.setup({
+      -- Create a table with the options to be passed to setup()
+      R_args = { "--quiet", "--no-save" },
+      auto_start = "no",
+      objbr_auto_start = false,
+      objbr_place = 'console,below',
+      rconsole_width = 120,
+      min_editor_width = 80,
+      rconsole_height = 20,
+      nvimpager = "split_h",
+      hook = {
+        on_filetype = function()
+          -- This function will be called at the FileType event
+          -- of files supported by R.nvim. This is an
+          -- opportunity to create mappings local to buffers.
 
-        -- Use specific comment headers
+          -- Use specific comment headers
 
-        vim.bo.comments = [[:#',:####,:###,:##,:#]]
-        -- Keybindings
-        vim.keymap.set("n", "<Enter>", "<Plug>RDSendLine", { buffer = true })
-        vim.keymap.set("v", "<Enter>", "<Plug>RSendSelection", { buffer = true })
-        vim.keymap.set(
-          "i",
-          "--",
-          "<Cmd>lua MiniTrailspace.trim()<CR><Plug>RInsertAssign",
-          { buffer = true, noremap = true }
-        )
-        vim.keymap.set(
-          "i",
-          ",,",
-          "<Cmd>lua MiniTrailspace.trim()<CR><Plug>RInsertPipe<CR><esc>o",
-          { buffer = true, noremap = true }
-        )
-        local r_clues = {
-          { mode = "n", keys = "<localleader>a", desc = "+batch" },
-          { mode = "n", keys = "<localleader>b", desc = "+between/debug" },
-          { mode = "n", keys = "<localleader>c", desc = "+substitute" },
-          { mode = "n", keys = "<localleader>f", desc = "+functions" },
-          { mode = "n", keys = "<localleader>i", desc = "+install" },
-          { mode = "n", keys = "<localleader>k", desc = "+knit" },
-          { mode = "n", keys = "<localleader>p", desc = "+paragraph" },
-          { mode = "n", keys = "<localleader>r", desc = "+regular" },
-          { mode = "n", keys = "<localleader>s", desc = "+selection" },
-          { mode = "n", keys = "<localleader>t", desc = "+dput" },
-          { mode = "n", keys = "<localleader>u", desc = "+undebug" },
-        }
-        vim.b.miniclue_config = {
-          clues = {
-            r_clues,
-          },
-          triggers = {
-            { mode = "n", keys = "<localleader>", desc = "+R" },
-          },
-        }
-      end,
-    },
-    pdfviewer = "zathura",
-  })
+          vim.bo.comments = [[:#',:####,:###,:##,:#]]
+          -- Keybindings
+          vim.keymap.set("n", "<Enter>", "<Plug>RDSendLine", { buffer = true })
+          vim.keymap.set("v", "<Enter>", "<Plug>RSendSelection", { buffer = true })
+          vim.keymap.set(
+            "i",
+            "--",
+            "<Cmd>lua MiniTrailspace.trim()<CR><Plug>RInsertAssign",
+            { buffer = true, noremap = true }
+          )
+          vim.keymap.set(
+            "i",
+            ",,",
+            "<Cmd>lua MiniTrailspace.trim()<CR><Plug>RInsertPipe<CR><esc>o",
+            { buffer = true, noremap = true }
+          )
+          local r_clues = {
+            { mode = "n", keys = "<localleader>a", desc = "+batch" },
+            { mode = "n", keys = "<localleader>b", desc = "+between/debug" },
+            { mode = "n", keys = "<localleader>c", desc = "+substitute" },
+            { mode = "n", keys = "<localleader>f", desc = "+functions" },
+            { mode = "n", keys = "<localleader>i", desc = "+install" },
+            { mode = "n", keys = "<localleader>k", desc = "+knit" },
+            { mode = "n", keys = "<localleader>p", desc = "+paragraph" },
+            { mode = "n", keys = "<localleader>r", desc = "+regular" },
+            { mode = "n", keys = "<localleader>s", desc = "+selection" },
+            { mode = "n", keys = "<localleader>t", desc = "+dput" },
+            { mode = "n", keys = "<localleader>u", desc = "+undebug" },
+          }
+          vim.b.miniclue_config = {
+            clues = {
+              r_clues,
+            },
+            triggers = {
+              { mode = "n", keys = "<localleader>", desc = "+R" },
+            },
+          }
+        end,
+      },
+      pdfviewer = "zathura",
+    })
+  end
 end)
 
 

@@ -119,7 +119,7 @@ local terminal_commands = {
   clickhouse_local = "clickhouse local -m",
   duckdb = "duckdb",
   julia = "julia --project=@.",
-  python = "uv run python",
+  python = "uv run ipython",
   shell = "echo 'Hello " .. vim.env.USER .. "!'",
 }
 

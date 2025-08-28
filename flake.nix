@@ -9,7 +9,7 @@
     # Nix inputs
     # TODO: move this to stable once 25.11 is out
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-25.tar.gz";
 
@@ -102,13 +102,13 @@
         )
 
         ### Unstable pkgs
-        (
-          final: prev: let
-            pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.system};
-          in {
-            clickhouse-lts = pkgs-unstable.clickhouse-lts;
-          }
-        )
+        # (
+        #   final: prev: let
+        #     pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.system};
+        #   in {
+        #     clickhouse-lts = pkgs-unstable.clickhouse-lts;
+        #   }
+        # )
 
         ### General fixes
         (

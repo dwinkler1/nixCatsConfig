@@ -227,6 +227,7 @@ vim.keymap.set("n", "<leader>tc", '<Cmd>lua Config.terminal.open_clickhouse_clie
   { desc = "Open Clickhouse client" })
 vim.keymap.set("n", "<leader>tl", '<Cmd>lua Config.terminal.open_clickhouse_local()<CR>',
   { desc = "Open Clickhouse local" })
+vim.keymap.set("n", "<leader>tp", '<Cmd>lua Config.terminal.open_python()<CR>', { desc = "Open Python" })
 vim.keymap.set("n", "<leader>tj", '<Cmd>lua Config.terminal.open_julia()<CR>', { desc = "Open Julia" })
 vim.keymap.set("n", "<leader>td", '<Cmd>lua Config.terminal.open_duckdb()<CR>', { desc = "Open DuckDB" })
 vim.keymap.set("n", "<leader>tx", '<Cmd>lua Config.terminal.open_in_terminal()<CR>', { desc = "Terminal Command" })

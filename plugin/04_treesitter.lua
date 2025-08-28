@@ -168,6 +168,7 @@ function M.move_to_next_non_empty_line()
 
   return true
 end
+
 function M.vselect_node(node)
   if not node then
     return false
@@ -195,7 +196,6 @@ function M.select_until_global(global_nodes)
 
   local node_type = node:type()
 
-  vim.notify("Node type: " .. node:type())
   if node_type == root_node then
     print("Cursor is on the root " .. root_node .. " node or in an empty area.")
     return nil
@@ -212,14 +212,11 @@ function M.select_until_global(global_nodes)
   local parent = node:parent()
   local parent_type = parent:type() or ""
   if parent and is_in_list(global_nodes, parent_type) then
-    vim.notify("Parent type: " .. parent_type)
     if M.vselect_node(node) then
       return node
     end
   end
   while parent and not is_in_list(global_nodes, parent:type()) do
-    vim.notify("Parent type: " .. parent:type())
-    vim.notify("Node type: " .. node:type())
     node = parent
     parent = node:parent()
   end
@@ -240,10 +237,10 @@ function M.slime_send_region()
     vim.notify("slime plugin not available", vim.log.levels.ERROR)
     return
   end
-  
+
   local slime_command = ":<C-u>call slime#send_op(visualmode(), 1)<CR>"
   local termcodes = vim.api.nvim_replace_termcodes(slime_command, true, true, true)
-  
+
   vim.api.nvim_feedkeys(termcodes, "x", true)
 end
 
@@ -256,7 +253,6 @@ function M.send_repl(global_nodes)
     local cur_type = cur_node:type()
     if COMMENT_TYPES[cur_type] or is_in_list(global_nodes, cur_type) then
       M.move_to_next_non_empty_line()
-      print("moving to next")
     end
   end
 
@@ -272,6 +268,45 @@ function M.send_repl(global_nodes)
   -- Move cursor and continue
   ts_utils.goto_node(sel_node, true)
   M.move_to_next_non_empty_line()
+end
+
+function M.setup_keybindings(global_nodes)
+  local current_global_nodes = global_nodes
+
+  vim.keymap.set({ 'n' }, '<localleader>r', function()
+      current_global_nodes = M.set_global_nodes()
+    end,
+    { noremap = true, silent = true, desc = "set global_nodes", buffer = true })
+
+  vim.keymap.set({ 'n', 'v' }, '<localleader>v', function()
+      M.move_to_next_non_empty_line(); M.select_until_global(current_global_nodes)
+    end,
+    { noremap = true, silent = true, desc = "Visual select next node after WS", buffer = true })
+
+  vim.keymap.set('n', '<localleader>a', function() M.send_repl(current_global_nodes) end,
+    { noremap = true, silent = true, desc = "Send node to REPL", buffer = true })
+
+  vim.keymap.set({ 'n', 'i' }, '<S-CR>', function() M.send_repl(current_global_nodes) end,
+    { noremap = true, silent = true, desc = "Send node to REPL", buffer = true })
+
+  vim.keymap.set('n', '<CR>', function() M.send_repl(current_global_nodes) end,
+    { noremap = true, silent = true, desc = "Send node to REPL", buffer = true })
+
+  vim.keymap.set('n', '<localleader>n',
+    function() current_global_nodes = M.add_global_node(current_global_nodes) end,
+    { noremap = true, silent = true, desc = "Add node under cursor to globals", buffer = true })
+
+  vim.keymap.set('n', '<localleader>x',
+    function() current_global_nodes = M.remove_global_node(current_global_nodes) end,
+    { noremap = true, silent = true, desc = "Remove node under cursor from globals", buffer = true })
+
+  vim.keymap.set('n', '<localleader>o', function()
+    pout = table.concat(global_nodes, ', ') .. ""
+    print(pout)
+  end, { noremap = true, silent = true, desc = "Print globals", buffer = true })
+
+  vim.keymap.set('n', '<localleader>p', function() M.get_type() end,
+    { noremap = true, silent = true, desc = "Print node type", buffer = true })
 end
 
 Config.treesitter_helpers = M
