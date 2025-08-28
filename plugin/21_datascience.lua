@@ -37,7 +37,7 @@ end)
 
 -- r
 now(function()
-  if nixCats('lua.gitPlugins') then
+  if nixCats('gitPlugins') then
     vim.g.rout_follow_colorscheme = true
     local r = require("r")
     r.setup({
