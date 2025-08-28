@@ -194,7 +194,7 @@ later(function()
   require("copilot").setup({
     suggestion = { enabled = false },
     panel = { enabled = false },
-    filetypes = { markdown = true, help = true },
+    filetypes = { markdown = true, help = true, ["."] = true },
     server_opts_overrides = {
       settings = {
         telemetry = { telemetryLevel = 'off' }
