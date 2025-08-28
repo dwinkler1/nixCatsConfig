@@ -7,11 +7,11 @@ if not Config.isNixCats then
   local m_add = MiniDeps.add
 
   now(function()
-    add({ source = "R-nvim/R.nvim" })
+    m_add({ source = "R-nvim/R.nvim" })
   end)
 
   now_if_args(function()
-    add({ source = "jmbuhr/otter.nvim" })
+    m_add({ source = "jmbuhr/otter.nvim" })
   end)
 
   later(function()

@@ -44,17 +44,52 @@ Config.try_opendir = function()
 end
 
 -- For mini.start
+--- Edit a file in the specified window, with smart buffer reuse
+--- @param path string: File path to edit
+--- @param win_id number|nil: Window ID (defaults to current window)
+--- @return number|nil: Buffer ID on success, nil on failure
 Config.edit = function(path, win_id)
-  if type(path) ~= 'string' then return end
-  local b = vim.api.nvim_win_get_buf(win_id or 0)
-  local try_mimic_buf_reuse = (vim.fn.bufname(b) == '' and vim.bo[b].buftype ~= 'quickfix' and not vim.bo[b].modified)
-      and (#vim.fn.win_findbuf(b) == 1 and vim.deep_equal(vim.fn.getbufline(b, 1, '$'), { '' }))
-  local buf_id = vim.fn.bufadd(vim.fn.fnamemodify(path, ':.'))
-  -- Showing in window also loads. Use `pcall` to not error with swap messages.
-  pcall(vim.api.nvim_win_set_buf, win_id or 0, buf_id)
-  vim.bo[buf_id].buflisted = true
-  if try_mimic_buf_reuse then pcall(vim.api.nvim_buf_delete, b, { unload = false }) end
-  return buf_id
+  -- Validate inputs
+  if type(path) ~= 'string' or path == '' then
+    return nil
+  end
+
+  win_id = win_id or 0
+  if not vim.api.nvim_win_is_valid(win_id == 0 and vim.api.nvim_get_current_win() or win_id) then
+    return nil
+  end
+
+  local current_buf = vim.api.nvim_win_get_buf(win_id)
+
+  -- Check if current buffer can be reused (empty, unmodified, single window)
+  local is_empty_buffer = vim.fn.bufname(current_buf) == ''
+  local is_regular_buffer = vim.bo[current_buf].buftype ~= 'quickfix'
+  local is_unmodified = not vim.bo[current_buf].modified
+  local is_single_window = #vim.fn.win_findbuf(current_buf) == 1
+  local has_only_empty_line = vim.deep_equal(vim.fn.getbufline(current_buf, 1, '$'), { '' })
+
+  local can_reuse_buffer = is_empty_buffer and is_regular_buffer and is_unmodified
+      and is_single_window and has_only_empty_line
+
+  -- Create or get buffer for the file
+  local normalized_path = vim.fn.fnamemodify(path, ':.')
+  local target_buf = vim.fn.bufadd(normalized_path)
+
+  -- Set buffer in window (use pcall to handle swap file messages gracefully)
+  local success = pcall(vim.api.nvim_win_set_buf, win_id, target_buf)
+  if not success then
+    return nil
+  end
+
+  -- Ensure buffer is listed
+  vim.bo[target_buf].buflisted = true
+
+  -- Clean up old buffer if it was reused
+  if can_reuse_buffer then
+    pcall(vim.api.nvim_buf_delete, current_buf, { unload = false })
+  end
+
+  return target_buf
 end
 
 -- Load library

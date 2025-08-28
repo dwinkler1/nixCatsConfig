@@ -19,7 +19,7 @@ later(function()
       json = { "prettier" },
       python = { "black" },
       nix = { "alejandra" },
-      r = { "my_styler" },
+      -- r = { "my_styler" },
       rmd = { "injected" },
       quarto = { "injected" },
     },

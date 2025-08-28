@@ -37,7 +37,7 @@
   } @ inputs: let
     inherit (nixCats) utils;
     luaPath = ./.;
-    forEachSystem = utils.eachSystem ["aarch64-darwin" "x86_64-linux" "aarch64-linux"]; #nixpkgs.lib.platforms.all;
+    forEachSystem = utils.eachSystem ["aarch64-darwin" "x86_64-linux" "aarch64-linux"];
 
     # Calls: import nixpkgs { config = extra_pkg_config; inherit system; }
     extra_pkg_config = {
@@ -62,11 +62,8 @@
         (
           final: prev: let
             reqPkgs = with prev.rpkgs.rPackages; [
-              Hmisc
-              Rcpp
-              arm
+              arrow
               broom
-              car
               data_table
               devtools
               janitor
@@ -98,14 +95,6 @@
           final: prev: let
             reqPkgs = pyPackages:
               with pyPackages; [
-                ipython
-                numpy
-                optuna
-                polars
-                requests
-                scikit-learn
-                statsmodels
-                xgboost
               ];
           in {
             python = prev.python3.withPackages reqPkgs;
@@ -320,6 +309,11 @@
         test = {
           TESTVAR = "It worked!";
         };
+      };
+
+      ## lua config
+      optionalLuaPreInit = {
+        external = [''vim.o.shell = "${pkgs.zsh}/bin/zsh"''];
       };
 
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh

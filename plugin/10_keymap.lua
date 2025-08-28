@@ -37,6 +37,7 @@ _G.Config.leader_group_clues = {
   { mode = 'x', keys = '<Leader>l',  desc = '+LSP' },
   { mode = 'x', keys = '<Leader>r',  desc = '+R' },
   { mode = 'n', keys = '<Leader>z',  desc = '+ZK' },
+  { mode = 'x', keys = '<leader>a',  desc = '+AI' },
 }
 
 -- Create `<Leader>` mappings
@@ -64,14 +65,21 @@ nmap_leader('<Tab>', '<Cmd>bnext<CR>', 'Next buffer')
 nmap_leader('<S-Tab>', '<Cmd>bprev<CR>', 'Prev buffer')
 
 -- a is for 'AI'
-nmap_leader("ai", "<cmd>CodeCompanionActions<CR>", "Chat Action")
 nmap_leader("ac", "<cmd>CodeCompanionChat Toggle<CR>", "Chat Toggle")
-nmap_leader("an", "<cmd>CodeCompanionChat Add<CR>", "Chat New")
+nmap_leader("ae", "<cmd>CodeCompanion /explain<CR>", "Explain Code")
 nmap_leader("af", "<cmd>CodeCompanion /fix<CR>", "Fix Code")
-nmap_leader("ae", "<cmd>CodeCompanion /exlain<CR>", "Explain Code")
-nmap_leader("al", "<cmd>CodeCompanion /lsp<CR>", "Explain LSP Diagnostics")
 nmap_leader("ag", "<cmd>CodeCompanion /commit<CR>", "Generate commit message")
---- CopilotChat defined with plugin
+nmap_leader("ai", "<cmd>CodeCompanionActions<CR>", "Chat Action")
+nmap_leader("al", "<cmd>CodeCompanion /lsp<CR>", "Explain LSP Diagnostics")
+nmap_leader("an", "<cmd>CodeCompanionChat Add<CR>", "Chat New")
+nmap_leader("as", "<cmd>CodeCompanion /suggest<CR>", "Suggest Improvements")
+nmap_leader("ax", "<cmd>CodeCompanion /fixer<CR>", "Code Fixer")
+nmap_leader("ax", "<cmd>CodeCompanion /fixer<CR>", "Code Fixer")
+xmap_leader("ae", "<cmd>CodeCompanion /explain<CR>", "Explain Code")
+xmap_leader("af", "<cmd>CodeCompanion /fix<CR>", "Fix Code")
+xmap_leader("ap", "<cmd>CodeCompanion /expert<CR>", "Code Fixer")
+xmap_leader("ap", "<cmd>CodeCompanion /expert<CR>", "Code Fixer")
+xmap_leader("as", "<cmd>CodeCompanion /suggest<CR>", "Suggest Improvements")
 
 -- b is for 'buffer'
 nmap_leader('bb', '<Cmd>b#<CR>', 'Alternate')
@@ -144,8 +152,8 @@ nmap_leader('gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>', 'Show at cursor')
 xmap_leader('gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>', 'Show at selection')
 
 -- j/k navigate quickfix
-nmap_leader("j", '<cmd>cnext<CR>zz',  "Quickfix next")
-nmap_leader("k", '<cmd>cprev<CR>zz',  "Quickfix prev")
+nmap_leader("j", '<cmd>cnext<CR>zz', "Quickfix next")
+nmap_leader("k", '<cmd>cprev<CR>zz', "Quickfix prev")
 
 -- l is for 'LSP' (Language Server Protocol)
 vim.keymap.set({ 'n' }, 'grd', '<Cmd>lua vim.lsp.buf.definition()<CR>', { desc = 'Definition' })
@@ -186,7 +194,9 @@ nmap_leader('oS', '<Cmd>lua Config.insert_section()<CR>', 'Section insert')
 nmap_leader('ot', '<Cmd>lua MiniTrailspace.trim()<CR>', 'Trim trailspace')
 nmap_leader('oT', trailspace_toggle_command, 'Trailspace hl toggle')
 nmap_leader('oz', '<Cmd>lua MiniMisc.zoom()<CR>', 'Zoom toggle')
-nmap_leader('ow', "<Cmd>lua MiniSessions.write(vim.fn.input('Session name: ', string.match(vim.fn.getcwd(), \"[^/]+$\") .. '-session.vim'))<CR>", 'Write session')
+nmap_leader('ow',
+  "<Cmd>lua MiniSessions.write(vim.fn.input('Session name: ', string.match(vim.fn.getcwd(), \"[^/]+$\") .. '-session.vim'))<CR>",
+  'Write session')
 
 -- r is for 'R'
 nmap_leader('rc', '<Cmd>RSend devtools::check()<CR>', 'Check')
@@ -211,14 +221,16 @@ nmap_leader('s', '<Cmd>SlimeSendCurrentLine<CR>j', 'Send to terminal')
 --   mode) send text and move one line down from bottom of selection.
 xmap_leader('s', '<Plug>SlimeRegionSend<CR>', 'Send to terminal')
 
--- t is for 'terminal' (uses 'neoterm') and 'minitest'
+-- t is for 'terminal'
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
-vim.keymap.set("n", "<leader>tc", '<Cmd>lua Config.terminal.open_clickhouse_client()<CR>', { desc = "Open Clickhouse client" })
-vim.keymap.set("n", "<leader>tl", '<Cmd>lua Config.terminal.open_clickhouse_local()<CR>', { desc = "Open Clickhouse local" })
+vim.keymap.set("n", "<leader>tc", '<Cmd>lua Config.terminal.open_clickhouse_client()<CR>',
+  { desc = "Open Clickhouse client" })
+vim.keymap.set("n", "<leader>tl", '<Cmd>lua Config.terminal.open_clickhouse_local()<CR>',
+  { desc = "Open Clickhouse local" })
 vim.keymap.set("n", "<leader>tj", '<Cmd>lua Config.terminal.open_julia()<CR>', { desc = "Open Julia" })
 vim.keymap.set("n", "<leader>td", '<Cmd>lua Config.terminal.open_duckdb()<CR>', { desc = "Open DuckDB" })
 vim.keymap.set("n", "<leader>tx", '<Cmd>lua Config.terminal.open_in_terminal()<CR>', { desc = "Terminal Command" })
-vim.keymap.set("n", "<leader>tt", '<Cmd>lua Config.terminal.open_in_terminal("")<CR>', { desc = "Terminal" })
+vim.keymap.set("n", "<leader>tt", '<Cmd>lua Config.terminal.open_shell()<CR>', { desc = "Terminal" })
 
 -- u is for UI
 nmap_leader('ut', '<Cmd>TSContext toggle<CR>', 'Toggle TScontext')
@@ -244,24 +256,21 @@ map_pick_core('vc', '', 'Core visits (all)')
 map_pick_core('vC', nil, 'Core visits (cwd)')
 
 -- w is for 'windows'
-nmap_leader("wh", "<C-w>h", "Go to Left Window",    {remap = true})
-nmap_leader("wj", "<C-w>j", "Go to Lower Window",   {remap = true})
-nmap_leader("wk", "<C-w>k", "Go to Upper Window",   {remap = true})
-nmap_leader("wl", "<C-w>l", "Go to Right Window",   {remap = true})
+nmap_leader("wh", "<C-w>h", "Go to Left Window", { remap = true })
+nmap_leader("wj", "<C-w>j", "Go to Lower Window", { remap = true })
+nmap_leader("wk", "<C-w>k", "Go to Upper Window", { remap = true })
+nmap_leader("wl", "<C-w>l", "Go to Right Window", { remap = true })
 
-nmap_leader("_",  "<C-W>s", "Split Window Below",   {remap = true})
-nmap_leader("|",  "<C-W>v", "Split Window Right",   {remap = true})
-nmap_leader("wd", "<C-W>c", "Delete Window",        {remap = true})
-nmap_leader("wo", "<C-W>o", "Delete Other Windows", {remap = true})
+nmap_leader("_", "<C-W>s", "Split Window Below", { remap = true })
+nmap_leader("|", "<C-W>v", "Split Window Right", { remap = true })
+nmap_leader("wd", "<C-W>c", "Delete Window", { remap = true })
+nmap_leader("wo", "<C-W>o", "Delete Other Windows", { remap = true })
 
 -- z is for 'ZettelKasten'
 nmap_leader("zo", '<Cmd>ZkNotes<CR>', "Notes")
 nmap_leader("zt", '<Cmd>ZkTags<cr>', "Tags")
-nmap_leader("zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", "New" )
+nmap_leader("zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", "New")
 nmap_leader("zj", "<Cmd>ZkNew { group = 'journal' }<CR>", "Journal Entry")
 nmap_leader("zg", "<Cmd>ZkNew { title = vim.fn.input('Title: '), group = 'garden' }<CR>", "Garden Entry")
 
 -- stylua: ignore end
-
-
-

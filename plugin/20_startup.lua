@@ -189,6 +189,7 @@ now(function()
       { mode = 'n', keys = '<Leader>' },      -- Leader triggers
       { mode = 'n', keys = '<LocalLeader>' }, -- LocalLeader triggers
       { mode = 'x', keys = '<Leader>' },
+      { mode = 'x', keys = '<LocalLeader>' },
       { mode = 'n', keys = [[\]] },           -- mini.basics
       { mode = 'n', keys = '[' },             -- mini.bracketed
       { mode = 'n', keys = ']' },
