@@ -25,5 +25,6 @@ jobs:
       with:
         name: rde
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-        extraPullNames: rstats-on-nix, nix-community    - run: nix build
+        extraPullNames: rstats-on-nix, nix-community    
+    - run: nix build
     - run: nix flake check
