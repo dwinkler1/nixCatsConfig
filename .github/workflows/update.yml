@@ -17,10 +17,10 @@ jobs:
       - name: Install Determinate Nix
         uses: DeterminateSystems/determinate-nix-action@v3
       - uses: cachix/cachix-action@v14
-          with:
-            name: rde
-            authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-            extraPullNames: rstats-on-nix, nix-community
+        with:
+          name: rde
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          extraPullNames: rstats-on-nix, nix-community
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@v25
         with:
