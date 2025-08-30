@@ -24,3 +24,4 @@ if not Config.isNixCats then
 end
 
 require('mini.deps').setup()
+

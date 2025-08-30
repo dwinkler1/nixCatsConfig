@@ -227,6 +227,14 @@
             plugin = mini-nvim;
             name = "mini.nvim";
           }
+          {
+            plugin = cyberdream-nvim;
+            name = "cyberdream";
+          }
+          {
+            plugin = onedark-nvim;
+            name = "onedark";
+          }
         ];
         lua = with pkgs.vimPlugins; [
           luvit-meta
@@ -407,6 +415,8 @@
           r = false;
           utils = true;
           test = false;
+          background = "light";
+          colorscheme = "cyberdream";
         };
       };
     };

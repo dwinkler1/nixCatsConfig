@@ -3,27 +3,10 @@ local later = MiniDeps.later
 local now = MiniDeps.now
 
 if not Config.isNixCats then
-  local add = MiniDeps.add
   now(function()
-    add({ name = "mini.nvim" })
+    MiniDeps.add({ name = "mini.nvim" })
   end)
 end
-
-
-now(function()
-  local palette = require('mini.hues').make_palette({
-    background = '#fefcf5',
-    foreground = '#657b83',
-    accent = 'bg',
-    saturation = 'high',
-    n_hues = 8
-  })
-  palette.fg_mid2 = "#586e75"
-  palette.fg_mid = "#073642"
-  palette.bg_edge = "#FDE9E3" --"#fdf6e3"
-  palette.accent_bg = "#eee8d5"
-  require('mini.hues').apply_palette(palette)
-end)
 
 -- Leader key =================================================================
 vim.g.mapleader      = ' '
@@ -61,7 +44,7 @@ vim.o.signcolumn     = 'yes' -- Always show signcolumn or it would frequently sh
 vim.o.splitbelow     = true -- Horizontal splits will be below
 vim.o.splitright     = true -- Vertical splits will be to the right
 vim.o.wrap           = true -- Display long lines as just one line
-vim.o.bg             = 'light' -- Set background
+vim.o.background     = Config.isNixCats and nixCats('background') or 'dark' --'light' -- Set background
 
 vim.o.listchars      = table.concat({ 'extends:…', 'nbsp:␣', 'precedes:…', 'tab:> ', 'trail:·' }, ',') -- Special text symbols
 vim.o.cursorlineopt  = 'screenline,number' -- Show cursor line only screen line when wrapped
@@ -115,7 +98,7 @@ vim.o.formatlistpat    = [[^\s*[0-9\-\+\*]\+[\.\)]*\s\+]]
 
 -- Spelling ===================================================================
 vim.o.spelllang        = 'en_us,de' -- Define spelling dictionaries
-vim.o.spelloptions     = 'camel' -- Treat parts of camelCase words as seprate words
+vim.o.spelloptions     = 'camel'    -- Treat parts of camelCase words as seprate words
 
 -- vim.o.dictionary = vim.fn.stdpath('config') .. '/misc/dict/english.txt' -- Use specific dictionaries
 

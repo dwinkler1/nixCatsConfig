@@ -56,18 +56,26 @@ end
 
 -- Mini.nvim
 now(function()
-  local palette = require('mini.hues').make_palette({
-    background = '#fefcf5',
-    foreground = '#657b83',
-    accent = 'bg',
-    saturation = 'high',
-    n_hues = 8
-  })
-  palette.fg_mid2 = "#586e75"
-  palette.fg_mid = "#073642"
-  palette.bg_edge = "#fdf6e3"
-  palette.accent_bg = "#eee8d5"
-  require('mini.hues').apply_palette(palette)
+  local colorschemeName = nixCats('colorscheme')
+  if colorschemeName == 'light' then
+    local palette = require('mini.hues').make_palette({
+      background = '#fefcf5',
+      foreground = '#657b83',
+      accent = 'bg',
+      saturation = 'high',
+      n_hues = 8
+    })
+    palette.fg_mid2 = "#586e75"
+    palette.fg_mid = "#073642"
+    palette.bg_edge = "#fdf6e3"
+    palette.accent_bg = "#eee8d5"
+    require('mini.hues').apply_palette(palette)
+  else
+    if colorschemeName == "cyberdream" and vim.o.background == 'light' then
+      colorschemeName = colorschemeName .. '-light'
+    end
+    vim.cmd.colorscheme(colorschemeName)
+  end
 end)
 
 now(function()
@@ -190,8 +198,8 @@ now(function()
       { mode = 'n', keys = '<LocalLeader>' }, -- LocalLeader triggers
       { mode = 'x', keys = '<Leader>' },
       { mode = 'x', keys = '<LocalLeader>' },
-      { mode = 'n', keys = [[\]] },           -- mini.basics
-      { mode = 'n', keys = '[' },             -- mini.bracketed
+      { mode = 'n', keys = [[\]] }, -- mini.basics
+      { mode = 'n', keys = '[' },   -- mini.bracketed
       { mode = 'n', keys = ']' },
       { mode = 'x', keys = '[' },
       { mode = 'x', keys = ']' },
@@ -283,17 +291,17 @@ now_if_args(function()
 
   require 'treesitter-context'.setup {
     enable = false,
-    multiwindow = false,    -- Enable multiwindow support.
-    max_lines = 30,          -- How many lines the window should span. Values <= 0 mean no limit.
-    min_window_height = 50,  -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+    multiwindow = false,      -- Enable multiwindow support.
+    max_lines = 30,           -- How many lines the window should span. Values <= 0 mean no limit.
+    min_window_height = 50,   -- Minimum editor window height to enable context. Values <= 0 mean no limit.
     line_numbers = true,
     multiline_threshold = 10, -- Maximum number of lines to show for a single context
-    trim_scope = 'outer',   -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-    mode = 'cursor',        -- Line used to calculate context. Choices: 'cursor', 'topline'
+    trim_scope = 'outer',     -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+    mode = 'cursor',          -- Line used to calculate context. Choices: 'cursor', 'topline'
     -- Separator between context and content. Should be a single character string, like '-'.
     -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
     separator = '-',
-    zindex = 20,   -- The Z-index of the context window
+    zindex = 20,     -- The Z-index of the context window
     on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
   }
 end)
