@@ -90,6 +90,7 @@ later(function()
     },
     options = {
       linematch = 1000,
+      algorithm = 'myers',
     },
   })
 end)
