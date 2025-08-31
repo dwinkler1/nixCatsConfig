@@ -155,6 +155,7 @@
       lspsAndRuntimeDeps = {
         external = with pkgs; [
           clickhouse-lts
+          devenv
           duckdb
           fd
           gawk
@@ -185,12 +186,6 @@
           zathura
           zoxide
           zsh
-        ];
-        cpp = with pkgs; [
-          clang-tools
-          cmake
-          clang
-          ccls
         ];
         markdown = with pkgs; [
           python313Packages.pylatexenc
@@ -418,7 +413,6 @@
           external = true;
           general = true;
           gitPlugins = true;
-          cpp = false;
           lua = true;
           markdown = true;
           nix = true;
@@ -459,6 +453,7 @@
         default = pkgs.mkShell {
           name = defaultPackageName;
           packages = [defaultPackage];
+          nativeBuildInputs = with pkgs; [devenv];
           inputsFrom = [];
           shellHook = ''
           '';

@@ -3,3 +3,4 @@
 /.luarc.json
 .DS_Store
 .direnv
+cpp
