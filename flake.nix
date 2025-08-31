@@ -186,6 +186,12 @@
           zoxide
           zsh
         ];
+        cpp = with pkgs; [
+          clang-tools
+          cmake
+          clang
+          ccls
+        ];
         markdown = with pkgs; [
           python313Packages.pylatexenc
           quarto
@@ -202,7 +208,7 @@
         python = with pkgs; [
           python
           nodejs
-          pyright
+          basedpyright
           uv
         ];
         r = with pkgs; [
@@ -234,6 +240,10 @@
           {
             plugin = onedark-nvim;
             name = "onedark";
+          }
+          {
+            plugin = tokyonight-nvim;
+            name = "tokyonight";
           }
         ];
         lua = with pkgs.vimPlugins; [
@@ -354,7 +364,7 @@
         # see :help nixCats.flake.outputs.settings
         settings = {
           suffix-path = false;
-          suffix-LD = true;
+          suffix-LD = false;
           wrapRc = true;
           autowrapRuntimeDeps = "prefix";
           # your alias may not conflict with your other packages.
@@ -408,6 +418,7 @@
           external = true;
           general = true;
           gitPlugins = true;
+          cpp = false;
           lua = true;
           markdown = true;
           nix = true;

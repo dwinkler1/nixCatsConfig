@@ -17,8 +17,8 @@ now_if_args(function()
   vim.lsp.enable({
     "clangd",
     --    "nushell",
-    "pyright",
-    "rust_analyzer",
+    "basedpyright",
+    -- "rust_analyzer",
     -- "air",
     "r_language_server",
     --    "marksman",
@@ -67,6 +67,7 @@ now_if_args(function()
   vim.lsp.config('marksman', {
     filetypes = { "markdown", "markdown_inline", "codecompanion" },
   })
+
   vim.lsp.config('lua_ls', {
     settings = {
       Lua = {

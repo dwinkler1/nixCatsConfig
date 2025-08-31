@@ -8,7 +8,7 @@ local BLINK_VERSION = "v1.4.1"
 -- Plugin sources configuration
 local PLUGIN_SOURCES = {
   "hrsh7th/cmp-cmdline",
-  "xzbdmw/colorful-menu.nvim", 
+  "xzbdmw/colorful-menu.nvim",
   "zbirenbaum/copilot.lua",
   "jmbuhr/cmp-pandoc-references",
   "fang2hou/blink-copilot",
@@ -18,7 +18,7 @@ local PLUGIN_SOURCES = {
 
 local PLUGIN_ADDS = {
   "cmp-cmdline",
-  "blink.compat", 
+  "blink.compat",
   "colorful-menu.nvim",
   "cmp-pandoc-references",
   "cmp-r"
@@ -56,18 +56,18 @@ local function get_blink_fuzzy_setting()
   local setting = {
     sorts = { "exact", "score", "sort_text" }
   }
-  
+
   if not Config.isNixCats then
     setting.prebuilt_binary = { force_version = BLINK_VERSION }
   end
-  
+
   return setting
 end
 
 -- Plugin loading
 if not Config.isNixCats then
   local m_add = MiniDeps.add
-  
+
   now_if_args(function()
     m_add({
       source = "saghen/blink.cmp",
@@ -99,7 +99,7 @@ local function get_codecompanion_config()
         show_settings = false,
         window = {
           layout = "vertical",
-          position = "right", 
+          position = "right",
           width = 0.33,
         },
       },
@@ -127,7 +127,7 @@ local function get_codecompanion_config()
       },
       ["Code Fixer"] = {
         strategy = "chat",
-        description = "Fix code errors with expert guidance", 
+        description = "Fix code errors with expert guidance",
         opts = create_common_opts("<localleader>af", "afixer"),
         prompts = {
           {
@@ -158,7 +158,7 @@ local function get_codecompanion_config()
         },
         prompts = {
           {
-            role = "system", 
+            role = "system",
             content = create_system_prompt(
               "When asked to improve code, follow these steps:\n" ..
               "1. Identify the programming language.\n" ..
@@ -194,12 +194,34 @@ later(function()
   require("copilot").setup({
     suggestion = { enabled = false },
     panel = { enabled = false },
-    filetypes = { markdown = true, help = true, ["."] = true },
+    filetypes = {
+      help = true,
+      julia = true,
+      lua = true,
+      markdown = true,
+      nix = true,
+      python = true,
+      r = true,
+      sh = function()
+        if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then
+          -- disable for .env files
+          return false
+        end
+        return true
+      end,
+      ["."] = false
+    },
     server_opts_overrides = {
       settings = {
         telemetry = { telemetryLevel = 'off' }
       }
-    }
+    },
+    should_attach = function(_, bufname)
+      if string.match(bufname, "env") then
+        return false
+      end
+      return true
+    end
   })
 end)
 

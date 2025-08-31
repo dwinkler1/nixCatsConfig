@@ -235,6 +235,7 @@ vim.keymap.set("n", "<leader>tt", '<Cmd>lua Config.terminal.open_shell()<CR>', {
 
 -- u is for UI
 nmap_leader('ut', '<Cmd>TSContext toggle<CR>', 'Toggle TScontext')
+nmap_leader('ua', '<Cmd>Copilot toggle<CR>', 'Toggle AI completion')
 
 -- v is for 'visits'
 nmap_leader('vv', '<Cmd>lua MiniVisits.add_label("core")<CR>', 'Add "core" label')
