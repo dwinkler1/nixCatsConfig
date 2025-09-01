@@ -170,6 +170,8 @@ vim.api.nvim_create_autocmd('FileType', {
 if vim.g.neovide then
   vim.g.neovide_cursor_smooth_blink = true
   vim.g.neovide_cursor_animation_length = 0
+  vim.g.neovide_font_hinting = 'none'
+  vim.g.neovide_font_edging = 'subpixelantialias'
   vim.keymap.set("n", "<leader>ne", "<cmd>NeovideReload<CR>", { desc = "Reload Neovide" })
   vim.keymap.set("n", "<leader>nt", "<cmd>NeovideToggleTransparency<CR>", { desc = "Toggle Neovide Transparency" })
   vim.keymap.set(
