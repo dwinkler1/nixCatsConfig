@@ -13,6 +13,15 @@
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-25.tar.gz";
 
+    ## Extra R packages
+    fran = {
+      url = "github:dwinkler1/fran";
+      inputs = {
+        nixpkgs.follows = "rixpkgs";
+        nvimcom.follows = "plugins-r";
+      };
+    };
+
     # neovim plugs
     "plugins-r" = {
       url = "github:R-nvim/R.nvim";
@@ -59,6 +68,7 @@
         (final: prev: {
           rpkgs = inputs.rixpkgs.legacyPackages.${prev.system};
         })
+        inputs.fran.overlays.default
         (
           final: prev: let
             reqPkgs = with prev.rpkgs.rPackages; [
@@ -72,17 +82,7 @@
               reprex
               styler
               tidyverse
-              (buildRPackage {
-                name = "nvimcom";
-                src = inputs.plugins-r;
-                sourceRoot = "source/nvimcom";
-                buildInputs = with prev.rpkgs; [
-                  R
-                  stdenv.cc.cc
-                  gnumake
-                ];
-                propagatedBuildInputs = [];
-              })
+              prev.extraRPackages.nvimcom
             ];
           in {
             quarto = prev.rpkgs.quarto.override {extraRPackages = reqPkgs;};
