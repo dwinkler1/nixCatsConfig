@@ -202,7 +202,11 @@ later(function()
   local jump2d = require("mini.jump2d")
   jump2d.setup({
     spotter = jump2d.gen_spotter.pattern("[^%s%p]+"),
-    labels = "asdfghjkl;",
+    allowed_lines = {
+      blank = false,
+      cursor_at = false
+    },
+    labels = "asdfghjklweruiopzxcnm,;",
     view = { dim = true, n_steps_ahead = 2 },
     mappings = {
       start_jumping = "sj",

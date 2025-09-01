@@ -165,21 +165,16 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
   desc = [[Ensure proper 'formatoptions']],
 })
-
--- Neovide
+-- Neovide  ==============================================
 if vim.g.neovide then
+  vim.g.neovide_cursor_vfx_mode = "pixiedust"
   vim.g.neovide_cursor_smooth_blink = true
-  vim.g.neovide_cursor_animation_length = 0
+  vim.g.neovide_cursor_animation_length = 0.02
+  vim.g.neovide_cursor_short_animation_length = 0
   vim.g.neovide_font_hinting = 'none'
   vim.g.neovide_font_edging = 'subpixelantialias'
-  vim.keymap.set("n", "<leader>ne", "<cmd>NeovideReload<CR>", { desc = "Reload Neovide" })
-  vim.keymap.set("n", "<leader>nt", "<cmd>NeovideToggleTransparency<CR>", { desc = "Toggle Neovide Transparency" })
-  vim.keymap.set(
-    "n",
-    "<leader>ns",
-    "<cmd>NeovideToggleSmoothScrolling<CR>",
-    { desc = "Toggle Neovide Smooth Scrolling" }
-  )
+  vim.o.guifont = 'Iosevka Nerd Font,Symbols Nerd Font:h14:#e-subpixelantialias:#h-none'
+  vim.g.neovide_floating_corner_radius = 0.35
   vim.keymap.set("n", "<leader>nf", "<cmd>NeovideFullscreen<CR>", { desc = "Toggle Neovide Fullscreen" })
 end
 
