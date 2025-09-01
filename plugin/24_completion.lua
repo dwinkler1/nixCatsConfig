@@ -86,13 +86,15 @@ end
 local function get_codecompanion_config()
   return {
     adapters = {
-      copilot = function()
-        return require("codecompanion.adapters").extend("copilot", {
-          schema = {
-            model = { default = "claude-sonnet-4" }
-          }
-        })
-      end,
+      http = {
+        copilot = function()
+          return require("codecompanion.adapters").extend("copilot", {
+            schema = {
+              model = { default = "gpt-5" }
+            }
+          })
+        end,
+      }
     },
     display = {
       chat = {
