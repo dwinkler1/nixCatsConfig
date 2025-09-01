@@ -240,6 +240,34 @@
             plugin = tokyonight-nvim;
             name = "tokyonight";
           }
+          {
+            plugin = kanagawa-nvim;
+            name = "kanagawa";
+          }
+          {
+            plugin = gruvbox-nvim;
+            name = "gruvbox";
+          }
+          {
+            plugin = nord-nvim;
+            name = "nord";
+          }
+          {
+            plugin = dracula-nvim;
+            name = "dracula";
+          }
+          {
+            plugin = vscode-nvim;
+            name = "vscode";
+          }
+          {
+            plugin = nightfox-nvim;
+            name = "nightfox";
+          }
+          {
+            plugin = catppuccin-nvim;
+            name = "catppuccin";
+          }
         ];
         lua = with pkgs.vimPlugins; [
           luvit-meta
@@ -420,8 +448,8 @@
           r = false;
           utils = true;
           test = false;
-          background = "light";
-          colorscheme = "cyberdream";
+          background = "dark";
+          colorscheme = "kanagawa";
         };
       };
     };
