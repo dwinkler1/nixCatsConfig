@@ -309,7 +309,14 @@ now_if_args(function()
     sources = {
       default = { "references", "lsp", "path", "snippets", "buffer", "omni", "copilot", "codecompanion", "cmp_r" },
       providers = {
-        path = { score_offset = 50 },
+        path = {
+          score_offset = 50,
+          opts = {
+            get_cwd = function(_)
+              return vim.fn.getcwd()
+            end,
+          },
+        },
         lsp = { score_offset = 40 },
         snippets = { score_offset = 0 },
         cmp_cmdline = {

@@ -70,8 +70,8 @@ now(function()
           )
           vim.keymap.set(
             "i",
-            ",,",
-            "<Cmd>lua MiniTrailspace.trim()<CR><Plug>RInsertPipe<CR><esc>o",
+            ";;",
+            "<Cmd>lua MiniTrailspace.trim()<CR><Plug>RInsertPipe<CR>",
             { buffer = true, noremap = true }
           )
           local r_clues = {
