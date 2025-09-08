@@ -25,7 +25,7 @@ later(function()
   vim.g.slime_no_mappings = true
   add("vim-slime")
   vim.g.slime_cell_delimiter = "# %%"
-  vim.g.slime_bracketed_paste = true
+  vim.g.slime_bracketed_paste = Config.opt_bracket
   vim.g.slime_input_pid = true
   vim.g.slime_suggest_default = true
   --vim.g.slime_menu_config = false

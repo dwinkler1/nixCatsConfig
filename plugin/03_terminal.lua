@@ -1,17 +1,14 @@
 local M = {}
 
 -- Configuration
-M.opt_bracket = true
+Config.opt_bracket = true
 M.opt_term = nil
 
 -- Bracket paste control
 function M.toggle_bracket()
-  M.opt_bracket = not M.opt_bracket
-  return M.opt_bracket
-end
-
-function M.set_bracket(enabled)
-  M.opt_bracket = enabled ~= false
+  Config.opt_bracket = not Config.opt_bracket
+  vim.g.slime_bracketed_paste = Config.opt_bracket
+  return Config.opt_bracket
 end
 
 -- Terminal management
@@ -87,7 +84,7 @@ local function send_to_terminal(text, term_buf)
 
   -- Prepare text with optional bracket paste
   local formatted_text = text
-  if M.opt_bracket then
+  if Config.opt_bracket then
     local ESC = string.char(27)
     formatted_text = ESC .. "[200~" .. text .. ESC .. "[201~"
   end
