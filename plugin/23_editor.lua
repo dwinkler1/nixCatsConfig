@@ -102,6 +102,10 @@ later(function()
       width_focus = 80,
       width_preview = 90,
     },
+    mappings= {
+      mark_goto = "'",
+      synchronize = ':',
+    }
   })
   local minifiles_augroup = vim.api.nvim_create_augroup("ec-mini-files", {})
   vim.api.nvim_create_autocmd("User", {

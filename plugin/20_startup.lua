@@ -206,9 +206,7 @@ now(function()
       { mode = 'i', keys = '<C-x>' }, -- Built-in completion
       { mode = 'n', keys = 'g' },     -- `g` key
       { mode = 'x', keys = 'g' },
-      { mode = 'n', keys = "'" },     -- Marks
       { mode = 'n', keys = '`' },
-      { mode = 'x', keys = "'" },
       { mode = 'x', keys = '`' },
       { mode = 'n', keys = '"' }, -- Registers
       { mode = 'x', keys = '"' },
