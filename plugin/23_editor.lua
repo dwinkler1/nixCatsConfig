@@ -102,7 +102,7 @@ later(function()
       width_focus = 80,
       width_preview = 90,
     },
-    mappings= {
+    mappings = {
       mark_goto = "'",
       synchronize = ':',
     }
