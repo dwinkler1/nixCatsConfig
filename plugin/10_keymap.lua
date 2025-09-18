@@ -231,7 +231,8 @@ vim.keymap.set("n", "<leader>tl", '<Cmd>lua Config.terminal.open_clickhouse_loca
   { desc = "Open Clickhouse local" })
 vim.keymap.set("n", "<leader>tp", '<Cmd>lua Config.terminal.open_python()<CR>', { desc = "Open Python" })
 vim.keymap.set("n", "<leader>tj", '<Cmd>lua Config.terminal.open_julia()<CR>', { desc = "Open Julia" })
-vim.keymap.set("n", "<leader>td", '<Cmd>lua Config.terminal.open_duckdb();Config.terminal.toggle_bracket()<CR>', { desc = "Open DuckDB" })
+vim.keymap.set("n", "<leader>td", '<Cmd>lua Config.terminal.open_duckdb();Config.terminal.toggle_bracket()<CR>',
+  { desc = "Open DuckDB" })
 vim.keymap.set("n", "<leader>tx", '<Cmd>lua Config.terminal.open_in_terminal()<CR>', { desc = "Terminal Command" })
 vim.keymap.set("n", "<leader>tt", '<Cmd>lua Config.terminal.open_shell()<CR>', { desc = "Terminal" })
 nmap_leader("tb", '<Cmd>lua Config.terminal.toggle_bracket()<CR>', "Toggle bracketed paste")
@@ -275,8 +276,31 @@ nmap_leader("wo", "<C-W>o", "Delete Other Windows", { remap = true })
 -- z is for 'ZettelKasten'
 nmap_leader("zo", '<Cmd>ZkNotes<CR>', "Notes")
 nmap_leader("zt", '<Cmd>ZkTags<cr>', "Tags")
-nmap_leader("zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", "New")
-nmap_leader("zj", "<Cmd>ZkNew { group = 'journal' }<CR>", "Journal Entry")
-nmap_leader("zg", "<Cmd>ZkNew { title = vim.fn.input('Title: '), group = 'garden' }<CR>", "Garden Entry")
+nmap_leader(
+  "zn",
+  '<Cmd>ZkNew { group = "inbox", title = vim.fn.input("Title: ") }<CR>',
+  "New"
+)
+nmap_leader(
+  "zp",
+  "<Cmd>ZkNew { group = 'permanent', title = vim.fn.input('Title: ') }<CR>",
+  "Permanent"
+)
 
+nmap_leader(
+  "zl",
+  "<Cmd>ZkNew { group = 'literature', title = vim.fn.input('Title: '), extra.author = vim.fn.input('Author: '), extra.year = vim.fn.input('Year': ) }<CR>",
+  "Literature"
+)
+
+nmap_leader(
+  "zd",
+  "<Cmd>ZkNew { group = 'dashboard', title = vim.fn.input('Title: ') }<CR>",
+  "Dashboard"
+)
+nmap_leader(
+  "zP",
+  "<Cmd>ZkNew { group = 'project', title = vim.fn.input('Title: ')}<CR>",
+  "Project"
+)
 -- stylua: ignore end
