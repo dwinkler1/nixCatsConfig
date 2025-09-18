@@ -37,6 +37,7 @@ _G.Config.leader_group_clues = {
   { mode = 'x', keys = '<Leader>l',  desc = '+LSP' },
   { mode = 'x', keys = '<Leader>r',  desc = '+R' },
   { mode = 'n', keys = '<Leader>z',  desc = '+ZK' },
+  { mode = 'n', keys = '<Leader>zr',  desc = '+Reviews' },
   { mode = 'x', keys = '<leader>a',  desc = '+AI' },
 }
 
@@ -276,6 +277,17 @@ nmap_leader("wo", "<C-W>o", "Delete Other Windows", { remap = true })
 -- z is for 'ZettelKasten'
 nmap_leader("zo", '<Cmd>ZkNotes<CR>', "Notes")
 nmap_leader("zt", '<Cmd>ZkTags<cr>', "Tags")
+
+nmap_leader(
+  "zrd",
+  '<Cmd>ZkNew { group = "dreview" }<CR>',
+  "Daily Review"
+)
+nmap_leader(
+  "zrw",
+  '<Cmd>ZkNew { group = "wreview" }<CR>',
+  "Weekly Review"
+)
 nmap_leader(
   "zn",
   '<Cmd>ZkNew { group = "inbox", title = vim.fn.input("Title: ") }<CR>',
