@@ -10,11 +10,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758069975,
-        "narHash": "sha256-qa3t3J4kTbPZ7CzfJJlKaJoD2pXZv0mQE13VgAjm0kk=",
+        "lastModified": 1758101970,
+        "narHash": "sha256-JPv1iOk43caUlA8lQjwGcml/GWHnaPyOEe5mkPrkO5c=",
         "owner": "dwinkler1",
         "repo": "fran",
-        "rev": "31f967813664b527c02af4dbc0eac8930b6ef0eb",
+        "rev": "e44e2454a1f4ef14b7cccefb8b5422eed9cde5c3",
         "type": "github"
       },
       "original": {
