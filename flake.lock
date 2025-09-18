@@ -10,11 +10,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758101970,
-        "narHash": "sha256-JPv1iOk43caUlA8lQjwGcml/GWHnaPyOEe5mkPrkO5c=",
+        "lastModified": 1758200400,
+        "narHash": "sha256-k/HM1+t9xhDgCxn4bOxBYqxwK7+6Sg86gOh6z61UOAc=",
         "owner": "dwinkler1",
         "repo": "fran",
-        "rev": "e44e2454a1f4ef14b7cccefb8b5422eed9cde5c3",
+        "rev": "d42e2daa32b4870d18da5a3c9bb76613465869fa",
         "type": "github"
       },
       "original": {
@@ -89,11 +89,11 @@
     "plugins-r": {
       "flake": false,
       "locked": {
-        "lastModified": 1757760471,
-        "narHash": "sha256-bdJ63VMpzZ/cgdR4Wt4pkxBkuIxVDU6hCOqvCrD4zGU=",
+        "lastModified": 1758192647,
+        "narHash": "sha256-KgXBhzagf5QVm+t9koGdsurK4YF+mMwwgLR6vn9Yffg=",
         "owner": "R-nvim",
         "repo": "R.nvim",
-        "rev": "3f369a2d9ad78357f72ea65c3228793c980e1322",
+        "rev": "52f9dbd1db1b0c9a97d1419ab13a960c575214b8",
         "type": "github"
       },
       "original": {
