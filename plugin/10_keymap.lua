@@ -280,12 +280,12 @@ nmap_leader("zt", '<Cmd>ZkTags<cr>', "Tags")
 
 nmap_leader(
   "zrd",
-  '<Cmd>ZkNew { group = "dreview" }<CR>',
+  '<Cmd>ZkNew { group = "dreviews" }<CR>',
   "Daily Review"
 )
 nmap_leader(
   "zrw",
-  '<Cmd>ZkNew { group = "wreview" }<CR>',
+  '<Cmd>ZkNew { group = "wreviews" }<CR>',
   "Weekly Review"
 )
 nmap_leader(
