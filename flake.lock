@@ -89,11 +89,11 @@
     "plugins-r": {
       "flake": false,
       "locked": {
-        "lastModified": 1758401342,
-        "narHash": "sha256-NPVnDL6DkI3Fs4T52S0iuy8oqDb+cgGpRosl2GfJfbQ=",
+        "lastModified": 1758555497,
+        "narHash": "sha256-NT56UwOF4/F7uhEAMr9S48ito8FP+pDphKK4NF0iGAg=",
         "owner": "R-nvim",
         "repo": "R.nvim",
-        "rev": "964afe4f0465a2a2654142a91d9f968d1455ab74",
+        "rev": "bc903b220b27135e1b550db289fc3bcd4878116b",
         "type": "github"
       },
       "original": {
