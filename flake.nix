@@ -408,14 +408,14 @@
               };
             };
             m = {
-              enable = true;
+              enable = false;
               path = {
                 value = "${pkgs.uv}/bin/uv";
                 args = ["--add-flags" "run marimo edit"];
               };
             };
             jl = {
-              enable = true;
+              enable = false;
               path = {
                 value = "${pkgs.julia-bin}/bin/julia";
                 args = [
@@ -445,7 +445,7 @@
           markdown = true;
           nix = true;
           python = true;
-          r = false;
+          r = true;
           utils = true;
           test = false;
           background = "dark";
