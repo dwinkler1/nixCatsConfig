@@ -203,6 +203,7 @@
         python = with pkgs; [
           python
           nodejs
+          ruff
           basedpyright
           uv
         ];

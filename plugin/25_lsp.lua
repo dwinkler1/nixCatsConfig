@@ -17,7 +17,8 @@ now_if_args(function()
   vim.lsp.enable({
     "clangd",
     --    "nushell",
-    "basedpyright",
+    --"basedpyright",
+    "ruff",
     -- "rust_analyzer",
     -- "air",
     "r_language_server",
