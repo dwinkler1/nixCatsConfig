@@ -21,7 +21,7 @@ if require("zk.util").notebook_root(vim.fn.expand('%:p')) ~= nil then
   -- Alternative for backlinks using pure LSP and showing the source context.
   --map('n', '<leader>zb', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
   -- Open notes linked by the current buffer.
-  map("n", "<leader>zl", "<Cmd>ZkLinks<CR>", { noremap = true, silent = false, buffer = true, desc = "Links" })
+  map("n", "<leader>zL", "<Cmd>ZkLinks<CR>", { noremap = true, silent = false, buffer = true, desc = "Links" })
   map("n", "<leader>zi", "<Cmd>ZkInsertLink<CR>", { noremap = true, silent = false, buffer = true, desc = "Insert link" })
 
   -- Preview a linked note.

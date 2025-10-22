@@ -154,7 +154,6 @@
     } @ packageDef: {
       lspsAndRuntimeDeps = {
         external = with pkgs; [
-          clickhouse-lts
           devenv
           duckdb
           fd
@@ -212,6 +211,9 @@
           radianWrapper
           quarto
           air-formatter
+        ];
+        clickhouse = with pkgs; [
+          clickhouse-lts
         ];
       };
 
@@ -447,6 +449,7 @@
           nix = true;
           python = true;
           r = true;
+          clickhouse = false;
           utils = true;
           test = false;
           background = "dark";
