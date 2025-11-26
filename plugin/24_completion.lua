@@ -12,7 +12,6 @@ local PLUGIN_SOURCES = {
   "zbirenbaum/copilot.lua",
   "jmbuhr/cmp-pandoc-references",
   "fang2hou/blink-copilot",
-  "R-nvim/cmp-r",
   "olimorris/codecompanion.nvim"
 }
 
@@ -21,7 +20,6 @@ local PLUGIN_ADDS = {
   "blink.compat",
   "colorful-menu.nvim",
   "cmp-pandoc-references",
-  "cmp-r"
 }
 
 -- Helper functions
@@ -307,7 +305,7 @@ now_if_args(function()
     },
     snippets = { preset = "mini_snippets" },
     sources = {
-      default = { "references", "lsp", "path", "snippets", "buffer", "omni", "copilot", "codecompanion", "cmp_r" },
+      default = { "references", "lsp", "path", "snippets", "buffer", "omni", "copilot", "codecompanion" },
       providers = {
         path = {
           score_offset = 50,

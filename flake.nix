@@ -27,10 +27,6 @@
       url = "github:R-nvim/R.nvim";
       flake = false;
     };
-    "plugins-cmp-r" = {
-      url = "github:R-nvim/cmp-r";
-      flake = false;
-    };
     "plugins-cmp-pandoc-references" = {
       url = "github:jmbuhr/cmp-pandoc-references";
       flake = false;
@@ -66,7 +62,7 @@
 
         ### R Packages
         (final: prev: {
-          rpkgs = inputs.rixpkgs.legacyPackages.${prev.system};
+          rpkgs = inputs.rixpkgs.legacyPackages.${prev.stdenv.hostPlatform.system};
         })
         inputs.fran.overlays.default
         (
@@ -82,7 +78,6 @@
               reprex
               styler
               tidyverse
-              prev.extraRPackages.nvimcom
             ];
           in {
             quarto = prev.rpkgs.quarto.override {extraRPackages = reqPkgs;};
@@ -309,7 +304,7 @@
       optionalPlugins = {
         gitPlugins = with pkgs.neovimPlugins; [
           cmp-pandoc-references
-          cmp-r
+          # cmp-r
         ];
         general = with pkgs.vimPlugins; [];
         utils = with pkgs.vimPlugins; [

@@ -6,3 +6,5 @@
 cpp
 julia
 python
+.Rlibs
+test.*
