@@ -88,7 +88,7 @@ local function get_codecompanion_config()
         copilot = function()
           return require("codecompanion.adapters").extend("copilot", {
             schema = {
-              model = { default = "gpt-5" }
+              model = { default = "gemini-3-pro-preview" }
             }
           })
         end,
@@ -98,9 +98,9 @@ local function get_codecompanion_config()
       chat = {
         show_settings = false,
         window = {
-          layout = "vertical",
-          position = "right",
-          width = 0.33,
+          layout = "horizontal",
+          position = "bottom",
+          height = 0.33,
         },
       },
     },
