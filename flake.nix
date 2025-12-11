@@ -8,10 +8,10 @@
 
     # Nix inputs
     # TODO: move this to stable once 25.11 is out
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-25.tar.gz";
+    rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2025-11-10.tar.gz";
 
     ## Extra R packages
     fran = {
@@ -25,6 +25,10 @@
     # neovim plugs
     "plugins-r" = {
       url = "github:R-nvim/R.nvim";
+      flake = false;
+    };
+    "plugins-cmp-r" = {
+      url = "github:R-nvim/cmp-r";
       flake = false;
     };
     "plugins-cmp-pandoc-references" = {
@@ -304,7 +308,7 @@
       optionalPlugins = {
         gitPlugins = with pkgs.neovimPlugins; [
           cmp-pandoc-references
-          # cmp-r
+          cmp-r
         ];
         general = with pkgs.vimPlugins; [];
         utils = with pkgs.vimPlugins; [

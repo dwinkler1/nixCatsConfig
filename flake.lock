@@ -40,16 +40,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1763312402,
-        "narHash": "sha256-3YJkOBrFpmcusnh7i8GXXEyh7qZG/8F5z5+717550Hk=",
+        "lastModified": 1765311797,
+        "narHash": "sha256-mSD5Ob7a+T2RNjvPvOA1dkJHGVrNVl8ZOrAwBjKBDQo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "85a6c4a07faa12aaccd81b36ba9bfc2bec974fa1",
+        "rev": "09eb77e94fa25202af8f3e81ddc7353d9970ac1b",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixpkgs-unstable",
+        "ref": "nixos-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -67,6 +67,22 @@
       "original": {
         "owner": "jmbuhr",
         "repo": "cmp-pandoc-references",
+        "type": "github"
+      }
+    },
+    "plugins-cmp-r": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764700377,
+        "narHash": "sha256-xb7VFWM/BKAkN7fg62y8n618t2qkQjdYbPwhBhLJwtk=",
+        "owner": "R-nvim",
+        "repo": "cmp-r",
+        "rev": "70bfe8f4c062acc10266e24825439c009a0b1b89",
+        "type": "github"
+      },
+      "original": {
+        "owner": "R-nvim",
+        "repo": "cmp-r",
         "type": "github"
       }
     },
@@ -88,14 +104,14 @@
     },
     "rixpkgs": {
       "locked": {
-        "lastModified": 1756125117,
-        "narHash": "sha256-aCt9VnqhwL7HtNSG1P3YayJl9vmJbJvviSLAGdOzry0=",
+        "lastModified": 1762778295,
+        "narHash": "sha256-5Ogu11rMpc3ytcfBLwO3O1l1MJl0pTT+uCz/OJixmVo=",
         "type": "tarball",
-        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-25.tar.gz"
+        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-11-10.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-08-25.tar.gz"
+        "url": "https://github.com/rstats-on-nix/nixpkgs/archive/2025-11-10.tar.gz"
       }
     },
     "root": {
@@ -104,6 +120,7 @@
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
         "plugins-cmp-pandoc-references": "plugins-cmp-pandoc-references",
+        "plugins-cmp-r": "plugins-cmp-r",
         "plugins-r": "plugins-r",
         "rixpkgs": "rixpkgs"
       }
