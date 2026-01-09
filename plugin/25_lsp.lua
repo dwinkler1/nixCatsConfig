@@ -8,91 +8,82 @@ if not Config.isNixCats then
 end
 
 now_if_args(function()
-  -- Enable LSP only on Neovim>=0.11 as it introduced `vim.lsp.config`
-  if vim.fn.has("nvim-0.11") == 0 then
-    return
-  end
+  local servers = {
+    clangd = {},
+    basedpyright = {},
+    ruff = {},
+    marksman = {
+      filetypes = { "markdown", "markdown_inline", "codecompanion" },
+    },
+    r_language_server = {
+      filetypes = { 'r', 'rmd', 'rmarkdown' },
+      settings = {
+        ['r_language_server'] = {
+          lsp = {
+            rich_documentation = true,
+            enable = true,
+          },
+        },
+      }
+    },
+    julials = {
+      settings = {
+        julia = {
+          format = {
+            indent = 2,
+          },
+          lsp = {
+            autoStart = true,
+            provideFormatter = true,
+          },
+        },
+      },
+    },
+    lua_ls = {
+      settings = {
+        Lua = {
+          completion = {
+            callSnippet = "Replace",
+          },
+          runtime = {
+            version = "LuaJIT",
+          },
+          diagnostics = {
+            disable = { "trailing-space" },
+          },
+          workspace = {
+            checkThirdParty = false,
+          },
+          doc = {
+            privateName = { "^_" },
+          },
+          telemetry = {
+            enable = false,
+          },
+        },
+      },
+    },
+  }
 
-  -- All language servers are expected to be installed with 'mason.vnim'
-  vim.lsp.enable({
-    "clangd",
-    --    "nushell",
-    --"basedpyright",
-    "ruff",
-    -- "rust_analyzer",
-    -- "air",
-    "r_language_server",
-    --    "marksman",
-    "lua_ls",
-    "julials",
-  })
-
-  --  local capabilities = require("blink.cmp").get_lsp_capabilities({}, true)
   local lsp_flags = {
     allow_incremental_sync = true,
-    -- debounce_text_changes = 150,
   }
-  vim.lsp.config('*', {
-    -- capabilities = capabilities,
-    flags = lsp_flags
-  })
-  vim.lsp.config('r_language_server', {
-    filetypes = { 'r', 'rmd', 'rmarkdown' },
-    settings = {
-      ['r_language_server'] = {
-        lsp = {
-          rich_documentation = true,
-          enable = true,
-        },
-        -- on_attach = function(client, _)
-        --   client.server_capabilities.documentFormattingProvider = false
-        --   client.server_capabilities.documentRangeFormattingProvider = false
-        -- end,
-      },
-    }
-  })
-  vim.lsp.config('julials', {
-    settings = {
-      julia = {
-        format = {
-          indent = 2,
-        },
-        lsp = {
-          autoStart = true,
-          provideFormatter = true,
-        },
-      },
-    },
-  })
 
-  vim.lsp.config('marksman', {
-    filetypes = { "markdown", "markdown_inline", "codecompanion" },
-  })
-
-  vim.lsp.config('lua_ls', {
-    settings = {
-      Lua = {
-        completion = {
-          callSnippet = "Replace",
-        },
-        runtime = {
-          version = "LuaJIT",
-          -- plugin = lua_plugin_paths, -- handled by lazydev
-        },
-        diagnostics = {
-          disable = { "trailing-space" },
-        },
-        workspace = {
-          -- library = lua_library_files, -- handled by lazydev
-          checkThirdParty = false,
-        },
-        doc = {
-          privateName = { "^_" },
-        },
-        telemetry = {
-          enable = false,
-        },
-      },
-    },
-  })
+  if vim.fn.has("nvim-0.11") == 1 then
+    -- Neovim 0.11+ Native LSP Configuration
+    for name, config in pairs(servers) do
+      vim.lsp.config(name, config)
+    end
+    vim.lsp.config('*', { flags = lsp_flags })
+    
+    -- Enable all defined servers
+    vim.lsp.enable(vim.tbl_keys(servers))
+  else
+    -- Fallback for Neovim < 0.11 (using nvim-lspconfig)
+    local lspconfig = require('lspconfig')
+    for name, config in pairs(servers) do
+      local final_config = vim.tbl_extend("force", { flags = lsp_flags }, config)
+      lspconfig[name].setup(final_config)
+    end
+  end
 end)

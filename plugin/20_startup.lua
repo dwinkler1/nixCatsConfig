@@ -19,37 +19,6 @@ if not Config.isNixCats then
       source = "nvim-treesitter/nvim-treesitter-textobjects",
       checkout = "main",
     })
-
-    -- Ensure installed
-    --stylua: ignore
-    local ensure_installed = { "bash", "bibtex", "c", "caddy", "cmake", "comment", "commonlisp", "cpp", "css", "csv",
-      "cuda", "desktop", "diff", "dockerfile", "doxygen", "editorconfig", "fortran", "git_config", "git_rebase",
-      "gitattributes", "gitcommit", "gitignore", "gnuplot", "go", "gpg", "html", "javascript", "jq", "json", "json5",
-      "julia", "just", "latex", "ledger", "lua", "luadoc", "luap", "luau", "make", "markdown", "markdown_inline",
-      "matlab",
-      "meson", "muttrc", "nix", "nu", "passwd", "powershell", "prql", "python", "r", "query", "readline", "regex",
-      "requirements", "rnoweb", "rust", "sql", "ssh_config", "swift", "tmux", "toml", "tsv", "tsx", "typescript", "typst",
-      "vala", "vim", "vimdoc", "yaml", "zig", }
-
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = ensure_installed,
-      auto_install = true,
-      highlight = { enable = true },
-      indent = { enable = false },
-      parser_configurations = {
-        markdown = {
-          filetypes = { "markdown", },
-        },
-      },
-    })
-    local isnt_installed = function(lang)
-      return #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".*", false) == 0
-    end
-    local to_install = vim.tbl_filter(isnt_installed, ensure_installed)
-    if #to_install > 0 then
-      require("nvim-treesitter").install(to_install)
-    end
-
     add({ source = "zk-org/zk-nvim" })
   end)
 end
@@ -126,7 +95,6 @@ now(function()
   vim.notify = MiniNotify.make_notify()
 end)
 
-
 now(function()
   require("mini.sessions").setup()
 end)
@@ -172,7 +140,6 @@ end)
 now(function()
   require("mini.tabline").setup()
 end)
-
 
 now(function()
   local miniclue = require("mini.clue")
@@ -220,9 +187,12 @@ now(function()
 end)
 
 -- Treesitter
+
 now_if_args(function()
-  require("nvim-treesitter.configs").setup({
-    auto_install = false,
+  local configs = require("nvim-treesitter.configs")
+
+  -- Base configuration
+  local opts = {
     highlight = { enable = true },
     indent = { enable = false },
     parser_configurations = {
@@ -285,7 +255,29 @@ now_if_args(function()
         },
       },
     },
-  })
+  }
+
+  -- Environment-specific Overrides
+  if not Config.isNixCats then
+    opts.auto_install = true
+    opts.ensure_installed = Config.treesitter_helpers.default_parsers
+  else
+    opts.auto_install = false
+    -- Nix handles installation, so ensure_installed is skipped/empty
+  end
+
+  configs.setup(opts)
+
+  -- Manual parser check for non-Nix users (preserves existing logic)
+  if not Config.isNixCats then
+    local installed_check = function(lang)
+      return #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".*", false) == 0
+    end
+    local to_install = vim.tbl_filter(installed_check, opts.ensure_installed)
+    if #to_install > 0 then
+      require("nvim-treesitter").install(to_install)
+    end
+  end
 
   require 'treesitter-context'.setup {
     enable = false,
