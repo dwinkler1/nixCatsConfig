@@ -534,6 +534,7 @@
         # this will make a package out of each of the packageDefinitions defined above
         # and set the default package to the one passed in here.
         packages = utils.mkAllWithDefault defaultPackage;
+        formatter = pkgs.nixfmt-tree;
 
         # choose your package for devShell
         # and add whatever else you want in it.
