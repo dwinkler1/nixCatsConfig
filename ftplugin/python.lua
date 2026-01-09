@@ -6,8 +6,8 @@ local ts_lib = Config.treesitter_helpers
 local global_nodes_python = { 'module' }
 ts_lib.setup_keybindings(global_nodes_python)
 
-local conform_format_group = vim.api.nvim_create_augroup("PythonConformFormat", { clear = false })
-vim.api.nvim_clear_autocmds({ group = conform_format_group, buffer = 0 })
+local conform_format_group =
+  vim.api.nvim_create_augroup("PythonConformFormat_" .. vim.api.nvim_get_current_buf(), { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = conform_format_group,
   buffer = 0,
