@@ -10,7 +10,9 @@ local assign_action = function()
     return
   end
 
-  MiniTrailspace.trim()
+  if MiniTrailspace and MiniTrailspace.trim then
+    MiniTrailspace.trim()
+  end
   r_edit.assign()
 end
 
