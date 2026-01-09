@@ -13,7 +13,7 @@ M.default_parsers = {
 
 -- Cache treesitter utils to avoid repeated requires
 local ts_utils = require('nvim-treesitter.ts_utils')
-local smart_send = require('nixCatsUtils.smart_send')
+local smart_send = require('nix_smart_send')
 
 -- Helper function to check if value exists in list (optimized with early return)
 local function is_in_list(list, value)
