@@ -24,7 +24,7 @@ later(function()
   vim.g.slime_target = "neovim"
   vim.g.slime_no_mappings = true
   add("vim-slime")
-  vim.g.slime_cell_delimiter = "# %%"
+  vim.g.slime_cell_delimiter = vim.g.slime_cell_delimiter or "# %%"
   vim.g.slime_bracketed_paste = Config.opt_bracket
   vim.g.slime_input_pid = false
   vim.g.slime_suggest_default = true
