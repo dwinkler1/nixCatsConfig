@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   buffer = 0,
   callback = function()
     require("conform").format({
-      timeout_ms = 100,
+      timeout_ms = 1000,
       lsp_format = "prefer",
     })
   end,
