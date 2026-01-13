@@ -28,4 +28,5 @@ jobs:
         extraPullNames: rstats-on-nix, nix-community    
     - run: nix build
     - run: nix develop
+    - run: nix run
     - run: nix flake check
