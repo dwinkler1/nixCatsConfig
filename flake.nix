@@ -547,6 +547,16 @@
             shellHook = '''';
           };
         };
+
+        # checks to ensure the flake builds correctly on all systems
+        checks = {
+          # Test that the default package builds
+          default = defaultPackage;
+          # Test that the package can be built and has expected structure
+          package-build = pkgs.runCommand "check-${defaultPackageName}" { } ''
+            ${defaultPackage}/bin/${defaultPackageName} --version > $out
+          '';
+        };
       }
     )
     // (
