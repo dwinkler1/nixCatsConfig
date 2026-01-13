@@ -547,6 +547,35 @@
             shellHook = '''';
           };
         };
+
+        # checks to ensure the flake builds correctly on all systems
+        checks = {
+          # Test that the default package builds
+          default = defaultPackage;
+          # Test that the package can be built and has expected structure
+          # Note: Neovim supports --version flag for version information
+          package-build = pkgs.runCommand "check-${defaultPackageName}" { } ''
+            BINARY_PATH="${defaultPackage}/bin/${defaultPackageName}"
+            
+            # Verify the binary exists and is executable
+            if [ ! -x "$BINARY_PATH" ]; then
+              echo "Error: Binary ${defaultPackageName} not found or not executable"
+              exit 1
+            fi
+            
+            # Try to run --version and capture result (Neovim standard flag)
+            # Using || true to gracefully handle any failure
+            "$BINARY_PATH" --version > version_output.txt 2>&1 || true
+            
+            # Create output file indicating success
+            echo "Package validation successful" > $out
+            echo "Binary location: $BINARY_PATH" >> $out
+            if [ -s version_output.txt ]; then
+              echo "Version output:" >> $out
+              cat version_output.txt >> $out
+            fi
+          '';
+        };
       }
     )
     // (

@@ -4,6 +4,11 @@ on:
   push:
     paths:
       - 'flake.lock'
+      - 'flake.nix'
+  pull_request:
+    paths:
+      - 'flake.lock'
+      - 'flake.nix'
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -12,10 +17,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
     steps:
     - uses: actions/checkout@v4
     - uses: wimpysworld/nothing-but-nix@main
+      if: runner.os == 'Linux'
       with:
         hatchet-protocol: 'carve'
     - uses: cachix/install-nix-action@v31
