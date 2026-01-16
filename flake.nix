@@ -172,6 +172,7 @@
           ruby
           shfmt
           sqlfluff
+          tree-sitter
           wget
           zathura
         ];
