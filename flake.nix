@@ -100,9 +100,6 @@
               reqPkgs =
                 pyPackages: with pyPackages; [
                   numpy
-                  pandas
-                  matplotlib
-                  ipython
                 ];
             in
             {
@@ -164,7 +161,6 @@
           lspsAndRuntimeDeps = {
             external = with pkgs; [
               devenv
-              duckdb
               fd
               gawk
               gh
@@ -176,23 +172,16 @@
               jq
               just
               lazygit
-              lynx
               man
-              pandoc
               perl
               pigz
               poppler
-              rclone
               ripgrep
-              rsync
               ruby
               shfmt
               sqlfluff
-              tldr
               wget
               zathura
-              zoxide
-              zsh
             ];
             markdown = with pkgs; [
               python313Packages.pylatexenc
