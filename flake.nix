@@ -222,9 +222,9 @@
               quarto
               air-formatter
             ];
-            clickhouse = with pkgs; [
-              clickhouse-lts
-            ];
+            # clickhouse = with pkgs; [
+            #   clickhouse-lts
+            # ];
           };
 
           # This is for plugins that will load at startup without using packadd:
@@ -500,7 +500,7 @@
               nix = true;
               python = true;
               r = true;
-              clickhouse = false;
+              #clickhouse = false;
               utils = true;
               test = false;
               background = "dark";
