@@ -10,7 +10,7 @@ local defaults = {
   clickhouse_client = "clickhouse client -m",
   clickhouse_local = "clickhouse local -m",
   duckdb = "duckdb",
-  julia = "julia",
+  julia = "julia --project=@.",
   python = "ipython",
   shell = "echo 'Hello " .. vim.env.USER .. "!'",
 }
