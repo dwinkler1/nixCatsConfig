@@ -111,28 +111,36 @@
         # )
 
         ### General fixes
-        (final: prev: {
-          codecompanion-nvim = prev.vimPlugins.codecompanion-nvim.overrideAttrs {
-            checkInputs = with prev.vimPlugins; [
-              blink-cmp
-              mini-nvim
-            ];
-            dependencies = [prev.vimPlugins.plenary-nvim];
-            nvimSkipModules = [
-              # Requires setup call
-              "codecompanion.actions.static"
-              "codecompanion.actions.init"
-              # Test
-              "minimal"
-              # Fails on darwin
-              "codecompanion.providers.actions.fzf_lua"
-              # Not using
-              "codecompanion.providers.completion.cmp.setup"
-              "codecompanion.providers.actions.telescope"
-              "codecompanion.providers.actions.snacks"
-            ];
-          };
-        })
+        (
+          final: prev: {
+            codecompanion-nvim = prev.vimPlugins.codecompanion-nvim.overrideAttrs {
+              checkInputs = with prev.vimPlugins; [
+                blink-cmp
+                mini-nvim
+              ];
+              dependencies = [prev.vimPlugins.plenary-nvim];
+              nvimSkipModules = [
+                # Requires setup call
+                "codecompanion.actions.static"
+                "codecompanion.actions.init"
+                # Test
+                "minimal"
+                # Fails on darwin
+                "codecompanion.providers.actions.fzf_lua"
+                # Not using
+                "codecompanion.providers.completion.cmp.setup"
+                "codecompanion.providers.actions.telescope"
+                "codecompanion.providers.actions.snacks"
+              ];
+            };
+            zk-nvim = prev.vimPlugins.zk-nvim.overrideAttrs {
+              nvimSkipModules = [
+                # Fails on darwin
+                "zk.pickers.fzf_lua"
+              ];
+            };
+          }
+        )
         # (utils.fixSystemizedOverlay inputs.codeium.overlays
         #   (system: inputs.codeium.overlays.${system}.default)
         # )
