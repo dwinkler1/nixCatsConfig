@@ -189,7 +189,6 @@ end)
 -- Treesitter
 
 now_if_args(function()
-  local configs = require("nvim-treesitter.configs")
   local ts_utils = require('nvim-treesitter.ts_utils')
   -- Base configuration
   local opts = {
@@ -266,9 +265,7 @@ now_if_args(function()
     -- Nix handles installation, so ensure_installed is skipped/empty
   end
 
-  configs.setup(opts)
-
-  -- Manual parser check for non-Nix users (preserves existing logic)
+  -- Manual parser check for non-Nix users
   if not Config.isNixCats then
     local installed_check = function(lang)
       return #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".*", false) == 0
@@ -279,11 +276,14 @@ now_if_args(function()
     end
   end
 
+
+  local configs = require("nvim-treesitter.configs")
+  configs.setup(opts)
   require 'treesitter-context'.setup {
-    enable = false,
+    enable = true,
     multiwindow = false,      -- Enable multiwindow support.
     max_lines = 30,           -- How many lines the window should span. Values <= 0 mean no limit.
-    min_window_height = 50,   -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+    min_window_height = 70,   -- Minimum editor window height to enable context. Values <= 0 mean no limit.
     line_numbers = true,
     multiline_threshold = 10, -- Maximum number of lines to show for a single context
     trim_scope = 'outer',     -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
