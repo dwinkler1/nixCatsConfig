@@ -190,7 +190,7 @@ end)
 
 now_if_args(function()
   local configs = require("nvim-treesitter.configs")
-
+  local ts_utils = require('nvim-treesitter.ts_utils')
   -- Base configuration
   local opts = {
     highlight = { enable = true },
