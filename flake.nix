@@ -9,14 +9,13 @@
     # Nix inputs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2025-11-10.tar.gz";
+    rixpkgs.url = "https://github.com/rstats-on-nix/nixpkgs/archive/2026-01-19.tar.gz";
 
     ## Extra R packages
     fran = {
       url = "github:dwinkler1/fran";
       inputs = {
         nixpkgs.follows = "rixpkgs";
-        nvimcom.follows = "plugins-r";
       };
     };
 
