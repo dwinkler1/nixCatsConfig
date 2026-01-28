@@ -11,7 +11,7 @@ https://github.com/BirdeeHub/nix-wrapper-modules/blob/main/templates/neovim/modu
    - Keep existing inputs (`nixCats`, `nixpkgs`, plugins, overlays) during the
      migration so the plugin sources and overlays stay available.
 2. **Create a Neovim module file (new)**
-   - Add a new module file (for example `modules/neovim.nix`) and start by
+   - Add a new module file (e.g., `modules/neovim.nix`) and start by
      copying the template file from the wrapper module repo.
    - Set `config.settings.config_directory = ./.;` so the module points to this
      repo’s `init.lua`/`plugin/` setup.
@@ -20,7 +20,7 @@ https://github.com/BirdeeHub/nix-wrapper-modules/blob/main/templates/neovim/modu
      `categoryDefinitions.optionalPlugins.*` into `config.specs.<name>.data`
      blocks (the template shows list specs and single plugin specs).
    - Convert `lspsAndRuntimeDeps.*` into `extraPackages` fields on the matching
-     specs (for example `specs.python.extraPackages = [...]`).
+     specs (e.g., `specs.python.extraPackages = [...]`).
    - Carry over custom overlays (R/Python overrides) in the module by
      referencing the same `pkgs` and overlay inputs in `flake.nix`.
 4. **Move settings + environment variables**
@@ -28,16 +28,19 @@ https://github.com/BirdeeHub/nix-wrapper-modules/blob/main/templates/neovim/modu
      (e.g., `wrapRc`, `autowrapRuntimeDeps`, `aliases`, host configs).
    - Move `categoryDefinitions.environmentVariables` into
      `config.settings.environmentVariables`.
-   - Translate `categoryDefinitions.extraWrapperArgs` into
-     `config.settings.extraWrapperArgs` (or the wrapper module equivalent).
+   - Translate `categoryDefinitions.extraWrapperArgs` into the makeWrapper
+     options (`config.addFlag`, `config.appendFlag`, `config.prefixVar`,
+     `config.suffixVar`) defined in
+     https://github.com/BirdeeHub/nix-wrapper-modules/blob/main/modules/makeWrapper/module.nix.
 5. **Recreate category toggles**
    - Replace `packageDefinitions.<name>.categories` with `config.specs.<name>.enable`
      toggles or add a `config.settings.cats` map and use it to enable/disable
-     specs (the template’s `settings.cats` option shows the pattern).
+     specs (the template’s `config.settings.cats` option shows the pattern).
 6. **Wire outputs to the wrapper module**
    - In `flake.nix` outputs, replace `nixCats.utils.baseBuilder` with the
-     wrapper module’s `wlib` builder (see wrapper docs for `packages`,
-     `devShells`, and `checks` usage).
+     wrapper module’s `wlib` builder (see the template flake at
+     https://github.com/BirdeeHub/nix-wrapper-modules/blob/main/templates/neovim/flake.nix
+     for `packages`, `devShells`, and `checks` usage).
    - Expose `nixosModules.default` and `homeModules.default` from the new module
      (mirroring the existing exports).
 7. **Validate the migration**
