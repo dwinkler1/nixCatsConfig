@@ -25,7 +25,7 @@ https://github.com/BirdeeHub/nix-wrapper-modules/blob/main/templates/neovim/modu
      referencing the same `pkgs` and overlay inputs in `flake.nix`.
 4. **Move settings + environment variables**
    - Translate `packageDefinitions.<name>.settings` into `config.settings`
-     (e.g. `wrapRc`, `autowrapRuntimeDeps`, `aliases`, host configs).
+     (e.g., `wrapRc`, `autowrapRuntimeDeps`, `aliases`, host configs).
    - Move `categoryDefinitions.environmentVariables` into
      `config.settings.environmentVariables`.
    - Translate `categoryDefinitions.extraWrapperArgs` into
