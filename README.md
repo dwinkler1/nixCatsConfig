@@ -8,7 +8,7 @@ https://github.com/BirdeeHub/nix-wrapper-modules/blob/main/templates/neovim/modu
 
 1. **Add the wrapper module input**
    - Add `nix-wrapper-modules` (or `wrapper-lib`) to `inputs` in `flake.nix`.
-   - Keep existing inputs (`nixCats`, `rixpkgs`, plugins, overlays) during the
+   - Keep existing inputs (`nixCats`, `nixpkgs`, plugins, overlays) during the
      migration so the plugin sources and overlays stay available.
 2. **Create a Neovim module file (new)**
    - Add a new module file (for example `modules/neovim.nix`) and start by
