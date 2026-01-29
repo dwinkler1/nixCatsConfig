@@ -1,20 +1,11 @@
 _G.Config = {}
-Config.isNixCats = vim.g.nix_info_plugin_name ~= nil
+local nix = require('config.nix').init { non_nix_value = true }
+Config.isNixCats = nix.is_nix
 
-local ok, nix_info = pcall(require, vim.g.nix_info_plugin_name or "")
-if ok then
-  _G.nixCats = nix_info
-  package.preload['nixCats.cats'] = function()
-    return setmetatable(nix_info.settings.cats or {}, getmetatable(nix_info))
-  end
-else
-  require('nixCatsUtils').setup {
-    non_nix_value = true,
-  }
-  Config.isNixCats = require('nixCatsUtils').isNixCats
-end
 
 require('lze').register_handlers(require('nixCatsUtils.lzUtils').for_cat)
+
+local mini_deps = require('mini.deps')
 
 if not Config.isNixCats then
   local path_package = vim.fn.stdpath('data') .. '/site/'
@@ -31,7 +22,7 @@ if not Config.isNixCats then
   end
 
   -- Set up 'mini.deps' (customize to your liking)
-  require('mini.deps').setup({ path = { package = path_package } })
+  mini_deps.setup({ path = { package = path_package } })
+else
+  mini_deps.setup()
 end
-
-require('mini.deps').setup()

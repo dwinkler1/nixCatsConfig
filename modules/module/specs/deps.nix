@@ -4,17 +4,6 @@
   lib,
   ...
 }:
-let
-  mk_path_prefix =
-    name: paths: lib.optional (paths != [ ]) {
-      name = name;
-      data = [
-        "PATH"
-        ":"
-        "${lib.makeBinPath paths}"
-      ];
-    };
-in
 {
   config.specMods =
     {
@@ -30,10 +19,13 @@ in
       config.runtimeDeps = lib.mkDefault (parentSpec.runtimeDeps or false);
     };
 
-  config.extraPackages = config.specCollect (acc: v: acc ++ (v.extraPackages or [ ])) [ ];
-
-  config.prefixVar = lib.flatten [
-    (mk_path_prefix "EXTERNAL_DEPS" (with pkgs; [
+  config.specs.external = {
+    data = lib.mkDefault null;
+    before = [ "INIT_MAIN" ];
+    config = ''
+      vim.o.shell = "${pkgs.zsh}/bin/zsh"
+    '';
+    extraPackages = with pkgs; [
       devenv
       fd
       gawk
@@ -57,32 +49,55 @@ in
       tree-sitter
       wget
       zathura
-    ]))
-    (mk_path_prefix "MARKDOWN_DEPS" (with pkgs; [
+    ];
+  };
+
+  config.specs.markdown = {
+    data = lib.mkDefault null;
+    extraPackages = with pkgs; [
       python313Packages.pylatexenc
       quarto
       zk
-    ]))
-    (mk_path_prefix "NIX_DEPS" (with pkgs; [
+    ];
+  };
+
+  config.specs.nix = {
+    data = lib.mkDefault null;
+    extraPackages = with pkgs; [
       alejandra
       nix-doc
       nixd
-    ]))
-    (mk_path_prefix "LUA_DEPS" (with pkgs; [
+    ];
+  };
+
+  config.specs.lua = {
+    data = lib.mkDefault null;
+    extraPackages = with pkgs; [
       lua-language-server
-    ]))
-    (mk_path_prefix "PYTHON_DEPS" (with pkgs; [
+    ];
+  };
+
+  config.specs.python = {
+    data = lib.mkDefault null;
+    extraPackages = with pkgs; [
       python
       nodejs
       ruff
       basedpyright
       uv
-    ]))
-    (mk_path_prefix "R_DEPS" (with pkgs; [
+    ];
+  };
+
+  config.specs.r = {
+    data = lib.mkDefault null;
+    extraPackages = with pkgs; [
       rWrapper
       radianWrapper
       quarto
       air-formatter
-    ]))
-  ];
+    ];
+  };
+
+  config.extraPackages =
+    config.specCollect (acc: v: acc ++ lib.optionals (if v ? enable then v.enable else true) (v.extraPackages or [ ])) [ ];
 }

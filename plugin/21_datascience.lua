@@ -2,6 +2,7 @@ local now = MiniDeps.now
 local now_if_args = Config.now_if_args
 local later = MiniDeps.later
 local add = Config.add
+local nix = require('config.nix')
 
 if not Config.isNixCats then
   local m_add = MiniDeps.add
@@ -30,7 +31,7 @@ later(function()
   vim.g.slime_suggest_default = true
   vim.g.slime_menu_config = false
   vim.g.slime_neovim_ignore_unlisted = false
-  
+
   -- Define standard slime mappings
   vim.keymap.set("v", "<CR>", "<Plug>SlimeRegionSend", { noremap = true })
   vim.keymap.set("v", "<localleader><localleader>", "<Plug>SlimeRegionSend", { noremap = true })
@@ -42,7 +43,7 @@ end)
 
 -- r
 now(function()
-  if nixCats(false, "settings", "cats", "gitPlugins") then
+  if nix.get_cat("r", false) then
     vim.g.rout_follow_colorscheme = true
     require("r").setup({
       -- Create a table with the options to be passed to setup()

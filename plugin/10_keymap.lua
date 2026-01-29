@@ -301,7 +301,7 @@ nmap_leader(
 
 nmap_leader(
   "zl",
-  "<Cmd>ZkNew { group = 'literature', title = vim.fn.input('Title: '), extra.author = vim.fn.input('Author: '), extra.year = vim.fn.input('Year': ) }<CR>",
+  "<Cmd>ZkNew { group = 'literature', title = vim.fn.input('Title: '), extra.author = vim.fn.input('Author: '), extra.year = vim.fn.input('Year: ') }<CR>",
   "Literature"
 )
 

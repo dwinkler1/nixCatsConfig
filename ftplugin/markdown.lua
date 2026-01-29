@@ -1,6 +1,6 @@
 -- Add the key mappings only for Markdown files in a zk notebook.
 if require("zk.util").notebook_root(vim.fn.expand('%:p')) ~= nil then
-  map = vim.keymap.set
+  local map = vim.keymap.set
   -- Open the link under the caret.
   map("n", "<CR>", "<Cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = false, buffer = true })
 

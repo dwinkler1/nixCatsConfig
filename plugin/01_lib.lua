@@ -11,18 +11,20 @@ Config.toggle_quickfix = function()
 end
 
 Config.log = {}
+Config.log_buf_id = Config.log_buf_id or nil
+Config.start_hrtime = Config.start_hrtime or vim.loop.hrtime()
 
 Config.log_print = function()
-  if log_buf_id == nil or not vim.api.nvim_buf_is_valid(log_buf_id) then
-    log_buf_id = vim.api.nvim_create_buf(true, true)
+  if Config.log_buf_id == nil or not vim.api.nvim_buf_is_valid(Config.log_buf_id) then
+    Config.log_buf_id = vim.api.nvim_create_buf(true, true)
   end
-  vim.api.nvim_win_set_buf(0, log_buf_id)
-  vim.api.nvim_buf_set_lines(log_buf_id, 0, -1, false, vim.split(vim.inspect(Config.log), '\n'))
+  vim.api.nvim_win_set_buf(0, Config.log_buf_id)
+  vim.api.nvim_buf_set_lines(Config.log_buf_id, 0, -1, false, vim.split(vim.inspect(Config.log), '\n'))
 end
 
 Config.log_clear = function()
   Config.log = {}
-  start_hrtime = vim.loop.hrtime()
+  Config.start_hrtime = vim.loop.hrtime()
   vim.cmd('echo "Cleared log"')
 end
 

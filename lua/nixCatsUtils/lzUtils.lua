@@ -6,6 +6,7 @@
 --]]
 
 local M = {}
+local nix = require('config.nix')
 -- A nixCats specific lze handler that you can use to conditionally enable by category easier.
 -- at the start of your config, register with
 -- require('lze').register_handlers(require('nixCatsUtils.lzUtils').for_cat)
@@ -21,13 +22,13 @@ M.for_cat = {
     set_lazy = false,
     modify = function(plugin)
         if type(plugin.for_cat) == "table" and plugin.for_cat.cat ~= nil then
-            if vim.g[ [[nixCats-special-rtp-entry-nixCats]] ] ~= nil then
-                plugin.enabled = nixCats(plugin.for_cat.cat) or false
-            else
-                plugin.enabled = plugin.for_cat.default
+            local default = plugin.for_cat.default
+            if default == nil then
+                default = false
             end
+            plugin.enabled = nix.get_cat(plugin.for_cat.cat, default)
         else
-            plugin.enabled = nixCats(plugin.for_cat) or false
+            plugin.enabled = nix.get_cat(plugin.for_cat, false)
         end
         return plugin
     end,

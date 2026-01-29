@@ -19,7 +19,7 @@ local M = {}
 --]]
 
 ---@type boolean
-M.isNixCats = vim.g[ [[nixCats-special-rtp-entry-nixCats]] ] ~= nil
+M.isNixCats = vim.g.nix_info_plugin_name ~= nil or vim.g[ [[nixCats-special-rtp-entry-nixCats]] ] ~= nil
 
 ---@class nixCatsSetupOpts
 ---@field non_nix_value boolean|nil

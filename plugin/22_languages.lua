@@ -13,7 +13,7 @@ end
 -- lua
 later(function()
   add("luvit-meta")
-  add("lazydev.nvim")
+  add("lazydev")
   require("lazydev").setup({
     library = {
       -- See the configuration section for more details

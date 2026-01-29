@@ -1,6 +1,7 @@
 local now = MiniDeps.now
 local later = MiniDeps.later
 local now_if_args = Config.now_if_args
+local nix = require('config.nix')
 
 if not Config.isNixCats then
   local add = MiniDeps.add
@@ -25,7 +26,7 @@ end
 
 -- Mini.nvim
 now(function()
-  local colorschemeName = nixCats("onedark_dark", "settings", "colorscheme")
+  local colorschemeName = nix.get_setting("onedark_dark", "colorscheme")
   if colorschemeName == 'light' then
     local palette = require('mini.hues').make_palette({
       background = '#fefcf5',
@@ -189,19 +190,12 @@ end)
 -- Treesitter
 
 now_if_args(function()
-  local ts_utils = require('nvim-treesitter.ts_utils')
+  vim.treesitter.language.register("markdown", { "markdown", "codecompanion" })
+
   -- Base configuration
   local opts = {
     highlight = { enable = true },
     indent = { enable = false },
-    parser_configurations = {
-      markdown = {
-        filetypes = {
-          "markdown",
-          "codecompanion"
-        },
-      },
-    },
     textobjects = {
       move = {
         enable = true,

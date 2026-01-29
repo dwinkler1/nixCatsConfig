@@ -6,8 +6,26 @@
 }:
 {
   config.specs.gitPlugins = {
-    data = with pkgs.neovimPlugins; [
-      r
+    data = [ ];
+  };
+
+  config.specs.r = {
+    data = [
+      config.nvim-lib.neovimPlugins.r
+    ];
+  };
+
+  config.specs.markdown-lazy = {
+    lazy = true;
+    data = [
+      config.nvim-lib.neovimPlugins.cmp-pandoc-references
+    ];
+  };
+
+  config.specs.r-lazy = {
+    lazy = true;
+    data = [
+      config.nvim-lib.neovimPlugins.cmp-r
     ];
   };
 
@@ -142,6 +160,7 @@
   };
 
   config.specs.utils-lazy = {
+    lazy = true;
     data = with pkgs.vimPlugins; [
       blink-compat
       blink-copilot
@@ -158,9 +177,7 @@
   };
 
   config.specs.gitPlugins-lazy = {
-    data = with pkgs.neovimPlugins; [
-      cmp-pandoc-references
-      cmp-r
-    ];
+    lazy = true;
+    data = [ ];
   };
 }

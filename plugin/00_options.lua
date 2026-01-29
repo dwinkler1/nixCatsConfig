@@ -1,6 +1,8 @@
 --stylua: ignore start
 local later = MiniDeps.later
 local now = MiniDeps.now
+local nix = require('config.nix')
+
 
 if not Config.isNixCats then
   now(function()
@@ -44,7 +46,7 @@ vim.o.signcolumn     = 'yes' -- Always show signcolumn or it would frequently sh
 vim.o.splitbelow     = true -- Horizontal splits will be below
 vim.o.splitright     = true -- Vertical splits will be to the right
 vim.o.wrap           = true -- Display long lines as just one line
-vim.o.background     = Config.isNixCats and nixCats('dark', "settings", "background") or 'dark' --'light' -- Set background
+vim.o.background     = nix.get_setting('dark', "background") --'light' -- Set background
 
 vim.o.listchars      = table.concat({ 'extends:…', 'nbsp:␣', 'precedes:…', 'tab:> ', 'trail:·' }, ',') -- Special text symbols
 vim.o.cursorlineopt  = 'screenline,number' -- Show cursor line only screen line when wrapped
