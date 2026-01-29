@@ -5,7 +5,7 @@ This directory contains composable Nix overlays used by the Neovim wrapper confi
 ## Files
 
 - `r.nix`  
-  R-related overrides and package additions. Applies both rixpkgs and fran overlays to nixpkgs, making `pkgs.rpkgs` (rixpkgs) and custom R packages available.
+  R-related overrides (rix overlay). Exposes `pkgs.rpkgs` from rstats-on-nix and creates pre-configured `rWrapper` and `quarto` with standard R packages.
 
 - `python.nix`  
   Python-related overrides and package additions (e.g., extra Python packages).
@@ -14,13 +14,14 @@ This directory contains composable Nix overlays used by the Neovim wrapper confi
   Neovim plugin overrides (e.g., patching or pinning plugin derivations).
 
 - `default.nix`  
-  Aggregates and exports the overlays in a composable way.
+  Aggregates and exports the overlays in a composable way. Includes the fran overlay for custom R packages.
 
 ## Exports from `default.nix`
 
 `overlays/default.nix` exposes:
 
-- `rOverlay`  
+- `rOverlay` - rix overlay for R packages from rstats-on-nix
+- `franOverlay` - fran overlay for custom R packages and tools  
 - `pythonOverlay`  
 - `pluginsOverlay`  
 - `dependencyOverlays` (list of overlays in order)  
