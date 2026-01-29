@@ -10,6 +10,9 @@ This directory contains composable Nix overlays used by the Neovim wrapper confi
 - `python.nix`  
   Python-related overrides and package additions (e.g., extra Python packages).
 
+- `julia.nix`  
+  Julia-related overrides and package additions (e.g., Julia environment with LanguageServer).
+
 - `plugins.nix`  
   Neovim plugin overrides (e.g., patching or pinning plugin derivations).
 
@@ -22,6 +25,7 @@ This directory contains composable Nix overlays used by the Neovim wrapper confi
 
 - `rOverlay`  
 - `pythonOverlay`  
+- `juliaOverlay`  
 - `pluginsOverlay`  
 - `dependencyOverlays` (list of overlays in order)  
 - `dependencyOverlay` (composed overlay via `lib.composeManyExtensions`)  

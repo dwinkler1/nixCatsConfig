@@ -6,11 +6,11 @@ This repo is designed to be reused downstream via `nix-wrapper-modules`.
 
 1. Import the wrapper module from `modules/neovim.nix`.
 2. Use the overlay helpers in `overlays/default.nix` to compose your own overlays.
-3. Override or add specs by name (e.g., `specs.python`, `specs.r`).
+3. Override or add specs by name (e.g., `specs.python`, `specs.r`, `specs.julia`).
 
 Minimal downstream approach:
 - Use the exported wrapper module: `wrapperModules.default`
-- Compose overlays: `overlays.default` or individual `rOverlay`, `pythonOverlay`, `pluginsOverlay`
+- Compose overlays: `overlays.default` or individual `rOverlay`, `pythonOverlay`, `juliaOverlay`, `pluginsOverlay`
 - Add extra packages via spec overrides (e.g., extend `specs.python.extraPackages`)
 
 ### Minimal downstream flake example (with spec override)
@@ -196,6 +196,7 @@ Available categories and intent:
 - `external`: external tools and integrations
 - `general`: core Neovim plugins/features
 - `gitPlugins`: git-related plugins
+- `julia`: Julia tooling and plugins
 - `lua`: Lua tooling and LSPs
 - `markdown`: markdown tooling and plugins
 - `nix`: Nix tooling and plugins
