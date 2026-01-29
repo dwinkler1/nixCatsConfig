@@ -8,12 +8,13 @@ inputs:
 let
   # R package configuration - built from rixpkgs with required R packages
   # Only evaluated when actually referenced (Nix lazy evaluation)
-  rixpkgs = inputs.rixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  rixpkgsBase = inputs.rixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   
-  franOverlay = inputs.fran.overlays.default pkgs pkgs;
+  # Apply fran overlay to rixpkgs to make custom R packages available
+  rixpkgs = rixpkgsBase // (inputs.fran.overlays.default rixpkgsBase rixpkgsBase);
   
-  # Combine standard R packages with custom packages from franOverlay
-  reqRPkgs = (with rixpkgs.rPackages; [
+  # Standard R packages - custom packages from fran are available in rixpkgs but not used by default
+  reqRPkgs = with rixpkgs.rPackages; [
     arrow
     broom
     data_table
@@ -24,12 +25,12 @@ let
     reprex
     styler
     tidyverse
-  ]) ++ (franOverlay.extraRPackages or []);
+  ];
   
   buildRPackages = {
     rWrapper = rixpkgs.rWrapper.override { packages = reqRPkgs; };
-    radianWrapper = franOverlay.radianWrapper or (rixpkgs.radian.override { });
-    air-formatter = franOverlay.air-formatter or pkgs.emptyDirectory;
+    radianWrapper = rixpkgs.radianWrapper or (rixpkgs.radian.override { });
+    air-formatter = rixpkgs.air-formatter or pkgs.emptyDirectory;
     quarto = rixpkgs.quarto.override { extraRPackages = reqRPkgs; };
   };
 in
