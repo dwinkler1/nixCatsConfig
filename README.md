@@ -202,9 +202,43 @@ Available categories and intent:
 - `nix`: Nix tooling and plugins
 - `python`: Python tooling and plugins
 - `r`: R tooling and plugins
+- `julia`: Julia tooling and packages
+- `clickhouse`: Clickhouse client and tools
 - `utils`: general utilities
 - `test`: test-only tooling (disabled by default)
 - `treesitterParsers`: Treesitter parsers
+
+### Adding additional language packages
+
+**Julia packages** - No overlay needed, add packages directly to spec:
+```nix
+# In your downstream config:
+specs.julia.extraPackages = (config.specs.julia.extraPackages or [ ]) ++ [
+  (pkgs.julia-bin.withPackages [
+    "DataFrames"
+    "Plots" 
+    "CSV"
+    "Statistics"
+  ])
+];
+```
+
+**Python packages** - Extend the python overlay or spec:
+```nix
+specs.python.extraPackages = (config.specs.python.extraPackages or [ ]) ++ [
+  pkgs.python313Packages.pandas
+  pkgs.python313Packages.scikit-learn
+];
+```
+
+**R packages** - Add to rWrapper or access via pkgs.rpkgs:
+```nix
+specs.r.extraPackages = (config.specs.r.extraPackages or [ ]) ++ [
+  (pkgs.rpkgs.rWrapper.override {
+    packages = with pkgs.rpkgs.rPackages; [ ggplot2 dplyr ];
+  })
+];
+```
 
 ## Migration plan: nix-wrapper-modules
 

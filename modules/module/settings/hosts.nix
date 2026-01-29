@@ -28,7 +28,8 @@
           "edit"
         ];
       };
-
+    }
+    (lib.mkIf (config.cats.julia or true) {
       jl = {
         nvim-host.enable = true;
         nvim-host.package = "${pkgs.julia-bin}/bin/julia";
@@ -37,7 +38,7 @@
           "--project=@."
         ];
       };
-    }
+    })
     (lib.mkIf (config.cats.python or true) {
       python3.nvim-host.enable = true;
     })

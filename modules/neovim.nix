@@ -65,6 +65,8 @@ inputs:
       - nix: Nix tooling and plugins
       - python: Python tooling and plugins
       - r: R tooling and plugins
+      - julia: Julia tooling and packages
+      - clickhouse: Clickhouse client and tools
       - utils: general utilities
       - test: test-only tooling (disabled by default)
       - treesitterParsers: Treesitter parsers
@@ -79,6 +81,8 @@ inputs:
       nix = true;
       python = true;
       r = true;
+      julia = true;
+      clickhouse = true;
       utils = true;
       test = false;
       treesitterParsers = true;
