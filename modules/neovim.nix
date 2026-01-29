@@ -25,4 +25,5 @@ inputs:
   config.info.nixCats_wrapRc = config.settings.wrapRc or false;
   config.info.nvimLuaEnv = config.settings.nvim_lua_env;
   config.info.nixCats_configDirName = "nvim";
+  config.pkgs = pkgs;
 }
