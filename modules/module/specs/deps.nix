@@ -10,7 +10,10 @@ let
   # Only evaluated when actually referenced (Nix lazy evaluation)
   rixpkgs = inputs.rixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   
-  reqRPkgs = with rixpkgs.rPackages; [
+  franOverlay = inputs.fran.overlays.default pkgs pkgs;
+  
+  # Combine standard R packages with custom packages from franOverlay
+  reqRPkgs = (with rixpkgs.rPackages; [
     arrow
     broom
     data_table
@@ -21,9 +24,7 @@ let
     reprex
     styler
     tidyverse
-  ];
-  
-  franOverlay = inputs.fran.overlays.default pkgs pkgs;
+  ]) ++ (franOverlay.extraRPackages or []);
   
   buildRPackages = {
     rWrapper = rixpkgs.rWrapper.override { packages = reqRPkgs; };
