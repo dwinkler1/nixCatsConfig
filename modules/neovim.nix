@@ -60,6 +60,7 @@ inputs:
       - external: external tools and integrations
       - general: core Neovim plugins/features
       - gitPlugins: git-related plugins
+      - julia: Julia tooling and plugins
       - lua: Lua tooling and LSPs
       - markdown: markdown tooling and plugins
       - nix: Nix tooling and plugins
@@ -74,6 +75,7 @@ inputs:
       external = true;
       general = true;
       gitPlugins = true;
+      julia = true;
       lua = true;
       markdown = true;
       nix = true;

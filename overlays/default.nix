@@ -4,11 +4,13 @@ let
 
   rOverlay = import ./r.nix inputs;
   pythonOverlay = import ./python.nix inputs;
+  juliaOverlay = import ./julia.nix inputs;
   pluginsOverlay = import ./plugins.nix inputs;
 
   dependencyOverlays = [
     rOverlay
     pythonOverlay
+    juliaOverlay
     pluginsOverlay
   ];
   dependencyOverlay = lib.composeManyExtensions dependencyOverlays;
@@ -17,6 +19,7 @@ in
   inherit
     rOverlay
     pythonOverlay
+    juliaOverlay
     pluginsOverlay
     dependencyOverlays
     dependencyOverlay;
@@ -29,6 +32,7 @@ in
     inherit
       rOverlay
       pythonOverlay
+      juliaOverlay
       pluginsOverlay
       dependencyOverlays
       dependencyOverlay;

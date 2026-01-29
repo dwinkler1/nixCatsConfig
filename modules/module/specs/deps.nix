@@ -88,6 +88,13 @@
     ];
   };
 
+  config.specs.julia = {
+    data = lib.mkDefault null;
+    extraPackages = with pkgs; [
+      julia-bin
+    ];
+  };
+
   config.specs.r = {
     data = lib.mkDefault null;
     extraPackages = with pkgs; [
