@@ -1,10 +1,44 @@
+inputs:
 {
   config,
   pkgs,
   lib,
   ...
 }:
+let
+  # R package configuration - built from rixpkgs with required R packages
+  rixpkgs = inputs.rixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  
+  reqRPkgs = with rixpkgs.rPackages; [
+    arrow
+    broom
+    data_table
+    devtools
+    janitor
+    languageserver
+    quarto
+    reprex
+    styler
+    tidyverse
+  ];
+  
+  franOverlay = inputs.fran.overlays.default pkgs pkgs;
+  
+  buildRPackages = {
+    rWrapper = rixpkgs.rWrapper.override { packages = reqRPkgs; };
+    radianWrapper = franOverlay.radianWrapper or (rixpkgs.radian.override { });
+    air-formatter = franOverlay.air-formatter or pkgs.emptyDirectory;
+    quarto = rixpkgs.quarto.override { extraRPackages = reqRPkgs; };
+  };
+in
 {
+  options.rPackages = lib.mkOption {
+    type = lib.types.attrsOf lib.types.package;
+    description = "R packages built with configured dependencies";
+    default = buildRPackages;
+    readOnly = true;
+  };
+
   config.specMods =
     {
       parentSpec ? null,
@@ -56,7 +90,7 @@
     data = lib.mkDefault null;
     extraPackages = with pkgs; [
       python313Packages.pylatexenc
-      quarto
+      (if config.cats.r or true then config.rPackages.quarto else rixpkgs.quarto)
       zk
     ];
   };
@@ -88,13 +122,13 @@
     ];
   };
 
-  config.specs.r = {
+  config.specs.r = lib.mkIf (config.cats.r or true) {
     data = lib.mkDefault null;
-    extraPackages = with pkgs; [
-      rWrapper
-      radianWrapper
-      quarto
-      air-formatter
+    extraPackages = [
+      config.rPackages.rWrapper
+      config.rPackages.radianWrapper
+      config.rPackages.quarto
+      config.rPackages.air-formatter
     ];
   };
 

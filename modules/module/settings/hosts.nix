@@ -39,7 +39,7 @@
 
     r = {
       nvim-host.enable = true;
-      nvim-host.package = "${pkgs.rWrapper}/bin/R";
+      nvim-host.package = "${config.rPackages.rWrapper}/bin/R";
       nvim-host.argv0 = "R";
       nvim-host.addFlag = [
         "--no-save"
