@@ -1,3 +1,4 @@
+inputs:
 {
   config,
   pkgs,
@@ -77,7 +78,7 @@
     ];
   };
 
-  config.specs.python = {
+  config.specs.python = lib.mkIf (config.cats.python or true) {
     data = lib.mkDefault null;
     extraPackages = with pkgs; [
       python
@@ -88,13 +89,34 @@
     ];
   };
 
-  config.specs.r = {
+  config.specs.r = lib.mkIf (config.cats.r or true) {
     data = lib.mkDefault null;
     extraPackages = with pkgs; [
       rWrapper
       radianWrapper
       quarto
       air-formatter
+    ];
+  };
+
+  config.specs.julia = lib.mkIf (config.cats.julia or true) {
+    data = lib.mkDefault null;
+    extraPackages = with pkgs; [
+      # Julia with base packages
+      julia-bin
+      # Add additional Julia packages like this:
+      # (julia-bin.withPackages [
+      #   "DataFrames"
+      #   "Plots"
+      #   "CSV"
+      # ])
+    ];
+  };
+
+  config.specs.clickhouse = lib.mkIf (config.cats.clickhouse or true) {
+    data = lib.mkDefault null;
+    extraPackages = with pkgs; [
+      clickhouse
     ];
   };
 
