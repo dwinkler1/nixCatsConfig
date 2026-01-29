@@ -78,7 +78,7 @@ inputs:
     ];
   };
 
-  config.specs.python = {
+  config.specs.python = lib.mkIf (config.cats.python or true) {
     data = lib.mkDefault null;
     extraPackages = with pkgs; [
       python

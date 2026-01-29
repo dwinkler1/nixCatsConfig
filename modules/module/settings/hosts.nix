@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -8,7 +9,6 @@
     {
       node.nvim-host.enable = true;
       perl.nvim-host.enable = true;
-      python3.nvim-host.enable = true;
       ruby.nvim-host.enable = true;
 
       g = {
@@ -38,6 +38,9 @@
         ];
       };
     }
+    (lib.mkIf (config.cats.python or true) {
+      python3.nvim-host.enable = true;
+    })
     (lib.mkIf (config.cats.r or true) {
       r = {
         nvim-host.enable = true;
