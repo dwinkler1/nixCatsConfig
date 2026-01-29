@@ -1,10 +1,9 @@
 { ... }:
 final: prev:
-let
-  juliaEnv = prev.julia-bin.withPackages [
-    "LanguageServer"
-  ];
-in
 {
-  julia-bin = juliaEnv;
+  # Julia uses its own Pkg manager for package management
+  # rather than Nix-managed packages like R or Python.
+  # Julia packages (e.g., LanguageServer.jl) should be installed
+  # via Julia's Pkg.add() or a Project.toml file.
+  # This overlay is a placeholder for consistency and future extensibility.
 }
