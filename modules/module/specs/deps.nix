@@ -7,6 +7,7 @@ inputs:
 }:
 let
   # R package configuration - built from rixpkgs with required R packages
+  # Only evaluated when actually referenced (Nix lazy evaluation)
   rixpkgs = inputs.rixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   
   reqRPkgs = with rixpkgs.rPackages; [
@@ -34,7 +35,7 @@ in
 {
   options.rPackages = lib.mkOption {
     type = lib.types.attrsOf lib.types.package;
-    description = "R packages built with configured dependencies";
+    description = "R packages built with configured dependencies. Only built when referenced.";
     default = buildRPackages;
     readOnly = true;
   };
