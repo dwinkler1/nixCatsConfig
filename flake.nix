@@ -124,7 +124,9 @@
             inherit system;
             overlays = packageOverlays;
           };
-          wrapper = wrappers.lib.evalModule [ module { pkgs = pkgsWithOverlays; } ];
+          pkgsWithPlugins =
+            pkgsWithOverlays.extend (wrappers.lib.wrapperModules.neovim.overlays.default or (_: _: { }));
+          wrapper = wrappers.lib.evalModule [ { pkgs = pkgsWithPlugins; } module ];
         in
         {
           default = wrapper.config;
@@ -138,10 +140,12 @@
             inherit system;
             overlays = packageOverlays;
           };
-          wrapper = wrappers.lib.evalModule [ module { pkgs = pkgsWithOverlays; } ];
+          pkgsWithPlugins =
+            pkgsWithOverlays.extend (wrappers.lib.wrapperModules.neovim.overlays.default or (_: _: { }));
+          wrapper = wrappers.lib.evalModule [ { pkgs = pkgsWithPlugins; } module ];
         in
         {
-          default = wrapper.config.wrap { pkgs = pkgsWithOverlays; };
+          default = wrapper.config.wrap { pkgs = pkgsWithPlugins; };
           neovim = self.packages.${system}.default;
         }
       );

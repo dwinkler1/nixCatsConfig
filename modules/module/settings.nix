@@ -38,43 +38,6 @@
     TESTVAR2 = "It worked again!";
   };
 
-  config.hosts = {
-    node.nvim-host.enable = true;
-    perl.nvim-host.enable = true;
-    python3.nvim-host.enable = true;
-    ruby.nvim-host.enable = true;
-    neovide.nvim-host.enable = true;
-    m = {
-      nvim-host.enable = false;
-      nvim-host.package = pkgs.uv;
-      nvim-host.exePath = "bin/uv";
-      nvim-host.argv0 = "uv";
-      nvim-host.addFlag = [
-        "run"
-        "marimo"
-        "edit"
-      ];
-    };
-    jl = {
-      nvim-host.enable = true;
-      nvim-host.package = pkgs.julia-bin;
-      nvim-host.exePath = "bin/julia";
-      nvim-host.argv0 = "julia";
-      nvim-host.addFlag = [
-        "--project=@."
-      ];
-    };
-    r = {
-      nvim-host.enable = true;
-      nvim-host.package = pkgs.rWrapper;
-      nvim-host.exePath = "bin/R";
-      nvim-host.argv0 = "R";
-      nvim-host.addFlag = [
-        "--no-save"
-        "--no-restore"
-      ];
-    };
-  };
 
   config.settings.environmentVariables = {
     r = {

@@ -6,8 +6,8 @@
 }:
 {
   config.specs.gitPlugins = {
-    data = with pkgs.neovimPlugins; [
-      r
+    data = [
+      config.nvim-lib.neovimPlugins.r
     ];
   };
 
@@ -158,9 +158,9 @@
   };
 
   config.specs.gitPlugins-lazy = {
-    data = with pkgs.neovimPlugins; [
-      cmp-pandoc-references
-      cmp-r
+    data = [
+      config.nvim-lib.neovimPlugins.cmp-pandoc-references
+      config.nvim-lib.neovimPlugins.cmp-r
     ];
   };
 }
