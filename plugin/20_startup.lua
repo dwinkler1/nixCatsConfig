@@ -25,7 +25,7 @@ end
 
 -- Mini.nvim
 now(function()
-  local colorschemeName = nixCats('colorscheme')
+  local colorschemeName = nixCats("onedark_dark", "settings", "colorscheme")
   if colorschemeName == 'light' then
     local palette = require('mini.hues').make_palette({
       background = '#fefcf5',

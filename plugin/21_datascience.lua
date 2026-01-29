@@ -42,7 +42,7 @@ end)
 
 -- r
 now(function()
-  if nixCats('gitPlugins') then
+  if nixCats(false, "settings", "cats", "gitPlugins") then
     vim.g.rout_follow_colorscheme = true
     require("r").setup({
       -- Create a table with the options to be passed to setup()
