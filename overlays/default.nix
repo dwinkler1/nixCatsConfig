@@ -2,10 +2,12 @@
 let
   lib = nixpkgs.lib;
 
+  rOverlay = import ./r.nix inputs;
   pythonOverlay = import ./python.nix inputs;
   pluginsOverlay = import ./plugins.nix inputs;
 
   dependencyOverlays = [
+    rOverlay
     pythonOverlay
     pluginsOverlay
   ];
@@ -13,6 +15,7 @@ let
 in
 {
   inherit
+    rOverlay
     pythonOverlay
     pluginsOverlay
     dependencyOverlays
@@ -24,6 +27,7 @@ in
 
   overlays = {
     inherit
+      rOverlay
       pythonOverlay
       pluginsOverlay
       dependencyOverlays

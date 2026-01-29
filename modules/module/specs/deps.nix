@@ -5,43 +5,7 @@ inputs:
   lib,
   ...
 }:
-let
-  # R package configuration - built from rixpkgs with required R packages
-  # Only evaluated when actually referenced (Nix lazy evaluation)
-  rixpkgsBase = inputs.rixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-  
-  # Apply fran overlay to rixpkgs to make custom R packages available
-  rixpkgs = rixpkgsBase // (inputs.fran.overlays.default rixpkgsBase rixpkgsBase);
-  
-  # Standard R packages - custom packages from fran are available in rixpkgs but not used by default
-  reqRPkgs = with rixpkgs.rPackages; [
-    arrow
-    broom
-    data_table
-    devtools
-    janitor
-    languageserver
-    quarto
-    reprex
-    styler
-    tidyverse
-  ];
-  
-  buildRPackages = {
-    rWrapper = rixpkgs.rWrapper.override { packages = reqRPkgs; };
-    radianWrapper = rixpkgs.radianWrapper or (rixpkgs.radian.override { });
-    air-formatter = rixpkgs.air-formatter or pkgs.emptyDirectory;
-    quarto = rixpkgs.quarto.override { extraRPackages = reqRPkgs; };
-  };
-in
 {
-  options.rPackages = lib.mkOption {
-    type = lib.types.attrsOf lib.types.package;
-    description = "R packages built with configured dependencies. Only built when referenced.";
-    default = buildRPackages;
-    readOnly = true;
-  };
-
   config.specMods =
     {
       parentSpec ? null,
@@ -93,7 +57,7 @@ in
     data = lib.mkDefault null;
     extraPackages = with pkgs; [
       python313Packages.pylatexenc
-      (if config.cats.r or true then config.rPackages.quarto else rixpkgs.quarto)
+      quarto
       zk
     ];
   };
@@ -127,11 +91,11 @@ in
 
   config.specs.r = lib.mkIf (config.cats.r or true) {
     data = lib.mkDefault null;
-    extraPackages = [
-      config.rPackages.rWrapper
-      config.rPackages.radianWrapper
-      config.rPackages.quarto
-      config.rPackages.air-formatter
+    extraPackages = with pkgs; [
+      rWrapper
+      radianWrapper
+      quarto
+      air-formatter
     ];
   };
 

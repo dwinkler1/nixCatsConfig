@@ -10,9 +10,9 @@ This repo is designed to be reused downstream via `nix-wrapper-modules`.
 
 Minimal downstream approach:
 - Use the exported wrapper module: `wrapperModules.default`
-- Compose overlays: `overlays.default` or individual `pythonOverlay`, `pluginsOverlay`
+- Compose overlays: `overlays.default` or individual `rOverlay`, `pythonOverlay`, `pluginsOverlay`
 - Add extra packages via spec overrides (e.g., extend `specs.python.extraPackages`)
-- R packages are now built as module options (conditionally based on `cats.r`)
+- Access R packages via `pkgs.rpkgs.rPackages.*` when R overlay is applied
 
 ### Minimal downstream flake example (with spec override)
 

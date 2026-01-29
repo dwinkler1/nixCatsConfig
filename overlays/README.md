@@ -4,6 +4,9 @@ This directory contains composable Nix overlays used by the Neovim wrapper confi
 
 ## Files
 
+- `r.nix`  
+  R-related overrides and package additions. Applies both rixpkgs and fran overlays to nixpkgs, making `pkgs.rpkgs` (rixpkgs) and custom R packages available.
+
 - `python.nix`  
   Python-related overrides and package additions (e.g., extra Python packages).
 
@@ -13,13 +16,11 @@ This directory contains composable Nix overlays used by the Neovim wrapper confi
 - `default.nix`  
   Aggregates and exports the overlays in a composable way.
 
-- `r.nix` (archived)  
-  R-related configuration has been moved to module options in `modules/module/specs/deps.nix`. R packages are now built conditionally based on the `cats.r` category setting, making them truly optional rather than always included via overlay.
-
 ## Exports from `default.nix`
 
 `overlays/default.nix` exposes:
 
+- `rOverlay`  
 - `pythonOverlay`  
 - `pluginsOverlay`  
 - `dependencyOverlays` (list of overlays in order)  
@@ -56,7 +57,7 @@ let
   overlayDefs = import ./overlays/default.nix inputs;
 in {
   nixpkgs.overlays = [
-    overlayDefs.pythonOverlay
+    overlayDefs.rOverlay
     overlayDefs.pluginsOverlay
   ];
 }
