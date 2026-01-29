@@ -45,6 +45,7 @@ inputs:
   config.info.nixCats_config_location = config.settings.config_directory;
   config.info.nixCats_wrapRc = config.settings.wrapRc or false;
   config.info.nixCats_configDirName = "nvim";
+  config.binName = "n";
 
   config.hosts = {
     node.nvim-host.enable = true;
